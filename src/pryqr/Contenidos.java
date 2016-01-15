@@ -66,6 +66,9 @@ public class Contenidos extends javax.swing.JFrame {
 }
 
     
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -261,17 +264,11 @@ public class Contenidos extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlCrearArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jlCrearArticulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlCrearArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jlCrearArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
         );
 
         jPanel7.setBackground(new java.awt.Color(139, 93, 93));
@@ -327,6 +324,7 @@ public class Contenidos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jtCategorias);
 
         btnActualizarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
+        btnActualizarCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizarCategoria.setMaximumSize(new java.awt.Dimension(84, 81));
         btnActualizarCategoria.setMinimumSize(new java.awt.Dimension(84, 81));
         btnActualizarCategoria.setPreferredSize(new java.awt.Dimension(84, 81));
@@ -337,6 +335,7 @@ public class Contenidos extends javax.swing.JFrame {
         });
 
         btnEliminarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnEliminarCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarCategoria.setMaximumSize(new java.awt.Dimension(84, 81));
         btnEliminarCategoria.setMinimumSize(new java.awt.Dimension(84, 81));
         btnEliminarCategoria.setPreferredSize(new java.awt.Dimension(84, 81));
@@ -347,6 +346,7 @@ public class Contenidos extends javax.swing.JFrame {
         });
 
         btnBuscarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnBuscarCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarCategoria.setMaximumSize(new java.awt.Dimension(84, 81));
         btnBuscarCategoria.setMinimumSize(new java.awt.Dimension(84, 81));
         btnBuscarCategoria.setPreferredSize(new java.awt.Dimension(84, 81));

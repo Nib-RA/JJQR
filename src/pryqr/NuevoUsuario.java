@@ -40,7 +40,7 @@ String accion;
                 jlContraseña1.setVisible(false);
                 txtContraseñaUsuario.setVisible(false);
                 txtRepetirContraseñaUsuario.setVisible(false);
-                jLabel1.setText(accion + "Usuario");
+                lblNuevoUsuario.setText(accion + "Usuario");
                 lblIdUsuario.setText("ID del Usuario: \t\t" + ItemSeleccionado.idUsuario);
                 String SQLTU ="SELECT * FROM usuarios WHERE IDUSUARIO = " + ItemSeleccionado.idUsuario; 
                 sent = conn.createStatement();
@@ -82,7 +82,7 @@ String accion;
         jlContraseña1.setVisible(true);
         txtContraseñaUsuario.setVisible(true);
         txtRepetirContraseñaUsuario.setVisible(true);
-        jLabel1.setText("Nuevo Usuario");
+        lblNuevoUsuario.setText("Nuevo  Usuario");
         txtNombreUsuario.requestFocus();
     }
     
@@ -155,7 +155,7 @@ String accion;
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblNuevoUsuario = new javax.swing.JLabel();
         jlNombreUsuario = new javax.swing.JLabel();
         jlApellidoUsuario = new javax.swing.JLabel();
         jlEstado = new javax.swing.JLabel();
@@ -183,9 +183,9 @@ String accion;
 
         jPanel1.setBackground(new java.awt.Color(81, 28, 28));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Nuevo Usuario");
+        lblNuevoUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblNuevoUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNuevoUsuario.setText("Nuevo Usuario");
 
         jlNombreUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -329,7 +329,7 @@ String accion;
                                 .addComponent(jlNombreUsuario)
                                 .addGap(134, 134, 134)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
+                                    .addComponent(lblNuevoUsuario)
                                     .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jlCamposObligatorios1)))
@@ -339,7 +339,7 @@ String accion;
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel1)
+                .addComponent(lblNuevoUsuario)
                 .addGap(27, 27, 27)
                 .addComponent(lblIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -453,8 +453,6 @@ String accion;
         // TODO add your handling code here:
         char car=evt.getKeyChar();
         if((car<'0' || car>'9')) evt.consume();
-        //if(txtCedula.getText().trim().length()>9)       JOptionPane.showMessageDialog(this, "La cedula debe tener 10 digitos");
-        //else        JOptionPane.showMessageDialog(this, "El valor ingresado es "+txtCedula.getText());
         int limite  = 10;
         if (txtCedula.getText().length()== limite)              evt.consume();        
     }//GEN-LAST:event_txtCedulaKeyTyped
@@ -513,7 +511,6 @@ String accion;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarNuevoUsuario;
     private javax.swing.JButton btnGuardarNuevoUsuario;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox jcbEstadoUsuario;
     private javax.swing.JComboBox jcbTipodeUsuario;
@@ -528,6 +525,7 @@ String accion;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCedula1;
     private javax.swing.JLabel lblIdUsuario;
+    private javax.swing.JLabel lblNuevoUsuario;
     private javax.swing.JTextField txtApellidoUsuario;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtContraseñaUsuario;

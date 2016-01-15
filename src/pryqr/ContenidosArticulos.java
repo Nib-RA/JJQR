@@ -36,7 +36,7 @@ String id = "", rol = "", estado = "";
         Mostrar_Visualizador(btnActualizarArticulos, Ruta1);
         String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
         Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
-        String Ruta3=getClass().getResource("/images/search.jpg").getPath();
+        String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarArticulos, Ruta3);
     }
     
@@ -342,6 +342,7 @@ String id = "", rol = "", estado = "";
         jScrollPane1.setViewportView(jtCategorias);
 
         btnActualizarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
+        btnActualizarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
         btnActualizarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
         btnActualizarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
@@ -352,6 +353,7 @@ String id = "", rol = "", estado = "";
         });
 
         btnEliminarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnEliminarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
         btnEliminarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
         btnEliminarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
@@ -362,6 +364,7 @@ String id = "", rol = "", estado = "";
         });
 
         btnBuscarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnBuscarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
         btnBuscarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
         btnBuscarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
