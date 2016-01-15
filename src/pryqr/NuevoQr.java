@@ -21,8 +21,6 @@ import java.awt.Image;
 import java.io.File;
 import javax.swing.JLabel;
 import org.apache.commons.io.FileUtils;
-
-
 /**
  *
  * @author Familia
@@ -32,7 +30,6 @@ public class NuevoQr extends javax.swing.JFrame {
     Statement sent;
     File fichero;
     String[] imagen = {"", "", ""}, tempImagen = {"", "", ""}, tempNombreArchivo = {"", "", ""};
-
     
     public NuevoQr() {
         initComponents();
@@ -54,6 +51,8 @@ public class NuevoQr extends javax.swing.JFrame {
         File destino = new File(destiny);
         try {
             //Localisa la carpeta de origen y ubica la carpeta d destino
+            File rutaPrincipalImagenes = new File(imagen[indice]);
+            if(!rutaPrincipalImagenes.exists()) rutaPrincipalImagenes.mkdir();
             FileUtils.moveFileToDirectory(origen, destino, false);
             File nombreOriginal = new File(destiny + "\\" + tempNombreArchivo[indice]);
             File nombreModificado = new File(destiny + "\\" + nombre);
@@ -76,6 +75,7 @@ public class NuevoQr extends javax.swing.JFrame {
                 if(!tempImagen[0].isEmpty()){
                     File imagen1 = new File(imagen[0]);
                     if(!imagen1.exists()) imagen1.mkdir();
+                    imagen[0] += "\\Imagenes";
                     if(CopiaArchivos(tempImagen[0], imagen[0], "Imagen1.jpg", 0)) imagen[0] += "\\Imagen1.jpg";
                     else return;
                     if(!tempImagen[1].isEmpty()){
@@ -114,7 +114,7 @@ public class NuevoQr extends javax.swing.JFrame {
         }
     }
 
-    public static void  Mostrar_Visualizador(javax.swing.JLabel Pantalla,String Ruta_Destino) 
+    public static void Mostrar_Visualizador(javax.swing.JLabel Pantalla,String Ruta_Destino) 
     {
         try
         {
@@ -162,28 +162,10 @@ public class NuevoQr extends javax.swing.JFrame {
         if (JFileChooser.APPROVE_OPTION == resultado){
             fichero = jfchCargarVideo.getSelectedFile();
             try{
-            }catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, 
-                    "Error abriendo el video "+ ex);
-            }
-        } 
-    }
-    
-    
-     void CargarAudio(JLabel label){
-        int resultado;
-        // ventana = new CargarFoto();
-        JFileChooser jfchCargarVideo= new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("MP3", "mp3");
-        jfchCargarVideo.setFileFilter(filtro);
-        resultado= jfchCargarVideo.showOpenDialog(null);
-        if (JFileChooser.APPROVE_OPTION == resultado){
-            fichero = jfchCargarVideo.getSelectedFile();
-            try{
 
             }catch(Exception ex){
                     JOptionPane.showMessageDialog(null, 
-                    "Error abriendo el archivo de audio "+ ex);
+                    "Error abriendo la imagen "+ ex);
             }
         } 
     }
@@ -273,7 +255,10 @@ public class NuevoQr extends javax.swing.JFrame {
         jlNombreQr6.setForeground(new java.awt.Color(0, 153, 204));
         jlNombreQr6.setText("Descripcion");
 
-        txtAreaDescripcionNuevoQr.setColumns(20);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        txtAreaDescripcionNuevoQr.setColumns(10);
         txtAreaDescripcionNuevoQr.setRows(5);
         jScrollPane1.setViewportView(txtAreaDescripcionNuevoQr);
 
@@ -483,7 +468,7 @@ public class NuevoQr extends javax.swing.JFrame {
 
     private void btnImagen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImagen1MouseClicked
         CargarImagen(btnImagen1, 0);
-        imagen[0] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Imagenes";
+        imagen[0] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString();
     }//GEN-LAST:event_btnImagen1MouseClicked
 
     private void btnImagen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImagen2MouseClicked
@@ -504,7 +489,7 @@ public class NuevoQr extends javax.swing.JFrame {
 
     private void btnAudioQrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAudioQrMouseClicked
         // TODO add your handling code here:
-        CargarAudio(btnAudioQr);
+        
     }//GEN-LAST:event_btnAudioQrMouseClicked
 
     public static void main(String args[]) {

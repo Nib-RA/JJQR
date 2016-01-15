@@ -20,7 +20,7 @@ public class ContenidosArticulos extends javax.swing.JFrame {
 DefaultTableModel model;
 Connection conn;
 Statement sent;   
-String id = "", rol = "", estado = "";
+String id = "", imagenes = "";
         /**
      * Creates new form Principal
      */
@@ -41,33 +41,40 @@ String id = "", rol = "", estado = "";
     }
     
     void LlenarTablaArticulos(){
-    try{
-    //String titulos[] = {"IdCategoria","Nombre","Descripcion","Editar","Eliminar"};
-    String titulos[] = {"NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
-        "IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
-    //String SQL ="SELECT * FROM ingresos where CodigoParaiso Like '%"+txtBuscar.getText().toString().trim()+"%'AND ORDER BY Movimiento,Id,Fecha ASC"; 
-    String SQLTA ="SELECT * FROM articulos ORDER BY NOMBREARTICULO ASC"; 
-    model = new DefaultTableModel(null, titulos);
-    sent = conn.createStatement();
-    ResultSet rs = sent.executeQuery(SQLTA);
-    String[]fila=new String[9];
-    while(rs.next()){
-        fila[0] = rs.getString("NOMBREARTICULO");
-        fila[1] = rs.getString("DESCRIPCIONARTICULO");
-        fila[2] = rs.getString("IMAGENUNOARTICULO");
-        fila[3] = rs.getString("IMAGENDOSARTICULO");
-        fila[4] = rs.getString("IMAGENTRESARTICULO");
-        fila[5] = rs.getString("SONIDOARTICULO");
-        fila[6] = rs.getString("VIDEOARTICULO");
-        fila[7] = rs.getString("CODIGOQRARTICULO");
-        fila[8] = rs.getString("IMAGENQRARTICULO");
-       model.addRow(fila);
+        try{
+            //String titulos[] = {"IdCategoria","Nombre","Descripcion","Editar","Eliminar"};
+            String titulos[] = {"ID","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
+                "IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
+            //String SQL ="SELECT * FROM ingresos where CodigoParaiso Like '%"+txtBuscar.getText().toString().trim()+"%'AND ORDER BY Movimiento,Id,Fecha ASC"; 
+            String SQLTA ="SELECT * FROM articulos ORDER BY IDARTICULO ASC"; 
+            model = new DefaultTableModel(null, titulos);
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(SQLTA);
+            String[]fila=new String[10];
+            while(rs.next()){
+                fila[0] = rs.getString("IDARTICULO");
+                fila[1] = rs.getString("NOMBREARTICULO");
+                fila[2] = rs.getString("DESCRIPCIONARTICULO");
+                fila[3] = rs.getString("IMAGENUNOARTICULO");
+                fila[4] = rs.getString("IMAGENDOSARTICULO");
+                fila[5] = rs.getString("IMAGENTRESARTICULO");
+                fila[6] = rs.getString("SONIDOARTICULO");
+                fila[7] = rs.getString("VIDEOARTICULO");
+                fila[8] = rs.getString("CODIGOQRARTICULO");
+                fila[9] = rs.getString("IMAGENQRARTICULO");
+               model.addRow(fila);
+            }
+            jtContenidosArticulos.setModel(model);
+        }catch(Exception e){
     }
-    jtCategorias.setModel(model);
-    }catch(Exception e){
-    }
- 
 }
+
+    void SeleccionarItemTablaU(java.awt.event.MouseEvent evt){
+        DefaultTableModel modelo=(DefaultTableModel) jtContenidosArticulos.getModel();
+        id=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),0));
+        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),3));
+        Mostrar_Visualizador(lblImagen1, imagenes);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,10 +106,12 @@ String id = "", rol = "", estado = "";
         jlCategorias = new javax.swing.JLabel();
         btnNuevoQr = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtCategorias = new javax.swing.JTable();
+        jtContenidosArticulos = new javax.swing.JTable();
         btnActualizarArticulos = new javax.swing.JLabel();
         btnEliminarArticulos = new javax.swing.JLabel();
         btnBuscarArticulos = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblImagen1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -328,7 +337,7 @@ String id = "", rol = "", estado = "";
             }
         });
 
-        jtCategorias.setModel(new javax.swing.table.DefaultTableModel(
+        jtContenidosArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -339,7 +348,12 @@ String id = "", rol = "", estado = "";
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jtCategorias);
+        jtContenidosArticulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtContenidosArticulosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtContenidosArticulos);
 
         btnActualizarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
         btnActualizarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -374,6 +388,10 @@ String id = "", rol = "", estado = "";
             }
         });
 
+        jLabel1.setText("Imagenes");
+
+        lblImagen1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -394,7 +412,15 @@ String id = "", rol = "", estado = "";
                         .addComponent(jlCategorias))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(lblImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1))))))
                 .addContainerGap(106, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
@@ -414,8 +440,11 @@ String id = "", rol = "", estado = "";
                     .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblImagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(0, 177, Short.MAX_VALUE)
@@ -447,7 +476,7 @@ String id = "", rol = "", estado = "";
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addContainerGap(91, Short.MAX_VALUE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -530,12 +559,6 @@ String id = "", rol = "", estado = "";
         dispose();
     }//GEN-LAST:event_jlCrearArticuloMouseClicked
 
-    private void btnNuevoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoQrActionPerformed
-        // TODO add your handling code here:
-        NuevoQr nca = new NuevoQr();
-        nca.show();
-    }//GEN-LAST:event_btnNuevoQrActionPerformed
-
     private void jlPoliticasdePrivacidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPoliticasdePrivacidadMouseClicked
         // TODO add your handling code here:
         PoliticasdePrivacidad pp=new PoliticasdePrivacidad();
@@ -547,6 +570,14 @@ String id = "", rol = "", estado = "";
         TerminosyCondiciones tc1=new TerminosyCondiciones();
         tc1.setVisible(true);
     }//GEN-LAST:event_jlTerminosyCondicionesMouseClicked
+
+    private void btnBuscarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarArticulosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarArticulosMouseClicked
+
+    private void btnEliminarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarArticulosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarArticulosMouseClicked
 
     private void btnActualizarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarArticulosMouseClicked
         // TODO add your handling code here:
@@ -560,13 +591,16 @@ String id = "", rol = "", estado = "";
         }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a modificar");
     }//GEN-LAST:event_btnActualizarArticulosMouseClicked
 
-    private void btnEliminarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarArticulosMouseClicked
+    private void jtContenidosArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtContenidosArticulosMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarArticulosMouseClicked
+        SeleccionarItemTablaU(evt);
+    }//GEN-LAST:event_jtContenidosArticulosMouseClicked
 
-    private void btnBuscarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarArticulosMouseClicked
+    private void btnNuevoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoQrActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarArticulosMouseClicked
+        NuevoQr nca = new NuevoQr();
+        nca.show();
+    }//GEN-LAST:event_btnNuevoQrActionPerformed
 
     /**
      * @param args the command line arguments
@@ -609,6 +643,7 @@ String id = "", rol = "", estado = "";
     private javax.swing.JLabel btnEliminarArticulos;
     private javax.swing.JButton btnNuevoQr;
     private javax.swing.JButton btnUsuarios;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -627,6 +662,7 @@ String id = "", rol = "", estado = "";
     private javax.swing.JLabel jlNuevaCategoria;
     private javax.swing.JLabel jlPoliticasdePrivacidad;
     private javax.swing.JLabel jlTerminosyCondiciones;
-    private javax.swing.JTable jtCategorias;
+    private javax.swing.JTable jtContenidosArticulos;
+    private javax.swing.JLabel lblImagen1;
     // End of variables declaration//GEN-END:variables
 }
