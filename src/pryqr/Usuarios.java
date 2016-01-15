@@ -24,6 +24,8 @@ public class Usuarios extends javax.swing.JFrame {
     ItemSeleccionado is=new ItemSeleccionado();
     String id = "", rol = "", estado = "";
     Boolean comboBuscar=false;
+    Integer buscar = 0;
+
     
     public Usuarios() {
         initComponents();
@@ -40,8 +42,11 @@ public class Usuarios extends javax.swing.JFrame {
         Mostrar_Visualizador(btnEliminar, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarUsuarios, Ruta3);
-        jcbBuscarPor.setVisible(false);
-        txtBuscarPor.setVisible(false);
+        jcbBuscarPor.setEnabled(false);
+        txtBuscarPor.setEnabled(false);
+        chbActivo.setEnabled(false);
+        chbInactivo.setEnabled(false);
+
         
     }
     
@@ -193,6 +198,33 @@ public class Usuarios extends javax.swing.JFrame {
     }
     }
     
+    void BuscarPorEstadoUsuario (){
+        
+        try{
+         String titulos[] = {"IDUSUARIO", "TIPO DE USUARIO","NOMBRE","APELLIDO","CEDULA","CORREO DEL USUARIO","ESTADO DE USUARIO"};
+         
+    //Consulta para la fecha de inicio a fecha de final
+    String SQL = "SELECT *FROM usuarios WHERE ESTADOUSUARIO = 1 ORDER BY NOMBRESUSUARIO ASC";
+
+    model= new DefaultTableModel(null, titulos);
+    sent = conn.createStatement();
+    ResultSet rs = sent.executeQuery(SQL);
+    String[]fila=new String[7];
+   while(rs.next()){
+        fila[0] = rs.getString("IDUSUARIO");
+        fila[1] = rs.getString("TIPOUSUARIO");
+        fila[2] = rs.getString("NOMBRESUSUARIO");
+        fila[3] = rs.getString("APELLIDOSUSUARIO");
+        fila[4] = rs.getString("CEDULAUSUARIO");
+        fila[5] = rs.getString("CORREOUSUARIO");
+        fila[6] = rs.getString("ESTADOUSUARIO");
+        model.addRow(fila);
+   }
+    jtUsuarios.setModel(model);
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null,"Error de Consulta..... :(");
+    }
+    }
             
     
     @SuppressWarnings("unchecked")
@@ -222,6 +254,8 @@ public class Usuarios extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JLabel();
         btnBuscarUsuarios = new javax.swing.JLabel();
         lblNuevo = new javax.swing.JLabel();
+        chbActivo = new javax.swing.JCheckBox();
+        chbInactivo = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -397,6 +431,11 @@ public class Usuarios extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jcbBuscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione una opcion--", "Cedula de Usuario", "Nombre de Usuario", "Apellido de Usuario", "Tipo de Usuario", "Estado de Usuario" }));
+        jcbBuscarPor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbBuscarPorMouseClicked(evt);
+            }
+        });
         jcbBuscarPor.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcbBuscarPorItemStateChanged(evt);
@@ -406,6 +445,9 @@ public class Usuarios extends javax.swing.JFrame {
         txtBuscarPor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBuscarPorKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarPorKeyTyped(evt);
             }
         });
 
@@ -448,6 +490,20 @@ public class Usuarios extends javax.swing.JFrame {
 
         lblNuevo.setText("Nuevo");
 
+        chbActivo.setText("Activo");
+        chbActivo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chbActivoItemStateChanged(evt);
+            }
+        });
+
+        chbInactivo.setText("Inactivo");
+        chbInactivo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chbInactivoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -469,8 +525,13 @@ public class Usuarios extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcbBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jcbBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(chbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(chbInactivo)))))
+                .addContainerGap(305, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,7 +541,10 @@ public class Usuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jcbBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jcbBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chbActivo)
+                            .addComponent(chbInactivo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -601,61 +665,70 @@ public class Usuarios extends javax.swing.JFrame {
 
     private void btnBuscarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarUsuariosMouseClicked
         // TODO add your handling code here:
-        jcbBuscarPor.setVisible(true);
-        txtBuscarPor.setVisible(true);
+        jcbBuscarPor.setEnabled(true);
+        txtBuscarPor.setEnabled(true);
     }//GEN-LAST:event_btnBuscarUsuariosMouseClicked
 
     private void jcbBuscarPorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbBuscarPorItemStateChanged
         // TODO add your handling code here:
-        Integer buscar = jcbBuscarPor.getSelectedIndex();
-     if (buscar.equals(0))
-    {
-         JOptionPane.showMessageDialog(null, "Seleccione una Opcion ");
-         
-    }  
-     else if (buscar.equals(1))
-    {
-          //JOptionPane.showMessageDialog(null, "Ha seleccionado buscar por nombre");
-          txtBuscarPor.setVisible(true);
-          txtBuscarPor.requestFocus();
-          BuscarPorCedula();
-          
-     }
-     else if (buscar.equals(2))
-    {
-          //JOptionPane.showMessageDialog(null, "Ha seleccionado buscar por nombre");
-          txtBuscarPor.setVisible(true);
-          txtBuscarPor.requestFocus();
-          BuscarPorNombreUsuario();
-          
-     }
-     else if (buscar.equals(3))
-    {
-         // JOptionPane.showMessageDialog(null, "Ha seleccionado buscar por nombre");
-          txtBuscarPor.setVisible(true);
-          txtBuscarPor.requestFocus();
-          BuscarPorApellidoUsuario();
-          
-     }
-     else if (buscar.equals(4))
-   {
-            txtBuscarPor.setVisible(true);
+            buscar = jcbBuscarPor.getSelectedIndex();
+            chbActivo.setEnabled(true);
+            chbInactivo.setEnabled(true);
+            txtBuscarPor.setText("");
             txtBuscarPor.requestFocus();
-            BuscarPorTipoUsuario();
-     }else if (buscar.equals(5))
-    {
-          // JOptionPane.showMessageDialog(null, "Ha seleccionado buscar por estado de usuario");
-   }
-     
+            LlenarTablaUsuarios();
+            
     }//GEN-LAST:event_jcbBuscarPorItemStateChanged
 
     private void txtBuscarPorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPorKeyPressed
         // TODO add your handling code here:
-        BuscarPorNombreUsuario();
-        BuscarPorApellidoUsuario();
-        BuscarPorTipoUsuario();
-        BuscarPorCedula();
+        switch (buscar) {
+            case 1:
+                BuscarPorCedula();
+            break;
+            case 2:
+                BuscarPorNombreUsuario();
+            break;
+            case 3:
+                BuscarPorApellidoUsuario();
+            break;
+            case 4:
+                BuscarPorTipoUsuario();
+            break;
+            case 5:
+                BuscarPorEstadoUsuario();
+            break;
+            default:
+                JOptionPane.showMessageDialog(this,"Debe seleccionar un tipo de usuario");
+            break;
+        }
     }//GEN-LAST:event_txtBuscarPorKeyPressed
+
+    private void jcbBuscarPorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbBuscarPorMouseClicked
+        // TODO add your handling code here:
+        txtBuscarPor.setVisible(true);
+    }//GEN-LAST:event_jcbBuscarPorMouseClicked
+
+    private void txtBuscarPorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPorKeyTyped
+        // TODO add your handling code here:
+        if(buscar==1){
+             char car=evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+        int limite  = 10;
+        if (txtBuscarPor.getText().length()== limite)              evt.consume();        
+   
+        }
+    }//GEN-LAST:event_txtBuscarPorKeyTyped
+
+    private void chbActivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbActivoItemStateChanged
+        // TODO add your handling code here:
+        chbInactivo.setSelected(false);
+    }//GEN-LAST:event_chbActivoItemStateChanged
+
+    private void chbInactivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbInactivoItemStateChanged
+        // TODO add your handling code here:
+        chbActivo.setSelected(false);
+    }//GEN-LAST:event_chbInactivoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -698,6 +771,8 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel btnEliminar;
     private javax.swing.JLabel btnNuevoUsuario1;
     private javax.swing.JButton btnUsuarios;
+    private javax.swing.JCheckBox chbActivo;
+    private javax.swing.JCheckBox chbInactivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

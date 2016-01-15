@@ -40,7 +40,7 @@ public class Contenidos extends javax.swing.JFrame {
         Mostrar_Visualizador(btnEliminarCategoria, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarCategoria, Ruta3);
-        txtBuscarContenidos.setVisible(false);
+        txtBuscarContenidos.setVisible(true);
     }
     
     void LlenarTabla(){

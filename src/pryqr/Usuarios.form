@@ -389,11 +389,17 @@
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtBuscarPor" min="-2" pref="400" max="-2" attributes="0"/>
-                                  <Component id="jcbBuscarPor" min="-2" pref="189" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jcbBuscarPor" min="-2" pref="189" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="chbActivo" min="-2" pref="71" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="chbInactivo" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="305" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -405,7 +411,11 @@
                       <EmptySpace pref="16" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jcbBuscarPor" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jcbBuscarPor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chbActivo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chbInactivo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtBuscarPor" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -435,6 +445,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jcbBuscarPorMouseClicked"/>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jcbBuscarPorItemStateChanged"/>
               </Events>
               <AuxValues>
@@ -444,6 +455,7 @@
             <Component class="javax.swing.JTextField" name="txtBuscarPor">
               <Events>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarPorKeyPressed"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarPorKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="btnNuevoUsuario1">
@@ -517,6 +529,22 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="chbActivo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Activo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chbActivoItemStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="chbInactivo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Inactivo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chbInactivoItemStateChanged"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -32,6 +32,7 @@ public class NuevoQr extends javax.swing.JFrame {
     Statement sent;
     File fichero;
     String[] imagen = {"", "", ""}, tempImagen = {"", "", ""}, tempNombreArchivo = {"", "", ""};
+
     
     public NuevoQr() {
         initComponents();
@@ -43,9 +44,9 @@ public class NuevoQr extends javax.swing.JFrame {
         this.jcbCategoriasQR.setModel(mdlC);
         //Redimencionar una imagen a un label
         String Ruta=getClass().getResource("/images/plus.png").getPath();
-        Mostrar_Visualizador(lblImagen1, Ruta);
-        Mostrar_Visualizador(lblImagen2, Ruta);
-        Mostrar_Visualizador(lblImagen3, Ruta);
+        Mostrar_Visualizador(btnImagen1, Ruta);
+        Mostrar_Visualizador(btnImagen2, Ruta);
+        Mostrar_Visualizador(btnImagen3, Ruta);
     }
     
     Boolean CopiaArchivos(String home, String destiny, String nombre, Integer indice){
@@ -161,10 +162,28 @@ public class NuevoQr extends javax.swing.JFrame {
         if (JFileChooser.APPROVE_OPTION == resultado){
             fichero = jfchCargarVideo.getSelectedFile();
             try{
+            }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, 
+                    "Error abriendo el video "+ ex);
+            }
+        } 
+    }
+    
+    
+     void CargarAudio(JLabel label){
+        int resultado;
+        // ventana = new CargarFoto();
+        JFileChooser jfchCargarVideo= new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("MP3", "mp3");
+        jfchCargarVideo.setFileFilter(filtro);
+        resultado= jfchCargarVideo.showOpenDialog(null);
+        if (JFileChooser.APPROVE_OPTION == resultado){
+            fichero = jfchCargarVideo.getSelectedFile();
+            try{
 
             }catch(Exception ex){
                     JOptionPane.showMessageDialog(null, 
-                    "Error abriendo la imagen "+ ex);
+                    "Error abriendo el archivo de audio "+ ex);
             }
         } 
     }
@@ -193,9 +212,9 @@ public class NuevoQr extends javax.swing.JFrame {
         btnGenerarNuevoQr = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnCerrar = new javax.swing.JButton();
-        lblImagen1 = new javax.swing.JLabel();
-        lblImagen3 = new javax.swing.JLabel();
-        lblImagen2 = new javax.swing.JLabel();
+        btnImagen1 = new javax.swing.JLabel();
+        btnImagen3 = new javax.swing.JLabel();
+        btnImagen2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -232,6 +251,11 @@ public class NuevoQr extends javax.swing.JFrame {
 
         btnVideoQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/video.png"))); // NOI18N
         btnVideoQr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVideoQr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVideoQrMouseClicked(evt);
+            }
+        });
 
         jlAudioQr.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jlAudioQr.setForeground(new java.awt.Color(0, 153, 204));
@@ -239,6 +263,11 @@ public class NuevoQr extends javax.swing.JFrame {
 
         btnAudioQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/audio.png"))); // NOI18N
         btnAudioQr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAudioQr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAudioQrMouseClicked(evt);
+            }
+        });
 
         jlNombreQr6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jlNombreQr6.setForeground(new java.awt.Color(0, 153, 204));
@@ -284,27 +313,27 @@ public class NuevoQr extends javax.swing.JFrame {
             }
         });
 
-        lblImagen1.setForeground(new java.awt.Color(255, 255, 51));
-        lblImagen1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblImagen1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnImagen1.setForeground(new java.awt.Color(255, 255, 51));
+        btnImagen1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImagen1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImagen1MouseClicked(evt);
+                btnImagen1MouseClicked(evt);
             }
         });
 
-        lblImagen3.setForeground(new java.awt.Color(255, 255, 51));
-        lblImagen3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblImagen3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnImagen3.setForeground(new java.awt.Color(255, 255, 51));
+        btnImagen3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImagen3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImagen3MouseClicked(evt);
+                btnImagen3MouseClicked(evt);
             }
         });
 
-        lblImagen2.setForeground(new java.awt.Color(255, 255, 51));
-        lblImagen2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblImagen2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnImagen2.setForeground(new java.awt.Color(255, 255, 51));
+        btnImagen2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImagen2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImagen2MouseClicked(evt);
+                btnImagen2MouseClicked(evt);
             }
         });
 
@@ -337,16 +366,16 @@ public class NuevoQr extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jlNombreQr, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jlCategoriaQr)
-                                    .addComponent(lblImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jcbCategoriasQR, 0, 207, Short.MAX_VALUE)
                                     .addComponent(txtNombreQr)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(lblImagen2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnImagen2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblImagen3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnImagen3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(13, 13, 13))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jlNombreQr6)
@@ -387,9 +416,9 @@ public class NuevoQr extends javax.swing.JFrame {
                             .addComponent(txtNombreQr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblImagen3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblImagen2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImagen3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImagen2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlImagen1)
@@ -452,20 +481,31 @@ public class NuevoQr extends javax.swing.JFrame {
         GuardarQr();
     }//GEN-LAST:event_btnGenerarNuevoQrActionPerformed
 
-    private void lblImagen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagen1MouseClicked
-        CargarImagen(lblImagen1, 0);
+    private void btnImagen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImagen1MouseClicked
+        CargarImagen(btnImagen1, 0);
         imagen[0] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Imagenes";
-    }//GEN-LAST:event_lblImagen1MouseClicked
+    }//GEN-LAST:event_btnImagen1MouseClicked
 
-    private void lblImagen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagen2MouseClicked
-        CargarImagen(lblImagen2, 1);
+    private void btnImagen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImagen2MouseClicked
+        CargarImagen(btnImagen2, 1);
         imagen[1] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Imagenes";
-    }//GEN-LAST:event_lblImagen2MouseClicked
+    }//GEN-LAST:event_btnImagen2MouseClicked
 
-    private void lblImagen3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagen3MouseClicked
-        CargarImagen(lblImagen3, 2);
+    private void btnImagen3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImagen3MouseClicked
+        CargarImagen(btnImagen3, 2);
         imagen[2] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Imagenes";
-    }//GEN-LAST:event_lblImagen3MouseClicked
+    }//GEN-LAST:event_btnImagen3MouseClicked
+
+    private void btnVideoQrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVideoQrMouseClicked
+        // TODO add your handling code here:
+        CargarVideo(btnVideoQr);
+       
+    }//GEN-LAST:event_btnVideoQrMouseClicked
+
+    private void btnAudioQrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAudioQrMouseClicked
+        // TODO add your handling code here:
+        CargarAudio(btnAudioQr);
+    }//GEN-LAST:event_btnAudioQrMouseClicked
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -504,6 +544,9 @@ public class NuevoQr extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelarNuevoQr;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnGenerarNuevoQr;
+    private javax.swing.JLabel btnImagen1;
+    private javax.swing.JLabel btnImagen2;
+    private javax.swing.JLabel btnImagen3;
     private javax.swing.JLabel btnVideoQr;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -518,9 +561,6 @@ public class NuevoQr extends javax.swing.JFrame {
     private javax.swing.JLabel jlNombreQr;
     private javax.swing.JLabel jlNombreQr6;
     private javax.swing.JLabel jlVideoQr;
-    private javax.swing.JLabel lblImagen1;
-    private javax.swing.JLabel lblImagen2;
-    private javax.swing.JLabel lblImagen3;
     private javax.swing.JTextArea txtAreaDescripcionNuevoQr;
     private javax.swing.JTextField txtNombreQr;
     // End of variables declaration//GEN-END:variables
