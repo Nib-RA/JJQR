@@ -36,6 +36,8 @@ String id = "", rol = "", estado = "";
         Mostrar_Visualizador(btnActualizarArticulos, Ruta1);
         String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
         Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
+        String Ruta3=getClass().getResource("/images/search.jpg").getPath();
+        Mostrar_Visualizador(btnBuscarArticulos, Ruta3);
     }
     
     void LlenarTablaArticulos(){
@@ -100,6 +102,7 @@ String id = "", rol = "", estado = "";
         jtCategorias = new javax.swing.JTable();
         btnActualizarArticulos = new javax.swing.JLabel();
         btnEliminarArticulos = new javax.swing.JLabel();
+        btnBuscarArticulos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -358,6 +361,16 @@ String id = "", rol = "", estado = "";
             }
         });
 
+        btnBuscarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnBuscarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
+        btnBuscarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
+        btnBuscarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
+        btnBuscarArticulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarArticulosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -370,7 +383,9 @@ String id = "", rol = "", estado = "";
                         .addGap(32, 32, 32)
                         .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
-                        .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(372, 372, 372)
                         .addComponent(jlCategorias))
@@ -393,7 +408,8 @@ String id = "", rol = "", estado = "";
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(53, Short.MAX_VALUE))
@@ -545,6 +561,10 @@ String id = "", rol = "", estado = "";
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarArticulosMouseClicked
 
+    private void btnBuscarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarArticulosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarArticulosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -581,6 +601,7 @@ String id = "", rol = "", estado = "";
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnActualizarArticulos;
+    private javax.swing.JLabel btnBuscarArticulos;
     private javax.swing.JButton btnContenidos;
     private javax.swing.JLabel btnEliminarArticulos;
     private javax.swing.JButton btnNuevoQr;
