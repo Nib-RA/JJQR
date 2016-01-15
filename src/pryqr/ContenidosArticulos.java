@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static pryqr.NuevoQr.Mostrar_Visualizador;
 
 /**
  *
@@ -18,7 +19,8 @@ import javax.swing.table.DefaultTableModel;
 public class ContenidosArticulos extends javax.swing.JFrame {
 DefaultTableModel model;
 Connection conn;
-Statement sent;        
+Statement sent;   
+String id = "", rol = "", estado = "";
         /**
      * Creates new form Principal
      */
@@ -28,7 +30,12 @@ Statement sent;
         this.setLocationRelativeTo(null);
         conn = mysql.getConnect();
         LlenarTablaArticulos();
-        
+        String Ruta=getClass().getResource("/images/plus.png").getPath();
+        Mostrar_Visualizador(btnActualizarArticulos, Ruta);
+        String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
+        Mostrar_Visualizador(btnActualizarArticulos, Ruta1);
+        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
+        Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
     }
     
     void LlenarTablaArticulos(){
@@ -91,6 +98,8 @@ Statement sent;
         btnNuevoQr = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtCategorias = new javax.swing.JTable();
+        btnActualizarArticulos = new javax.swing.JLabel();
+        btnEliminarArticulos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -299,12 +308,15 @@ Statement sent;
             .addComponent(jlCrearCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
         jlNuevaCategoria.setForeground(new java.awt.Color(255, 255, 255));
         jlNuevaCategoria.setText("Nuevo");
 
         jlCategorias.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
         jlCategorias.setText("Galeria de Piezas de Arte ");
 
+        btnNuevoQr.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevoQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.jpg"))); // NOI18N
         btnNuevoQr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNuevoQr.addActionListener(new java.awt.event.ActionListener() {
@@ -326,6 +338,26 @@ Statement sent;
         ));
         jScrollPane1.setViewportView(jtCategorias);
 
+        btnActualizarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
+        btnActualizarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
+        btnActualizarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
+        btnActualizarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
+        btnActualizarArticulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualizarArticulosMouseClicked(evt);
+            }
+        });
+
+        btnEliminarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnEliminarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
+        btnEliminarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
+        btnEliminarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
+        btnEliminarArticulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarArticulosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -333,15 +365,19 @@ Statement sent;
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(61, 61, 61)
-                        .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnNuevoQr)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(372, 372, 372)
-                        .addComponent(jlCategorias))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addComponent(jlCategorias)))
+                .addContainerGap(98, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -353,11 +389,18 @@ Statement sent;
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jlCategorias)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(0, 177, Short.MAX_VALUE)
@@ -490,6 +533,22 @@ Statement sent;
         tc1.setVisible(true);
     }//GEN-LAST:event_jlTerminosyCondicionesMouseClicked
 
+    private void btnActualizarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarArticulosMouseClicked
+        // TODO add your handling code here:
+        if(!id.isEmpty()){
+            /*is.setAccionBoton("Actualizar");
+            is.setIdUsuario(id);
+            is.setRol(rol);
+            is.setEstado(estado);*/
+            NuevoUsuario frnu=new NuevoUsuario();
+            frnu.show();
+        }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a modificar");
+    }//GEN-LAST:event_btnActualizarArticulosMouseClicked
+
+    private void btnEliminarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarArticulosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarArticulosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -525,7 +584,9 @@ Statement sent;
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnActualizarArticulos;
     private javax.swing.JButton btnContenidos;
+    private javax.swing.JLabel btnEliminarArticulos;
     private javax.swing.JButton btnNuevoQr;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JPanel jPanel1;

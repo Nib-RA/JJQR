@@ -6,16 +6,12 @@ package pryqr;
 
 
 import Modelos.UsuarioIngresado;
-import db.ConexionBase;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import java.sql.*;
 import db.mysql;
 import java.awt.event.KeyEvent;
-import java.util.Locale;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  *

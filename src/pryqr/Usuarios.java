@@ -34,10 +34,12 @@ public class Usuarios extends javax.swing.JFrame {
         conn = mysql.getConnect();
         LlenarTablaUsuarios();
         jtUsuarios.requestFocus();
-        String Ruta=getClass().getResource("/images/actualizar.png").getPath();
+        String Ruta=getClass().getResource("/images/plus.png").getPath();
         Mostrar_Visualizador(btnActualizar, Ruta);
-        String Ruta1=getClass().getResource("/images/eliminar.jpg").getPath();
-        Mostrar_Visualizador(btnEliminar, Ruta1);
+        String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
+        Mostrar_Visualizador(btnActualizar, Ruta1);
+        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
+        Mostrar_Visualizador(btnEliminar, Ruta2);
     }
     
     void LlenarTablaUsuarios(){

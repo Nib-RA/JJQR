@@ -317,6 +317,8 @@ public class Contenidos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
         jlNuevaCategoria.setForeground(new java.awt.Color(255, 255, 255));
         jlNuevaCategoria.setText("Nuevo");
 

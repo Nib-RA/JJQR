@@ -11,7 +11,6 @@ import db.mysql;
 import java.io.File;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import org.apache.commons.io.FileUtils;
 
 /**
  *
