@@ -31,8 +31,7 @@ public class NuevoQr extends javax.swing.JFrame {
     Connection conn;
     Statement sent;
     File fichero;
-    String tempNombreArchivo = "";
-    String[] imagen = new String[3], tempImagen = new String[3];
+    String[] imagen = {"", "", ""}, tempImagen = {"", "", ""}, tempNombreArchivo = {"", "", ""};
     
     public NuevoQr() {
         initComponents();
@@ -49,18 +48,22 @@ public class NuevoQr extends javax.swing.JFrame {
         Mostrar_Visualizador(lblImagen3, Ruta);
     }
     
-    void CopiaArchivos(String home, String destiny){
+    Boolean CopiaArchivos(String home, String destiny, String nombre, Integer indice){
         File origen = new File(home);
         File destino = new File(destiny);
         try {
             //Localisa la carpeta de origen y ubica la carpeta d destino
             FileUtils.moveFileToDirectory(origen, destino, false);
-            File nombreOriginal = new File(destiny + "\\" + tempNombreArchivo);
-            File nombreModificado = new File(destiny + "\\Imagen1.jpg");
+            File nombreOriginal = new File(destiny + "\\" + tempNombreArchivo[indice]);
+            File nombreModificado = new File(destiny + "\\" + nombre);
             Boolean cambioNombre = nombreOriginal.renameTo(nombreModificado);
-            if(!cambioNombre) JOptionPane.showMessageDialog(this, "El renombrado no se pudo realizar");
+            if(!cambioNombre){
+                JOptionPane.showMessageDialog(this, "El renombrado no se pudo realizar");
+                return false;
+            }
         } catch (Exception e) {
         }
+        return true;
     }
     
     void GuardarQr(){
@@ -72,21 +75,27 @@ public class NuevoQr extends javax.swing.JFrame {
                 if(!tempImagen[0].isEmpty()){
                     File imagen1 = new File(imagen[0]);
                     if(!imagen1.exists()) imagen1.mkdir();
-                    
+                    if(CopiaArchivos(tempImagen[0], imagen[0], "Imagen1.jpg", 0)) imagen[0] += "\\Imagen1.jpg";
+                    else return;
                     if(!tempImagen[1].isEmpty()){
-                        
-                    }
+                        if(CopiaArchivos(tempImagen[1], imagen[1], "Imagen2.jpg", 1)) imagen[1] += "\\Imagen2.jpg";
+                        else return;
+                    } else imagen[1] = "";
+                    if(!tempImagen[2].isEmpty()){
+                        if(CopiaArchivos(tempImagen[2], imagen[2], "Imagen3.jpg", 2)) imagen[2] += "\\Imagen3.jpg";
+                        else return;
+                    } else imagen[2] = "";
                     String SQLA = "INSERT INTO articulos(NOMBREARTICULO,DESCRIPCIONARTICULO,IMAGENUNOARTICULO,IMAGENDOSARTICULO,"
                             + "IMAGENTRESARTICULO,SONIDOARTICULO,VIDEOARTICULO,CODIGOQRARTICULO,IMAGENQRARTICULO)"
                                   + " VALUES(?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = conn.prepareStatement(SQLA);
-                    ps.setString(1, txtNombreQr.getText());
-                    ps.setString(2, txtAreaDescripcionNuevoQr.getText());
-                    ps.setString(3, "Imagen1");
-                    ps.setString(4, "Imagen2");
-                    ps.setString(5, "Imagen3");
-                    ps.setString(6, "Imagen4");
-                    ps.setString(7, "Imagen5");
+                    ps.setString(1, txtNombreQr.getText().toString());
+                    ps.setString(2, txtAreaDescripcionNuevoQr.getText().toString());
+                    ps.setString(3, imagen[0]);
+                    ps.setString(4, imagen[1]);
+                    ps.setString(5, imagen[2]);
+                    ps.setString(6, "sonido");
+                    ps.setString(7, "video");
                     ps.setString(8, "Codigo");
                     ps.setString(9, "ImagenQr");
                     int n = ps.executeUpdate();
@@ -129,7 +138,7 @@ public class NuevoQr extends javax.swing.JFrame {
             fichero = jfchCargarfoto.getSelectedFile();
             try{
                 tempImagen[identificador] = fichero.getPath();
-                tempNombreArchivo = fichero.getName();
+                tempNombreArchivo[identificador] = fichero.getName();
                 ImageIcon icon = new ImageIcon(fichero.toString());
                 Icon icono = new ImageIcon(icon.getImage().
                 getScaledInstance(label.getWidth(), label.getHeight(), 
