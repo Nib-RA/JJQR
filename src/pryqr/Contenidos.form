@@ -179,7 +179,7 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="btnUsuarios" min="-2" pref="211" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="btnContenidos" min="-2" pref="213" max="-2" attributes="0"/>
+                      <Component id="btnGaleria" min="-2" pref="213" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jlMuseo" min="-2" pref="441" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -194,7 +194,7 @@
                   <Component id="jbAcercade" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
                   <Component id="jbContactanos" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
                   <Component id="btnUsuarios" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
-                  <Component id="btnContenidos" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
+                  <Component id="btnGaleria" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jlMuseo" max="32767" attributes="0"/>
@@ -304,7 +304,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsuariosActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnContenidos">
+            <Component class="javax.swing.JButton" name="btnGaleria">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="1d" green="1d" red="5c" type="rgb"/>
@@ -323,9 +323,6 @@
                   <Dimension value="[200, 23]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnContenidosActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -335,9 +332,6 @@
               <Color blue="5d" green="5d" red="8b" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel6MouseClicked"/>
-          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -382,9 +376,6 @@
               <Color blue="5d" green="5d" red="8b" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel7MouseClicked"/>
-          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -417,9 +408,6 @@
                   <Color id="Cursor de Mano"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jlCrearCategoriaMouseClicked"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
