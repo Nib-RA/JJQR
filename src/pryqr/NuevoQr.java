@@ -31,6 +31,7 @@ public class NuevoQr extends javax.swing.JFrame {
     Connection conn;
     Statement sent;
     File fichero;
+    String tempNombreArchivo = "";
     String[] imagen = new String[3], tempImagen = new String[3];
     
     public NuevoQr() {
@@ -53,8 +54,11 @@ public class NuevoQr extends javax.swing.JFrame {
         File destino = new File(destiny);
         try {
             //Localisa la carpeta de origen y ubica la carpeta d destino
-            FileUtils.copyFileToDirectory(origen, destino);
-            origen.delete();
+            FileUtils.moveFileToDirectory(origen, destino, false);
+            File nombreOriginal = new File(destiny + "\\" + tempNombreArchivo);
+            File nombreModificado = new File(destiny + "\\Imagen1.jpg");
+            Boolean cambioNombre = nombreOriginal.renameTo(nombreModificado);
+            if(!cambioNombre) JOptionPane.showMessageDialog(this, "El renombrado no se pudo realizar");
         } catch (Exception e) {
         }
     }
@@ -66,7 +70,12 @@ public class NuevoQr extends javax.swing.JFrame {
             try {
                 //Ingreso en nuevo usuario
                 if(!tempImagen[0].isEmpty()){
+                    File imagen1 = new File(imagen[0]);
+                    if(!imagen1.exists()) imagen1.mkdir();
                     
+                    if(!tempImagen[1].isEmpty()){
+                        
+                    }
                     String SQLA = "INSERT INTO articulos(NOMBREARTICULO,DESCRIPCIONARTICULO,IMAGENUNOARTICULO,IMAGENDOSARTICULO,"
                             + "IMAGENTRESARTICULO,SONIDOARTICULO,VIDEOARTICULO,CODIGOQRARTICULO,IMAGENQRARTICULO)"
                                   + " VALUES(?,?,?,?,?,?,?,?,?)";
@@ -113,13 +122,14 @@ public class NuevoQr extends javax.swing.JFrame {
         int resultado;
         // ventana = new CargarFoto();
         JFileChooser jfchCargarfoto= new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG y PNG", "jpg", "png");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG", "jpg");
         jfchCargarfoto.setFileFilter(filtro);
         resultado= jfchCargarfoto.showOpenDialog(null);
         if (JFileChooser.APPROVE_OPTION == resultado){
             fichero = jfchCargarfoto.getSelectedFile();
             try{
                 tempImagen[identificador] = fichero.getPath();
+                tempNombreArchivo = fichero.getName();
                 ImageIcon icon = new ImageIcon(fichero.toString());
                 Icon icono = new ImageIcon(icon.getImage().
                 getScaledInstance(label.getWidth(), label.getHeight(), 
@@ -435,17 +445,17 @@ public class NuevoQr extends javax.swing.JFrame {
 
     private void lblImagen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagen1MouseClicked
         CargarImagen(lblImagen1, 0);
-        imagen[0] = ValoresConstantes.directorioPrincipal + txtNombreQr.getText().toString() + "Imagenes";
+        imagen[0] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Imagenes";
     }//GEN-LAST:event_lblImagen1MouseClicked
 
     private void lblImagen2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagen2MouseClicked
         CargarImagen(lblImagen2, 1);
-        imagen[1] = ValoresConstantes.directorioPrincipal + txtNombreQr.getText().toString();
+        imagen[1] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Imagenes";
     }//GEN-LAST:event_lblImagen2MouseClicked
 
     private void lblImagen3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagen3MouseClicked
         CargarImagen(lblImagen3, 2);
-        imagen[2] = ValoresConstantes.directorioPrincipal + txtNombreQr.getText().toString();
+        imagen[2] = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Imagenes";
     }//GEN-LAST:event_lblImagen3MouseClicked
 
     public static void main(String args[]) {
