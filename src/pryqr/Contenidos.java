@@ -40,6 +40,7 @@ public class Contenidos extends javax.swing.JFrame {
         Mostrar_Visualizador(btnEliminarCategoria, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarCategoria, Ruta3);
+        txtBuscarContenidos.setVisible(false);
     }
     
     void LlenarTabla(){
@@ -64,10 +65,32 @@ public class Contenidos extends javax.swing.JFrame {
     }
     
 }
+    
+    void BuscarPorNombreCategoria (){
+        
+        try{
+         String titulos[] = {"IDCATEGORIA", "NOMBRECATEGORIA","DESCRIPCIONCATEGORIA"};
+         
+    //Consulta para la fecha de inicio a fecha de final
+    String SQL = "SELECT *FROM categorias WHERE NOMBRECATEGORIA Like '%"+txtBuscarContenidos.getText().toString().trim()+"%'ORDER BY NOMBRECATEGORIA ASC";
 
-    
-    
-    
+    model= new DefaultTableModel(null, titulos);
+    sent = conn.createStatement();
+    ResultSet rs = sent.executeQuery(SQL);
+    String[]fila=new String[3];
+   while(rs.next()){
+        fila[0] = rs.getString("IDCATEGORIA");
+        fila[1] = rs.getString("NOMBRECATEGORIA");
+        fila[2] = rs.getString("DESCRIPCIONCATEGORIA");
+        model.addRow(fila);
+        
+   }
+    jtCategorias.setModel(model);
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null,"Error de Consulta..... :(");
+    }
+  }
+          
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -98,6 +121,7 @@ public class Contenidos extends javax.swing.JFrame {
         btnActualizarCategoria = new javax.swing.JLabel();
         btnEliminarCategoria = new javax.swing.JLabel();
         btnBuscarCategoria = new javax.swing.JLabel();
+        txtBuscarContenidos = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -356,6 +380,12 @@ public class Contenidos extends javax.swing.JFrame {
             }
         });
 
+        txtBuscarContenidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarContenidosKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -370,7 +400,9 @@ public class Contenidos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBuscarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscarContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(372, 372, 372)
                         .addComponent(jlCategorias))
@@ -392,10 +424,14 @@ public class Contenidos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNuevCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBuscarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnNuevCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(txtBuscarContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnActualizarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -519,7 +555,13 @@ public class Contenidos extends javax.swing.JFrame {
 
     private void btnBuscarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarCategoriaMouseClicked
         // TODO add your handling code here:
+        txtBuscarContenidos.setVisible(true);
     }//GEN-LAST:event_btnBuscarCategoriaMouseClicked
+
+    private void txtBuscarContenidosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarContenidosKeyPressed
+        // TODO add your handling code here:
+        BuscarPorNombreCategoria();
+    }//GEN-LAST:event_txtBuscarContenidosKeyPressed
 
     /**
      * @param args the command line arguments
@@ -581,5 +623,6 @@ public class Contenidos extends javax.swing.JFrame {
     private javax.swing.JLabel jlPoliticasdePrivacidad;
     private javax.swing.JLabel jlTerminosyCondiciones;
     private javax.swing.JTable jtCategorias;
+    private javax.swing.JTextField txtBuscarContenidos;
     // End of variables declaration//GEN-END:variables
 }
