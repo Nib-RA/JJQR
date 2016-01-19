@@ -46,12 +46,12 @@ public class NuevoQr extends javax.swing.JFrame {
         Mostrar_Visualizador(btnImagen3, Ruta);
     }
     
-    Boolean CopiaArchivos(String home, String destiny, String nombre, Integer indice){
+    Boolean CopiaArchivos(String home, String destiny, String[] multimedia, String nombre, Integer indice){
         File origen = new File(home);
         File destino = new File(destiny);
         try {
             //Localisa la carpeta de origen y ubica la carpeta d destino
-            File rutaPrincipalImagenes = new File(imagen[indice]);
+            File rutaPrincipalImagenes = new File(multimedia[indice]);
             if(!rutaPrincipalImagenes.exists()) rutaPrincipalImagenes.mkdir();
             FileUtils.moveFileToDirectory(origen, destino, false);
             File nombreOriginal = new File(destiny + "\\" + tempNombreArchivo[indice]);
@@ -76,14 +76,14 @@ public class NuevoQr extends javax.swing.JFrame {
                     File imagen1 = new File(imagen[0]);
                     if(!imagen1.exists()) imagen1.mkdir();
                     imagen[0] += "\\Imagenes";
-                    if(CopiaArchivos(tempImagen[0], imagen[0], "Imagen1.jpg", 0)) imagen[0] += "\\Imagen1.jpg";
+                    if(CopiaArchivos(tempImagen[0], imagen[0], imagen, "Imagen1.jpg", 0)) imagen[0] += "\\Imagen1.jpg";
                     else return;
                     if(!tempImagen[1].isEmpty()){
-                        if(CopiaArchivos(tempImagen[1], imagen[1], "Imagen2.jpg", 1)) imagen[1] += "\\Imagen2.jpg";
+                        if(CopiaArchivos(tempImagen[1], imagen[1], imagen, "Imagen2.jpg", 1)) imagen[1] += "\\Imagen2.jpg";
                         else return;
                     } else imagen[1] = "";
                     if(!tempImagen[2].isEmpty()){
-                        if(CopiaArchivos(tempImagen[2], imagen[2], "Imagen3.jpg", 2)) imagen[2] += "\\Imagen3.jpg";
+                        if(CopiaArchivos(tempImagen[2], imagen[2], imagen, "Imagen3.jpg", 2)) imagen[2] += "\\Imagen3.jpg";
                         else return;
                     } else imagen[2] = "";
                     String SQLA = "INSERT INTO articulos(NOMBREARTICULO,DESCRIPCIONARTICULO,IMAGENUNOARTICULO,IMAGENDOSARTICULO,"
