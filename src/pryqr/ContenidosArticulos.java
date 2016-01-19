@@ -73,7 +73,11 @@ String id = "", imagenes = "";
         DefaultTableModel modelo=(DefaultTableModel) jtContenidosArticulos.getModel();
         id=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),0));
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),3));
-        Mostrar_Visualizador(lblImagen1, imagenes);
+        Mostrar_Visualizador(lblVistaPreviaImagen1, imagenes);
+         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),4));
+        Mostrar_Visualizador(lblVistaPreviaImagen2, imagenes);
+         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),5));
+        Mostrar_Visualizador(lblVistaPreviaImagen3, imagenes);
     }
 
     /**
@@ -111,7 +115,10 @@ String id = "", imagenes = "";
         btnEliminarArticulos = new javax.swing.JLabel();
         btnBuscarArticulos = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        lblImagen1 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        lblVistaPreviaImagen1 = new javax.swing.JLabel();
+        lblVistaPreviaImagen2 = new javax.swing.JLabel();
+        lblVistaPreviaImagen3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -390,7 +397,33 @@ String id = "", imagenes = "";
 
         jLabel1.setText("Imagenes");
 
-        lblImagen1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblVistaPreviaImagen1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblVistaPreviaImagen2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblVistaPreviaImagen3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblVistaPreviaImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(lblVistaPreviaImagen2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(lblVistaPreviaImagen3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(396, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblVistaPreviaImagen1, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+            .addComponent(lblVistaPreviaImagen2, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+            .addComponent(lblVistaPreviaImagen3, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -416,11 +449,8 @@ String id = "", imagenes = "";
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(lblImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel1))))))
+                                .addComponent(jLabel1))
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(106, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
@@ -444,7 +474,7 @@ String id = "", imagenes = "";
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblImagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(0, 177, Short.MAX_VALUE)
@@ -651,6 +681,7 @@ String id = "", imagenes = "";
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbAcercade;
     private javax.swing.JButton jbContactanos;
@@ -663,6 +694,8 @@ String id = "", imagenes = "";
     private javax.swing.JLabel jlPoliticasdePrivacidad;
     private javax.swing.JLabel jlTerminosyCondiciones;
     private javax.swing.JTable jtContenidosArticulos;
-    private javax.swing.JLabel lblImagen1;
+    private javax.swing.JLabel lblVistaPreviaImagen1;
+    private javax.swing.JLabel lblVistaPreviaImagen2;
+    private javax.swing.JLabel lblVistaPreviaImagen3;
     // End of variables declaration//GEN-END:variables
 }
