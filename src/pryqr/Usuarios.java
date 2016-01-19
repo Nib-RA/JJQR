@@ -85,6 +85,25 @@ public class Usuarios extends javax.swing.JFrame {
         lblNuevo.setText(id);
     }
 
+    
+    void Eliminar(){
+    JOptionPane.showMessageDialog(null, "El registro sera eliminado");
+        int fila = jtUsuarios.getSelectedRow();
+        try {
+            String SQL = "DELETE FROM usuarios WHERE IdUSUARIO=" + jtUsuarios.getValueAt(fila, 0);
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(SQL);
+            if (n > 0){
+                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente ");
+                LlenarTablaUsuarios();
+            }
+            else                JOptionPane.showMessageDialog(null, "Usuario no eliminado ");
+            }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+        
+    
     void BuscarPorNombreUsuario (){
         
         try{
@@ -661,6 +680,7 @@ public class Usuarios extends javax.swing.JFrame {
     
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
+        Eliminar();
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarUsuariosMouseClicked

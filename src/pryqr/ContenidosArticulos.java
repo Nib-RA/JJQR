@@ -11,6 +11,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
+import sun.invoke.empty.Empty;
 
 /**
  *
@@ -68,15 +69,18 @@ String id = "", imagenes = "";
         }catch(Exception e){
     }
 }
+    
+    
+    
 
     void SeleccionarItemTablaU(java.awt.event.MouseEvent evt){
         DefaultTableModel modelo=(DefaultTableModel) jtContenidosArticulos.getModel();
         id=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),0));
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),3));
         Mostrar_Visualizador(lblVistaPreviaImagen1, imagenes);
-         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),4));
+        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),4));
         Mostrar_Visualizador(lblVistaPreviaImagen2, imagenes);
-         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),5));
+        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),5));
         Mostrar_Visualizador(lblVistaPreviaImagen3, imagenes);
     }
 
