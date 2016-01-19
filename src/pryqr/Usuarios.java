@@ -218,18 +218,39 @@ public class Usuarios extends javax.swing.JFrame {
     }
     
     void BuscarPorEstadoUsuario (){
-        
         try{
-         String titulos[] = {"IDUSUARIO", "TIPO DE USUARIO","NOMBRE","APELLIDO","CEDULA","CORREO DEL USUARIO","ESTADO DE USUARIO"};
-         
-    //Consulta para la fecha de inicio a fecha de final
-    String SQL = "SELECT *FROM usuarios WHERE ESTADOUSUARIO = 1 ORDER BY NOMBRESUSUARIO ASC";
-
-    model= new DefaultTableModel(null, titulos);
-    sent = conn.createStatement();
-    ResultSet rs = sent.executeQuery(SQL);
-    String[]fila=new String[7];
-   while(rs.next()){
+        String titulos[] = {"IDUSUARIO", "TIPO DE USUARIO","NOMBRE","APELLIDO","CEDULA","CORREO DEL USUARIO","ESTADO DE USUARIO"};
+        String SQL = "SELECT *FROM usuarios WHERE ESTADOUSUARIO = 1 ORDER BY NOMBRESUSUARIO ASC";
+        model= new DefaultTableModel(null, titulos);
+        sent = conn.createStatement();
+        ResultSet rs = sent.executeQuery(SQL);
+        String[]fila=new String[7];
+       while(rs.next()){
+        fila[0] = rs.getString("IDUSUARIO");
+        fila[1] = rs.getString("TIPOUSUARIO");
+        fila[2] = rs.getString("NOMBRESUSUARIO");
+        fila[3] = rs.getString("APELLIDOSUSUARIO");
+        fila[4] = rs.getString("CEDULAUSUARIO");
+        fila[5] = rs.getString("CORREOUSUARIO");
+        fila[6] = rs.getString("ESTADOUSUARIO");
+        model.addRow(fila);
+   }
+    jtUsuarios.setModel(model);
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null,"Error de Consulta..... :(");
+    }
+    }
+    
+    
+    void BuscarPorEstadoUsuarioInactivo (){
+        try{
+        String titulos[] = {"IDUSUARIO", "TIPO DE USUARIO","NOMBRE","APELLIDO","CEDULA","CORREO DEL USUARIO","ESTADO DE USUARIO"};
+        String SQL = "SELECT *FROM usuarios WHERE ESTADOUSUARIO = 0 ORDER BY NOMBRESUSUARIO ASC";
+        model= new DefaultTableModel(null, titulos);
+        sent = conn.createStatement();
+        ResultSet rs = sent.executeQuery(SQL);
+        String[]fila=new String[7];
+       while(rs.next()){
         fila[0] = rs.getString("IDUSUARIO");
         fila[1] = rs.getString("TIPOUSUARIO");
         fila[2] = rs.getString("NOMBRESUSUARIO");
@@ -743,11 +764,13 @@ public class Usuarios extends javax.swing.JFrame {
     private void chbActivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbActivoItemStateChanged
         // TODO add your handling code here:
         chbInactivo.setSelected(false);
+        BuscarPorEstadoUsuario();
     }//GEN-LAST:event_chbActivoItemStateChanged
 
     private void chbInactivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbInactivoItemStateChanged
         // TODO add your handling code here:
         chbActivo.setSelected(false);
+        BuscarPorEstadoUsuarioInactivo();
     }//GEN-LAST:event_chbInactivoItemStateChanged
 
     /**
