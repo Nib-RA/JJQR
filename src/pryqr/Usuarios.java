@@ -23,7 +23,7 @@ public class Usuarios extends javax.swing.JFrame {
     Statement sent;
     ItemSeleccionado is=new ItemSeleccionado();
     String id = "", rol = "", estado = "";
-    Boolean comboBuscar=false;
+    //Boolean comboBuscar=false;
     Integer buscar = 0;
 
     
