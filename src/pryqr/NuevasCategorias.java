@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author Familia
@@ -66,6 +65,8 @@ String accion;
                         int n = ps.executeUpdate();
                         if (n > 0) {
                                 JOptionPane.showMessageDialog(null, "Categoria creada Correctamente");
+                                Contenidos frcon=new Contenidos();
+                                frcon.show();
                                 dispose();
                             } 
                       } catch (SQLException e) {
@@ -83,8 +84,8 @@ String accion;
                         if (n > 0) {
                             JOptionPane.showMessageDialog(null, "Categoria actualizada Correctamente");
                             dispose();
-                            Usuarios fru=new Usuarios();
-                            fru.show();
+                            Contenidos frc=new Contenidos();
+                            frc.show();
                         }
                     }
                 } catch (SQLException e) {
@@ -93,29 +94,7 @@ String accion;
         }
     }
          
-       /*void Guardar(){
-           if (txtNombreCategoria.getText().trim().isEmpty() || txtDescripcionCategoria.getText().trim().isEmpty() )                     JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
-           else{        
-                  try {
-               
-                            String SQL = "INSERT INTO categorias(NOMBRECATEGORIA,DESCRIPCIONCATEGORIA)"
-                                    + " VALUES(?,?)";
-                            PreparedStatement ps = conn.prepareStatement(SQL);
-                            ps.setString(1, txtNombreCategoria.getText());
-                            ps.setString(2, txtDescripcionCategoria.getText());
-                            int n = ps.executeUpdate();
-                            if (n > 0) {
-                                JOptionPane.showMessageDialog(null, "Categoria creada Correctamente");
-                                dispose();
-                            }
-                            //else       JOptionPane.showMessageDialog(null, "Escoja una fecha");
-                      } catch (SQLException e) {
-                      JOptionPane.showConfirmDialog(null, "Error: " + e.getMessage());
-                      System.out.println();
-                      }
-        }
-      }*/
-                
+       
        
     
     
@@ -279,6 +258,7 @@ String accion;
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         GuardarCategoria();
+        dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**

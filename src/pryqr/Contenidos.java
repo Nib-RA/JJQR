@@ -46,7 +46,7 @@ public class Contenidos extends javax.swing.JFrame {
     
     
     
-    void SeleccionarItemTablaU(java.awt.event.MouseEvent evt){
+    void SeleccionarItemTablaC(java.awt.event.MouseEvent evt){
         DefaultTableModel modelo=(DefaultTableModel) jtCategorias.getModel();
         id=String.valueOf(modelo.getValueAt(jtCategorias.getSelectedRow(),0));
     }
@@ -372,6 +372,11 @@ public class Contenidos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtCategoriasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtCategorias);
 
         btnActualizarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
@@ -588,6 +593,11 @@ public class Contenidos extends javax.swing.JFrame {
         // TODO add your handling code here:
         BuscarPorNombreCategoria();
     }//GEN-LAST:event_txtBuscarContenidosKeyPressed
+
+    private void jtCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCategoriasMouseClicked
+        // TODO add your handling code here:
+        SeleccionarItemTablaC(evt);
+    }//GEN-LAST:event_jtCategoriasMouseClicked
 
     /**
      * @param args the command line arguments
