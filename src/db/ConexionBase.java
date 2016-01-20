@@ -57,6 +57,11 @@ static Statement sent;
         Vector<Categorias> categorias= new Vector<Categorias> ();
         Categorias cat=null;
         if(con==null) con = mysql.getConnect();
+        cat=new Categorias();
+        cat.setIdCategoria(0);
+        cat.setNombreCategoria("--Seleccione una categoria--");
+        cat.setDescripcionCategoria("");
+        categorias.add(cat);
         try {
             sent = con.createStatement();
             ResultSet rs = sent.executeQuery(consulta1);
@@ -67,7 +72,7 @@ static Statement sent;
                 cat.setNombreCategoria(rs.getString(2));
                 cat.setDescripcionCategoria(rs.getString(3));
                 categorias.add(cat); 
-             }
+            }
             sent.close();
             rs.close();
         } catch (Exception e) {

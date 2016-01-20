@@ -217,7 +217,7 @@ public class NuevoQr extends javax.swing.JFrame {
 
         jlImagen1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jlImagen1.setForeground(new java.awt.Color(0, 153, 204));
-        jlImagen1.setText("Imagen 1");
+        jlImagen1.setText("Imagen 1*");
 
         jlImagen2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jlImagen2.setForeground(new java.awt.Color(0, 153, 204));

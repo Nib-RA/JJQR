@@ -245,7 +245,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="99" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Imagen 1"/>
+            <Property name="text" type="java.lang.String" value="Imagen 1*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlImagen2">

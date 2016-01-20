@@ -66,21 +66,20 @@ String id = "", imagenes = "";
             }
             jtContenidosArticulos.setModel(model);
         }catch(Exception e){
+        }
     }
-}
     
-    
-    
-
     void SeleccionarItemTablaU(java.awt.event.MouseEvent evt){
         DefaultTableModel modelo=(DefaultTableModel) jtContenidosArticulos.getModel();
         id=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),0));
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),3));
         Mostrar_Visualizador(lblVistaPreviaImagen1, imagenes);
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),4));
-        Mostrar_Visualizador(lblVistaPreviaImagen2, imagenes);
+        if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen2, imagenes);
+        else lblVistaPreviaImagen2.setIcon(null);
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),5));
-        Mostrar_Visualizador(lblVistaPreviaImagen3, imagenes);
+        if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen3, imagenes);
+        else lblVistaPreviaImagen3.setIcon(null);
     }
 
     /**
