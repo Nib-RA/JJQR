@@ -11,7 +11,6 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
-import sun.invoke.empty.Empty;
 
 /**
  *
