@@ -4,9 +4,11 @@
  */
 package pryqr;
 
+import Modelos.ItemSeleccionado;
 import db.mysql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 public class NuevasCategorias extends javax.swing.JFrame {
 Connection conn;
 Statement sent;
+String accion;
     
     /**
      * Creates new form NuevasCategorias
@@ -28,11 +31,69 @@ Statement sent;
         txtNombreCategoria.requestFocus();
         conn = mysql.getConnect();
 
-    }
+        accion=ItemSeleccionado.accionBoton;
+        btnAceptar.setText(accion);
+        try{
+            //Muestra los usuarios existentes en la base de datos
+            if(accion.contains("Actualizar")){
+                String SQLTC ="SELECT * FROM categorias WHERE IDCATEGORIA = " + ItemSeleccionado.idCategoria; 
+                sent = conn.createStatement();
+                ResultSet rs = sent.executeQuery(SQLTC);
+                rs.next();
+                txtNombreCategoria.setText(rs.getString("NOMBRECATEGORIA"));
+                txtDescripcionCategoria.setText(rs.getString("DESCRIPCIONCATEGORIA"));
+                rs.close();
+            }
+        }
+        catch(Exception e){
 
+        }
+    }
     
+
+    void GuardarCategoria(){
+        try {
+            //Ingreso en nuevo usuario
+            if(btnAceptar.getText().contains("Guardar")){
+                    if (txtNombreCategoria.getText().trim().isEmpty() || txtDescripcionCategoria.getText().trim().isEmpty() )                     JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
+                    else{        
+                        try {
+                        String SQL = "INSERT INTO categorias(NOMBRECATEGORIA,DESCRIPCIONCATEGORIA)"
+                                + " VALUES(?,?)";
+                        PreparedStatement ps = conn.prepareStatement(SQL);
+                        ps.setString(1, txtNombreCategoria.getText());
+                        ps.setString(2, txtDescripcionCategoria.getText());
+                        int n = ps.executeUpdate();
+                        if (n > 0) {
+                                JOptionPane.showMessageDialog(null, "Categoria creada Correctamente");
+                                dispose();
+                            } 
+                      } catch (SQLException e) {
+                      JOptionPane.showConfirmDialog(null, "Error: " + e.getMessage());
+                      System.out.println();
+                      }
+                       } 
+                    }
+                    else{
+                        String SQL = "UPDATE categorias SET NOMBRECATEGORIA = ?, DESCRIPCIONCATEGORIA = ? WHERE IDCATEGORIA = " + ItemSeleccionado.idCategoria;
+                        PreparedStatement ps = conn.prepareStatement(SQL);
+                        ps.setString(1, txtNombreCategoria.getText());
+                        ps.setString(2, txtDescripcionCategoria.getText());
+                        int n = ps.executeUpdate();
+                        if (n > 0) {
+                            JOptionPane.showMessageDialog(null, "Categoria actualizada Correctamente");
+                            dispose();
+                            Usuarios fru=new Usuarios();
+                            fru.show();
+                        }
+                    }
+                } catch (SQLException e) {
+            JOptionPane.showConfirmDialog(null, "Error: " + e.getMessage());
+            //System.out.println();
+        }
+    }
          
-       void Guardar(){
+       /*void Guardar(){
            if (txtNombreCategoria.getText().trim().isEmpty() || txtDescripcionCategoria.getText().trim().isEmpty() )                     JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
            else{        
                   try {
@@ -53,7 +114,7 @@ Statement sent;
                       System.out.println();
                       }
         }
-      }
+      }*/
                 
        
     
@@ -217,7 +278,7 @@ Statement sent;
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        Guardar();
+        GuardarCategoria();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**

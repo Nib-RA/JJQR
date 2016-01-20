@@ -4,6 +4,7 @@
  */
 package pryqr;
 
+import Modelos.ItemSeleccionado;
 import db.mysql;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,8 +21,8 @@ public class Contenidos extends javax.swing.JFrame {
     DefaultTableModel model;
     Connection conn;
     Statement sent;
-    String id = "", rol = "", estado = "";
-    
+    ItemSeleccionado isC=new ItemSeleccionado();
+    String id = "";
     
     
     
@@ -30,7 +31,7 @@ public class Contenidos extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         conn = mysql.getConnect();
-        LlenarTabla();
+        LlenarTablaCategorias();
         btnGaleria.requestFocus();
         String Ruta=getClass().getResource("/images/plus.png").getPath();
         Mostrar_Visualizador(btnActualizarCategoria, Ruta);
@@ -43,7 +44,15 @@ public class Contenidos extends javax.swing.JFrame {
         txtBuscarContenidos.setVisible(true);
     }
     
-    void LlenarTabla(){
+    
+    
+    void SeleccionarItemTablaU(java.awt.event.MouseEvent evt){
+        DefaultTableModel modelo=(DefaultTableModel) jtCategorias.getModel();
+        id=String.valueOf(modelo.getValueAt(jtCategorias.getSelectedRow(),0));
+    }
+    
+    
+    void LlenarTablaCategorias(){
     try{
     String titulos[] = {"Id","Nombre","Descripcion"};
     String SQLTC ="SELECT * FROM categorias ORDER BY NOMBRECATEGORIA ASC"; 
@@ -65,6 +74,23 @@ public class Contenidos extends javax.swing.JFrame {
     }
     
 }
+    
+    void EliminarCategoria(){
+    JOptionPane.showMessageDialog(null, "La categoría sera eliminada");
+        int fila = jtCategorias.getSelectedRow();
+        try {
+            String SQL = "DELETE FROM categorias WHERE IDCATEGORIA=" + jtCategorias.getValueAt(fila, 0);
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(SQL);
+            if (n > 0){
+                JOptionPane.showMessageDialog(null, "Categoria eliminada correctamente ");
+                LlenarTablaCategorias();
+            }
+            else                JOptionPane.showMessageDialog(null, "Categoria no eliminado ");
+            }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
     
     void BuscarPorNombreCategoria (){
         
@@ -91,6 +117,7 @@ public class Contenidos extends javax.swing.JFrame {
     }
   }
           
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -540,17 +567,16 @@ public class Contenidos extends javax.swing.JFrame {
 
     private void btnActualizarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarCategoriaMouseClicked
         if(!id.isEmpty()){
-           /* is.setAccionBoton("Actualizar");
-            is.setIdUsuario(id);
-            is.setRol(rol);
-            is.setEstado(estado);*/
-            NuevoUsuario frnu=new NuevoUsuario();
+            isC.setAccionBoton("Actualizar");
+            isC.setIdCategoria(id);
+            NuevasCategorias frnu=new NuevasCategorias();
             frnu.show();
-        }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a modificar");
+        }else JOptionPane.showMessageDialog(this, "No ha seleccionado una categoria a modificar");
     }//GEN-LAST:event_btnActualizarCategoriaMouseClicked
 
     private void btnEliminarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCategoriaMouseClicked
         // TODO add your handling code here:
+        EliminarCategoria();
     }//GEN-LAST:event_btnEliminarCategoriaMouseClicked
 
     private void btnBuscarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarCategoriaMouseClicked

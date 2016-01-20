@@ -14,6 +14,7 @@ public class ItemSeleccionado {
     public static String rol;
     public static Boolean estado;
     public static String accionBoton;
+    public static String idCategoria;
 
     
     public String getIdUsuario(){
@@ -47,5 +48,13 @@ public class ItemSeleccionado {
      public void setEstado(String estado){
         if(estado.contains("Activo")) this.estado = true;
         else this.estado = false;
+    }
+     
+     public String getIdCategoria(){
+        return idCategoria;
+    }
+    
+     public void setIdCategoria(String idCategoria){
+        this.idCategoria=idCategoria;
     }
 }
