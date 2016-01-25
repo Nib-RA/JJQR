@@ -5,11 +5,8 @@ import Modelos.ValoresConstantes;
 import java.sql.Connection;
 import db.mysql;
 import java.io.File;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import static pryqr.Login.txtPassword;
-import static pryqr.Login.txtUsuario;
 
 
 public class Principal extends javax.swing.JFrame {
@@ -27,7 +24,10 @@ public class Principal extends javax.swing.JFrame {
         jlMuseo.requestFocus();
         jlGaleria.setVisible(false);
         lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
-        
+        if(UsuarioIngresado.parametroR.equals("Secretario/a")){
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+    }
      }
 
     
@@ -106,7 +106,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jlMuseo.setFont(new java.awt.Font("Wide Latin", 0, 18)); // NOI18N
-        jlMuseo.setText("Museo \"Jorge Gallegos Cruz\"");
+        jlMuseo.setText("Museo \"ISIDRO AYORA\"");
         jlMuseo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnUsuarios.setBackground(new java.awt.Color(92, 29, 29));
@@ -146,8 +146,8 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlMuseo, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
+                .addComponent(jlMuseo, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -156,13 +156,12 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jbAcercade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlMuseo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(btnContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jbContactanos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbContactanos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(jlMuseo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jlGaleria.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
@@ -191,7 +190,7 @@ public class Principal extends javax.swing.JFrame {
 
         jlGaleria1.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
         jlGaleria1.setForeground(new java.awt.Color(51, 0, 0));
-        jlGaleria1.setText("MUSEO \"JORGE GALLEGOS CRUZ\"");
+        jlGaleria1.setText("MUSEO \"ISIDRO AYORA\"");
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
