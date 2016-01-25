@@ -29,12 +29,14 @@ String accion;
         this.setLocationRelativeTo(null);
         txtNombreCategoria.requestFocus();
         conn = mysql.getConnect();
-
+        lblIdCategoria.setVisible(false);
         accion=ItemSeleccionado.accionBoton;
         btnAceptar.setText(accion);
         try{
             //Muestra los usuarios existentes en la base de datos
             if(accion.contains("Actualizar")){
+                lbllNuevaCategoria.setText(accion + " Nueva Categoría");
+                lblIdCategoria.setText("ID de la Categoria: \t\t" + ItemSeleccionado.idCategoria);
                 String SQLTC ="SELECT * FROM categorias WHERE IDCATEGORIA = " + ItemSeleccionado.idCategoria; 
                 sent = conn.createStatement();
                 ResultSet rs = sent.executeQuery(SQLTC);
@@ -45,7 +47,6 @@ String accion;
             }
         }
         catch(Exception e){
-
         }
     }
     
@@ -109,7 +110,7 @@ String accion;
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jlNuevaCategoria = new javax.swing.JLabel();
+        lbllNuevaCategoria = new javax.swing.JLabel();
         jlNombreCategoria = new javax.swing.JLabel();
         jlDescripcionCategoria = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -119,6 +120,7 @@ String accion;
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         txtCerrar = new javax.swing.JButton();
+        lblIdCategoria = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(102, 0, 0));
@@ -126,9 +128,9 @@ String accion;
 
         jPanel1.setBackground(new java.awt.Color(2, 32, 62));
 
-        jlNuevaCategoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jlNuevaCategoria.setForeground(new java.awt.Color(255, 255, 255));
-        jlNuevaCategoria.setText("Nueva Categoria");
+        lbllNuevaCategoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbllNuevaCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        lbllNuevaCategoria.setText("Nueva Categoria");
 
         jlNombreCategoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlNombreCategoria.setForeground(new java.awt.Color(255, 255, 255));
@@ -170,6 +172,8 @@ String accion;
             }
         });
 
+        lblIdCategoria.setText("lblIdCategoria");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -177,17 +181,10 @@ String accion;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(147, 147, 147)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlNuevaCategoria)
+                    .addComponent(lbllNuevaCategoria)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtNombreCategoria)
                         .addGap(25, 25, 25))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlDescripcionCategoria)
-                    .addComponent(jlNombreCategoria)
-                    .addComponent(jScrollPane2))
-                .addContainerGap(25, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jlCamposObligatorios)
@@ -199,6 +196,18 @@ String accion;
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80))
                     .addComponent(txtCerrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblIdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlDescripcionCategoria)
+                            .addComponent(jlNombreCategoria)
+                            .addComponent(jScrollPane2))
+                        .addContainerGap(25, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(73, 73, 73)
@@ -210,8 +219,10 @@ String accion;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(txtCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlNuevaCategoria)
-                .addGap(35, 35, 35)
+                .addComponent(lbllNuevaCategoria)
+                .addGap(3, 3, 3)
+                .addComponent(lblIdCategoria)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlNombreCategoria)
                     .addComponent(txtNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -310,7 +321,8 @@ String accion;
     private javax.swing.JLabel jlCamposObligatorios;
     private javax.swing.JLabel jlDescripcionCategoria;
     private javax.swing.JLabel jlNombreCategoria;
-    private javax.swing.JLabel jlNuevaCategoria;
+    private javax.swing.JLabel lblIdCategoria;
+    private javax.swing.JLabel lbllNuevaCategoria;
     private javax.swing.JButton txtCerrar;
     private javax.swing.JTextArea txtDescripcionCategoria;
     private javax.swing.JTextField txtNombreCategoria;

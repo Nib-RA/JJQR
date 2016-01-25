@@ -5,6 +5,7 @@
  */
 package pryqr;
 
+import Modelos.UsuarioIngresado;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
 
 /**
@@ -20,6 +21,8 @@ public class AcercaDe extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
+        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        
         //Redimencionar una imagen a un label
         String Ruta=getClass().getResource("/images/acercade.jpg").getPath();
         String Ruta1=getClass().getResource("/images/acercadeLogin.png").getPath();
@@ -79,6 +82,7 @@ public class AcercaDe extends javax.swing.JFrame {
         jlJJ2016 = new javax.swing.JLabel();
         jlPoliticasdePrivacidad = new javax.swing.JLabel();
         jlTerminosyCondiciones = new javax.swing.JLabel();
+        lblUsuarioyRol = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -123,7 +127,7 @@ public class AcercaDe extends javax.swing.JFrame {
         });
 
         jlMuseo.setFont(new java.awt.Font("Wide Latin", 0, 18)); // NOI18N
-        jlMuseo.setText("Museo \"Jorge Gallegos Cruz\"");
+        jlMuseo.setText("Museo  \"ISIDRO AYORA\"");
         jlMuseo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlMuseoMouseClicked(evt);
@@ -167,8 +171,8 @@ public class AcercaDe extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlMuseo)
-                .addGap(81, 81, 81)
+                .addComponent(jlMuseo, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -492,6 +496,9 @@ public class AcercaDe extends javax.swing.JFrame {
             }
         });
 
+        lblUsuarioyRol.setForeground(new java.awt.Color(255, 0, 0));
+        lblUsuarioyRol.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -503,7 +510,9 @@ public class AcercaDe extends javax.swing.JFrame {
                 .addComponent(jlTerminosyCondiciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlPoliticasdePrivacidad)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,9 +521,10 @@ public class AcercaDe extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlTerminosyCondiciones)
-                        .addComponent(jlPoliticasdePrivacidad))
+                        .addComponent(jlPoliticasdePrivacidad)
+                        .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlJJ2016))
-                .addGap(25, 25, 25))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -650,6 +660,7 @@ public class AcercaDe extends javax.swing.JFrame {
     private javax.swing.JLabel lblAcercaDe;
     private javax.swing.JLabel lblAcercaDeAppImg;
     private javax.swing.JLabel lblAcercaDeAppVersion;
+    private javax.swing.JLabel lblUsuarioyRol;
     private javax.swing.JLabel losQr;
     private javax.swing.JLabel losQr1;
     private javax.swing.JLabel losQr2;

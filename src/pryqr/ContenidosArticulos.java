@@ -4,6 +4,8 @@
  */
 package pryqr;
 
+import Modelos.ItemSeleccionado;
+import Modelos.UsuarioIngresado;
 import db.mysql;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,7 +22,10 @@ public class ContenidosArticulos extends javax.swing.JFrame {
 DefaultTableModel model;
 Connection conn;
 Statement sent;   
-String id = "", imagenes = "";
+String id = "", imagenes = "",categoria="";
+ItemSeleccionado isA=new ItemSeleccionado();
+String idA = "";
+Integer buscar = 0;
         /**
      * Creates new form Principal
      */
@@ -28,8 +33,13 @@ String id = "", imagenes = "";
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
+        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        btnContenidos.requestFocus();
         conn = mysql.getConnect();
         LlenarTablaArticulos();
+        rbtnBuscarPorCategoria.setVisible(false);
+        rbtnBuscarPorNombre.setVisible(false); 
+        txtBuscarArticulo.setVisible(false);
         String Ruta=getClass().getResource("/images/plus.png").getPath();
         Mostrar_Visualizador(btnActualizarArticulos, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
@@ -38,6 +48,7 @@ String id = "", imagenes = "";
         Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarArticulos, Ruta3);
+        
     }
     
     void LlenarTablaArticulos(){
@@ -69,9 +80,29 @@ String id = "", imagenes = "";
         }
     }
     
-    void SeleccionarItemTablaU(java.awt.event.MouseEvent evt){
+    
+    void EliminarArticulos(){
+    JOptionPane.showMessageDialog(null, "El artículo será eliminado");
+    
+        int fila = jtContenidosArticulos.getSelectedRow();
+        try {
+            String SQL = "DELETE FROM articulos WHERE IDARTICULO=" + jtContenidosArticulos.getValueAt(fila, 0);
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(SQL);
+            if (n > 0){
+                JOptionPane.showMessageDialog(null, "Artículo eliminado correctamente ");
+                LlenarTablaArticulos();
+            }
+            else                JOptionPane.showMessageDialog(null, "Artículo no eliminado ");
+            }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+
+    void SeleccionarItemTablaCA(java.awt.event.MouseEvent evt){
         DefaultTableModel modelo=(DefaultTableModel) jtContenidosArticulos.getModel();
-        id=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),0));
+        idA=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),0));
+        categoria=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),1));
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),3));
         Mostrar_Visualizador(lblVistaPreviaImagen1, imagenes);
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),4));
@@ -81,7 +112,40 @@ String id = "", imagenes = "";
         if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen3, imagenes);
         else lblVistaPreviaImagen3.setIcon(null);
     }
-
+    
+    
+    
+    void BuscarPorNombreArticulo (){
+        
+        try{
+       
+    //Consulta para la fecha de inicio a fecha de final
+    String titulos[] = {"ID","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
+                "IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
+    String SQL = "SELECT *FROM articulos WHERE NOMBREARTICULO Like '%"+txtBuscarArticulo.getText().toString().trim()+"%'ORDER BY NOMBREARTICULO ASC";
+          model = new DefaultTableModel(null, titulos);
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(SQL);
+            String[]fila=new String[10];
+            while(rs.next()){
+                fila[0] = rs.getString("IDARTICULO");
+                fila[1] = rs.getString("NOMBREARTICULO");
+                fila[2] = rs.getString("DESCRIPCIONARTICULO");
+                fila[3] = rs.getString("IMAGENUNOARTICULO");
+                fila[4] = rs.getString("IMAGENDOSARTICULO");
+                fila[5] = rs.getString("IMAGENTRESARTICULO");
+                fila[6] = rs.getString("SONIDOARTICULO");
+                fila[7] = rs.getString("VIDEOARTICULO");
+                fila[8] = rs.getString("CODIGOQRARTICULO");
+                fila[9] = rs.getString("IMAGENQRARTICULO");
+               model.addRow(fila);
+  }
+    jtContenidosArticulos.setModel(model);
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null,"Error de Consulta..... :(");
+    }
+    }
+          
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,6 +159,7 @@ String id = "", imagenes = "";
         jlJJ2016 = new javax.swing.JLabel();
         jlPoliticasdePrivacidad = new javax.swing.JLabel();
         jlTerminosyCondiciones = new javax.swing.JLabel();
+        lblUsuarioyRol = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -121,6 +186,9 @@ String id = "", imagenes = "";
         lblVistaPreviaImagen1 = new javax.swing.JLabel();
         lblVistaPreviaImagen2 = new javax.swing.JLabel();
         lblVistaPreviaImagen3 = new javax.swing.JLabel();
+        rbtnBuscarPorCategoria = new javax.swing.JRadioButton();
+        rbtnBuscarPorNombre = new javax.swing.JRadioButton();
+        txtBuscarArticulo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -148,6 +216,9 @@ String id = "", imagenes = "";
             }
         });
 
+        lblUsuarioyRol.setForeground(new java.awt.Color(255, 0, 0));
+        lblUsuarioyRol.setText("jLabel6");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -159,18 +230,25 @@ String id = "", imagenes = "";
                 .addComponent(jlTerminosyCondiciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlPoliticasdePrivacidad)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jlTerminosyCondiciones)
-                        .addComponent(jlPoliticasdePrivacidad))
-                    .addComponent(jlJJ2016))
-                .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jlTerminosyCondiciones)
+                                .addComponent(jlPoliticasdePrivacidad))
+                            .addComponent(jlJJ2016))
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -214,7 +292,7 @@ String id = "", imagenes = "";
         });
 
         jlMuseo.setFont(new java.awt.Font("Wide Latin", 0, 18)); // NOI18N
-        jlMuseo.setText("Museo \"Jorge Gallegos Cruz\"");
+        jlMuseo.setText("Museo  \"ISIDRO AYORA\"");
         jlMuseo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jlMuseo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -276,11 +354,6 @@ String id = "", imagenes = "";
         );
 
         jPanel6.setBackground(new java.awt.Color(139, 93, 93));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel6MouseClicked(evt);
-            }
-        });
 
         jlCrearArticulo.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jlCrearArticulo.setText("             Crear Articulo");
@@ -303,11 +376,6 @@ String id = "", imagenes = "";
         );
 
         jPanel7.setBackground(new java.awt.Color(139, 93, 93));
-        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel7MouseClicked(evt);
-            }
-        });
 
         jlCrearCategoria.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jlCrearCategoria.setText("           Crear Categoria");
@@ -401,12 +469,6 @@ String id = "", imagenes = "";
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblVistaPreviaImagen1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblVistaPreviaImagen2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblVistaPreviaImagen3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -427,6 +489,26 @@ String id = "", imagenes = "";
             .addComponent(lblVistaPreviaImagen3, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
         );
 
+        rbtnBuscarPorCategoria.setText("Categoría");
+        rbtnBuscarPorCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnBuscarPorCategoriaActionPerformed(evt);
+            }
+        });
+
+        rbtnBuscarPorNombre.setText("Nombre");
+        rbtnBuscarPorNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnBuscarPorNombreActionPerformed(evt);
+            }
+        });
+
+        txtBuscarArticulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarArticuloKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -441,7 +523,13 @@ String id = "", imagenes = "";
                         .addGap(39, 39, 39)
                         .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
-                        .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbtnBuscarPorCategoria)
+                            .addComponent(rbtnBuscarPorNombre))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscarArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(372, 372, 372)
                         .addComponent(jlCategorias))
@@ -465,12 +553,24 @@ String id = "", imagenes = "";
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jlCategorias)
-                .addGap(25, 25, 25)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(rbtnBuscarPorCategoria)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addComponent(txtBuscarArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)))
+                        .addComponent(rbtnBuscarPorNombre)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -517,7 +617,7 @@ String id = "", imagenes = "";
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1414, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -554,9 +654,7 @@ String id = "", imagenes = "";
 
     private void btnContenidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContenidosActionPerformed
         // TODO add your handling code here:
-        /*Contenidos fr=new Contenidos();
-        fr.setVisible(true);
-        dispose();*/
+        
     }//GEN-LAST:event_btnContenidosActionPerformed
 
     private void jlMuseoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMuseoMouseClicked
@@ -565,16 +663,6 @@ String id = "", imagenes = "";
         fr.setVisible(true);
         dispose();
     }//GEN-LAST:event_jlMuseoMouseClicked
-
-    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jPanel7MouseClicked
-
-    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jlCrearCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlCrearCategoriaMouseClicked
         // TODO add your handling code here:
@@ -605,34 +693,57 @@ String id = "", imagenes = "";
 
     private void btnBuscarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarArticulosMouseClicked
         // TODO add your handling code here:
+        rbtnBuscarPorCategoria.setVisible(true);
+        rbtnBuscarPorNombre.setVisible(true);
+        txtBuscarArticulo.setVisible(true);
+        txtBuscarArticulo.requestFocus();
     }//GEN-LAST:event_btnBuscarArticulosMouseClicked
 
     private void btnEliminarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarArticulosMouseClicked
         // TODO add your handling code here:
+        EliminarArticulos();
     }//GEN-LAST:event_btnEliminarArticulosMouseClicked
 
     private void btnActualizarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarArticulosMouseClicked
         // TODO add your handling code here:
-        if(!id.isEmpty()){
-            /*is.setAccionBoton("Actualizar");
-            is.setIdUsuario(id);
-            is.setRol(rol);
-            is.setEstado(estado);*/
-            NuevoUsuario frnu=new NuevoUsuario();
+        if(!idA.isEmpty()){
+            isA.setAccionBoton("Actualizar");
+            isA.setIdArticulo(idA);
+            NuevoQr frnu=new NuevoQr();
             frnu.show();
         }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a modificar");
     }//GEN-LAST:event_btnActualizarArticulosMouseClicked
 
     private void jtContenidosArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtContenidosArticulosMouseClicked
         // TODO add your handling code here:
-        SeleccionarItemTablaU(evt);
+        SeleccionarItemTablaCA(evt);
     }//GEN-LAST:event_jtContenidosArticulosMouseClicked
 
     private void btnNuevoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoQrActionPerformed
         // TODO add your handling code here:
+        isA.setAccionBoton("Guardar");
         NuevoQr nca = new NuevoQr();
         nca.show();
     }//GEN-LAST:event_btnNuevoQrActionPerformed
+
+    private void rbtnBuscarPorCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarPorCategoriaActionPerformed
+        // TODO add your handling code here:
+        //BuscarPorNombreCategoria();   
+        txtBuscarArticulo.setText("");
+    }//GEN-LAST:event_rbtnBuscarPorCategoriaActionPerformed
+
+    private void txtBuscarArticuloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarArticuloKeyPressed
+        // TODO add your handling code here:
+        if(rbtnBuscarPorNombre.isSelected()) BuscarPorNombreArticulo();
+        
+        
+    }//GEN-LAST:event_txtBuscarArticuloKeyPressed
+
+    private void rbtnBuscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarPorNombreActionPerformed
+        // TODO add your handling code here:
+        rbtnBuscarPorCategoria.setSelected(false);  
+        txtBuscarArticulo.setText("");
+    }//GEN-LAST:event_rbtnBuscarPorNombreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -696,8 +807,12 @@ String id = "", imagenes = "";
     private javax.swing.JLabel jlPoliticasdePrivacidad;
     private javax.swing.JLabel jlTerminosyCondiciones;
     private javax.swing.JTable jtContenidosArticulos;
+    private javax.swing.JLabel lblUsuarioyRol;
     private javax.swing.JLabel lblVistaPreviaImagen1;
     private javax.swing.JLabel lblVistaPreviaImagen2;
     private javax.swing.JLabel lblVistaPreviaImagen3;
+    private javax.swing.JRadioButton rbtnBuscarPorCategoria;
+    private javax.swing.JRadioButton rbtnBuscarPorNombre;
+    private javax.swing.JTextField txtBuscarArticulo;
     // End of variables declaration//GEN-END:variables
 }

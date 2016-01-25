@@ -5,6 +5,7 @@
 package pryqr;
 
 import Modelos.ItemSeleccionado;
+import Modelos.UsuarioIngresado;
 import db.mysql;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ public class Contenidos extends javax.swing.JFrame {
     Connection conn;
     Statement sent;
     ItemSeleccionado isC=new ItemSeleccionado();
-    String id = "";
+    String idC = "";
     
     
     
@@ -30,6 +31,7 @@ public class Contenidos extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
+        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         conn = mysql.getConnect();
         LlenarTablaCategorias();
         btnGaleria.requestFocus();
@@ -41,14 +43,16 @@ public class Contenidos extends javax.swing.JFrame {
         Mostrar_Visualizador(btnEliminarCategoria, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarCategoria, Ruta3);
-        txtBuscarContenidos.setVisible(true);
+        txtBuscarContenidos.setEnabled(false);
+        
     }
     
     
     
     void SeleccionarItemTablaC(java.awt.event.MouseEvent evt){
         DefaultTableModel modelo=(DefaultTableModel) jtCategorias.getModel();
-        id=String.valueOf(modelo.getValueAt(jtCategorias.getSelectedRow(),0));
+        idC=String.valueOf(modelo.getValueAt(jtCategorias.getSelectedRow(),0));
+        
     }
     
     
@@ -127,6 +131,7 @@ public class Contenidos extends javax.swing.JFrame {
         jlJJ2016 = new javax.swing.JLabel();
         jlPoliticasdePrivacidad = new javax.swing.JLabel();
         jlTerminosyCondiciones = new javax.swing.JLabel();
+        lblUsuarioyRol = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -176,6 +181,9 @@ public class Contenidos extends javax.swing.JFrame {
             }
         });
 
+        lblUsuarioyRol.setForeground(new java.awt.Color(255, 0, 0));
+        lblUsuarioyRol.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -187,7 +195,9 @@ public class Contenidos extends javax.swing.JFrame {
                 .addComponent(jlTerminosyCondiciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlPoliticasdePrivacidad)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,9 +206,10 @@ public class Contenidos extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlTerminosyCondiciones)
-                        .addComponent(jlPoliticasdePrivacidad))
+                        .addComponent(jlPoliticasdePrivacidad)
+                        .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlJJ2016))
-                .addGap(25, 25, 25))
+                .addGap(18, 18, 18))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -467,7 +478,7 @@ public class Contenidos extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnActualizarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(319, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -556,8 +567,10 @@ public class Contenidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jlCrearArticuloMouseClicked
 
     private void btnNuevCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevCategoriaActionPerformed
+        isC.setAccionBoton("Guardar");
         NuevasCategorias nca= new NuevasCategorias();
         nca.show();
+        
     }//GEN-LAST:event_btnNuevCategoriaActionPerformed
 
     private void jlPoliticasdePrivacidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPoliticasdePrivacidadMouseClicked
@@ -571,9 +584,9 @@ public class Contenidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jlTerminosyCondicionesMouseClicked
 
     private void btnActualizarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarCategoriaMouseClicked
-        if(!id.isEmpty()){
+        if(!idC.isEmpty()){
             isC.setAccionBoton("Actualizar");
-            isC.setIdCategoria(id);
+            isC.setIdCategoria(idC);
             NuevasCategorias frnu=new NuevasCategorias();
             frnu.show();
         }else JOptionPane.showMessageDialog(this, "No ha seleccionado una categoria a modificar");
@@ -586,7 +599,7 @@ public class Contenidos extends javax.swing.JFrame {
 
     private void btnBuscarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarCategoriaMouseClicked
         // TODO add your handling code here:
-        txtBuscarContenidos.setVisible(true);
+        txtBuscarContenidos.setEnabled(true);
     }//GEN-LAST:event_btnBuscarCategoriaMouseClicked
 
     private void txtBuscarContenidosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarContenidosKeyPressed
@@ -659,6 +672,7 @@ public class Contenidos extends javax.swing.JFrame {
     private javax.swing.JLabel jlPoliticasdePrivacidad;
     private javax.swing.JLabel jlTerminosyCondiciones;
     private javax.swing.JTable jtCategorias;
+    private javax.swing.JLabel lblUsuarioyRol;
     private javax.swing.JTextField txtBuscarContenidos;
     // End of variables declaration//GEN-END:variables
 }

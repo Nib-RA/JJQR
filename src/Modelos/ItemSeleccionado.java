@@ -15,8 +15,9 @@ public class ItemSeleccionado {
     public static Boolean estado;
     public static String accionBoton;
     public static String idCategoria;
+    public static String idArticulo;
 
-    
+     //Seleccionar el Id de los usuarios en el jtable 
     public String getIdUsuario(){
         return idUsuario;
     }
@@ -41,6 +42,8 @@ public class ItemSeleccionado {
         this.rol=rol;
     }
      
+     
+      //Seleccionar el Id del estado en el jtable 
     public Boolean getEstado(){
         return estado;
     }
@@ -50,11 +53,22 @@ public class ItemSeleccionado {
         else this.estado = false;
     }
      
+     //Seleccionar el Id de las categorias en el jtable 
      public String getIdCategoria(){
         return idCategoria;
     }
     
      public void setIdCategoria(String idCategoria){
         this.idCategoria=idCategoria;
+    }
+     
+      //Seleccionar el Id de los articulos en el jtable 
+    
+       public String getIdArticulo(){
+        return idArticulo;
+    }
+    
+     public void setIdArticulo(String idArticulo){
+        this.idArticulo=idArticulo;
     }
 }

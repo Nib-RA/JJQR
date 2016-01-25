@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pryqr;
 
 import Modelos.ItemSeleccionado;
+import Modelos.UsuarioIngresado;
 import db.mysql;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,7 +20,6 @@ public class Usuarios extends javax.swing.JFrame {
     Statement sent;
     ItemSeleccionado is=new ItemSeleccionado();
     String id = "", rol = "", estado = "";
-    //Boolean comboBuscar=false;
     Integer buscar = 0;
 
     
@@ -32,8 +28,10 @@ public class Usuarios extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         conn = mysql.getConnect();
+        lblNuevo.setVisible(false);
+        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         LlenarTablaUsuarios();
-        jtUsuarios.requestFocus();
+        btnUsuarios.requestFocus();
         String Ruta=getClass().getResource("/images/plus.png").getPath();
         Mostrar_Visualizador(btnActualizar, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
@@ -42,12 +40,10 @@ public class Usuarios extends javax.swing.JFrame {
         Mostrar_Visualizador(btnEliminar, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarUsuarios, Ruta3);
-        jcbBuscarPor.setEnabled(false);
         txtBuscarPor.setEnabled(false);
-        chbActivo.setEnabled(false);
-        chbInactivo.setEnabled(false);
-
-        
+        rbtnActivo.setEnabled(false);
+        rbtnInactivo.setEnabled(false);
+        jcbBuscarPor.setVisible(false);
     }
     
     void LlenarTablaUsuarios(){
@@ -189,7 +185,7 @@ public class Usuarios extends javax.swing.JFrame {
     }
     
     void BuscarPorCedula (){
-        
+        this.txtBuscarPor.setEnabled(true);
         try{
          String titulos[] = {"IDUSUARIO", "TIPO DE USUARIO","NOMBRE","APELLIDO","CEDULA","CORREO DEL USUARIO","ESTADO DE USUARIO"};
          
@@ -267,6 +263,7 @@ public class Usuarios extends javax.swing.JFrame {
     }
             
     
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -275,6 +272,7 @@ public class Usuarios extends javax.swing.JFrame {
         jlJJ2016 = new javax.swing.JLabel();
         jlPoliticasdePrivacidad = new javax.swing.JLabel();
         jlTerminosyCondiciones = new javax.swing.JLabel();
+        lblUsuarioyRol = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -294,8 +292,8 @@ public class Usuarios extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JLabel();
         btnBuscarUsuarios = new javax.swing.JLabel();
         lblNuevo = new javax.swing.JLabel();
-        chbActivo = new javax.swing.JCheckBox();
-        chbInactivo = new javax.swing.JCheckBox();
+        rbtnActivo = new javax.swing.JRadioButton();
+        rbtnInactivo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -324,6 +322,9 @@ public class Usuarios extends javax.swing.JFrame {
             }
         });
 
+        lblUsuarioyRol.setForeground(new java.awt.Color(255, 0, 0));
+        lblUsuarioyRol.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -335,16 +336,19 @@ public class Usuarios extends javax.swing.JFrame {
                 .addComponent(jlTerminosyCondiciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlPoliticasdePrivacidad)
-                .addContainerGap(550, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlTerminosyCondiciones)
-                        .addComponent(jlPoliticasdePrivacidad))
+                        .addComponent(jlPoliticasdePrivacidad)
+                        .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jlJJ2016))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
@@ -471,14 +475,14 @@ public class Usuarios extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jcbBuscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione una opcion--", "Cedula de Usuario", "Nombre de Usuario", "Apellido de Usuario", "Tipo de Usuario", "Estado de Usuario" }));
-        jcbBuscarPor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jcbBuscarPorMouseClicked(evt);
-            }
-        });
         jcbBuscarPor.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcbBuscarPorItemStateChanged(evt);
+            }
+        });
+        jcbBuscarPor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbBuscarPorMouseClicked(evt);
             }
         });
 
@@ -530,17 +534,17 @@ public class Usuarios extends javax.swing.JFrame {
 
         lblNuevo.setText("Nuevo");
 
-        chbActivo.setText("Activo");
-        chbActivo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chbActivoItemStateChanged(evt);
+        rbtnActivo.setText("Activo");
+        rbtnActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnActivoActionPerformed(evt);
             }
         });
 
-        chbInactivo.setText("Inactivo");
-        chbInactivo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chbInactivoItemStateChanged(evt);
+        rbtnInactivo.setText("Inactivo");
+        rbtnInactivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnInactivoActionPerformed(evt);
             }
         });
 
@@ -562,36 +566,37 @@ public class Usuarios extends javax.swing.JFrame {
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(btnBuscarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jcbBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(chbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rbtnActivo)
                                 .addGap(18, 18, 18)
-                                .addComponent(chbInactivo)))))
-                .addContainerGap(305, Short.MAX_VALUE))
+                                .addComponent(rbtnInactivo)))))
+                .addContainerGap(791, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(lblNuevo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jcbBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chbActivo)
-                            .addComponent(chbInactivo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnNuevoUsuario1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBuscarUsuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(btnNuevoUsuario1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarUsuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbBuscarPor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rbtnActivo)
+                        .addComponent(rbtnInactivo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -600,12 +605,15 @@ public class Usuarios extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1156, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(260, 260, 260)
-                .addComponent(jlUsuarios)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(260, 260, 260)
+                        .addComponent(jlUsuarios))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1364, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -616,7 +624,7 @@ public class Usuarios extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlUsuarios)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -706,26 +714,28 @@ public class Usuarios extends javax.swing.JFrame {
 
     private void btnBuscarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarUsuariosMouseClicked
         // TODO add your handling code here:
-        jcbBuscarPor.setEnabled(true);
+        jcbBuscarPor.setVisible(true);
         txtBuscarPor.setEnabled(true);
+        txtBuscarPor.requestFocus();
+        rbtnActivo.setEnabled(true);
+        rbtnInactivo.setEnabled(true);
+        //
     }//GEN-LAST:event_btnBuscarUsuariosMouseClicked
 
     private void jcbBuscarPorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbBuscarPorItemStateChanged
         // TODO add your handling code here:
-            buscar = jcbBuscarPor.getSelectedIndex();
-            chbActivo.setEnabled(true);
-            chbInactivo.setEnabled(true);
-            txtBuscarPor.setText("");
-            txtBuscarPor.requestFocus();
-            LlenarTablaUsuarios();
+        buscar = jcbBuscarPor.getSelectedIndex();
+        rbtnActivo.setSelected(false);
+        rbtnInactivo.setSelected(false);
+         LlenarTablaUsuarios();
             
     }//GEN-LAST:event_jcbBuscarPorItemStateChanged
 
     private void txtBuscarPorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPorKeyPressed
         // TODO add your handling code here:
         switch (buscar) {
-            case 1:
-                BuscarPorCedula();
+            case 1:   
+                BuscarPorCedula();        
             break;
             case 2:
                 BuscarPorNombreUsuario();
@@ -761,17 +771,19 @@ public class Usuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtBuscarPorKeyTyped
 
-    private void chbActivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbActivoItemStateChanged
+    private void rbtnActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActivoActionPerformed
         // TODO add your handling code here:
-        chbInactivo.setSelected(false);
-        BuscarPorEstadoUsuario();
-    }//GEN-LAST:event_chbActivoItemStateChanged
+      rbtnInactivo.setSelected(false);
+        BuscarPorEstadoUsuario();   
+        txtBuscarPor.setText("");
+    }//GEN-LAST:event_rbtnActivoActionPerformed
 
-    private void chbInactivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbInactivoItemStateChanged
+    private void rbtnInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnInactivoActionPerformed
         // TODO add your handling code here:
-        chbActivo.setSelected(false);
-        BuscarPorEstadoUsuarioInactivo();
-    }//GEN-LAST:event_chbInactivoItemStateChanged
+        rbtnActivo.setSelected(false);
+        BuscarPorEstadoUsuarioInactivo();  
+        txtBuscarPor.setText("");
+    }//GEN-LAST:event_rbtnInactivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -814,8 +826,6 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel btnEliminar;
     private javax.swing.JLabel btnNuevoUsuario1;
     private javax.swing.JButton btnUsuarios;
-    private javax.swing.JCheckBox chbActivo;
-    private javax.swing.JCheckBox chbInactivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -832,6 +842,9 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jlUsuarios;
     private javax.swing.JTable jtUsuarios;
     private javax.swing.JLabel lblNuevo;
+    private javax.swing.JLabel lblUsuarioyRol;
+    private javax.swing.JRadioButton rbtnActivo;
+    private javax.swing.JRadioButton rbtnInactivo;
     private javax.swing.JTextField txtBuscarPor;
     // End of variables declaration//GEN-END:variables
 }

@@ -73,7 +73,7 @@
                                   <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
                                   <Component id="txtCorreo" min="-2" pref="185" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="lblCedula1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jlContraseña" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -104,7 +104,7 @@
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jlCamposObligatorios1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCedulaSinGuion" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="61" max="32767" attributes="0"/>
@@ -138,12 +138,12 @@
                       <Component id="lblCedula" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtCedula" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlCamposObligatorios1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCedulaSinGuion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblCedula1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblCorreo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCorreo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
@@ -283,6 +283,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;aUsuario">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtContrase&#xf1;aUsuarioKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnGuardarNuevoUsuario">
           <Properties>
@@ -330,6 +333,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtRepetirContrase&#xf1;aUsuario">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtRepetirContrase&#xf1;aUsuarioKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCedula">
           <Properties>
@@ -347,7 +353,7 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCedulaKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblCedula1">
+        <Component class="javax.swing.JLabel" name="lblCorreo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
@@ -359,6 +365,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCorreo">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCorreoKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jlCamposObligatorios">
           <Properties>
@@ -371,7 +380,7 @@
             <Property name="text" type="java.lang.String" value="Todos los campos son obligatorios ... !"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jlCamposObligatorios1">
+        <Component class="javax.swing.JLabel" name="lblCedulaSinGuion">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="1"/>
