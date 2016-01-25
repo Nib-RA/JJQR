@@ -9,17 +9,14 @@ package db;
  * @author USUARIO
  */
 public class Categorias {
-    
     private Integer idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
     
-    
-    
     public Categorias(Integer idCategoria, String nombreCategoria, String descripcionCategoria){
-            this.idCategoria=idCategoria;
-            this.nombreCategoria=nombreCategoria;
-            this.descripcionCategoria=descripcionCategoria;
+        this.idCategoria=idCategoria;
+        this.nombreCategoria=nombreCategoria;
+        this.descripcionCategoria=descripcionCategoria;
     }
     
     public Categorias(){
@@ -48,13 +45,8 @@ public class Categorias {
         this.descripcionCategoria=descripcionCategoria;
     }
     
-    
-    
-    
     @Override
     public String toString(){
         return this.nombreCategoria;
-    }
-    
-       
+    } 
 }

@@ -54,7 +54,7 @@ static Statement sent;
     
     
     public static Vector<Categorias> leerDatosVector1(String consulta1){
-        Vector<Categorias> categorias= new Vector<Categorias> ();
+        Vector<Categorias> categorias= new Vector<Categorias>();
         Categorias cat=null;
         if(con==null) con = mysql.getConnect();
         cat=new Categorias();

@@ -6,6 +6,7 @@ package pryqr;
 
 import Modelos.GeneradorQR;
 import Modelos.ValoresConstantes;
+import db.Categorias;
 import db.ConexionBase;
 import db.mysql;
 import java.sql.Connection;
@@ -19,10 +20,14 @@ import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import javax.swing.Icon;
 import java.awt.Image;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Date;
+import java.util.Vector;
 import javax.swing.JLabel;
 import org.apache.commons.io.FileUtils;
 /**
@@ -33,26 +38,34 @@ public class NuevoQr extends javax.swing.JFrame {
     Connection conn;
     Statement sent;
     File fichero;
-    int numeroAleatorioTitulo = 0, desde = 10000, hasta = 99999;
+    int numeroAleatorioTitulo = 0, desde = 10000, hasta = 99999, idCategoria = 0;
     BufferedImage bufferedImage;
-    String audio = "", tempAudio = "", video = "", tempVideo = "", imagenQR = "", fechaActual = "";
+    DefaultComboBoxModel mdlC;
+    Vector<Categorias> categorias;
+    String audio = "", tempAudio = "", video = "", tempVideo = "", imagenQR = "", codigoImagenQR = "", fechaActual = "";
     String[] imagen = {"", "", ""}, tempImagen = {"", "", ""}, tempNombreArchivo = {"", "", ""}, tempNombreMultimedia = {"", ""};
     
     public NuevoQr() {
         initComponents();
+        jcbCategoriasQR.setFocusable(true);
         Random rnd = new Random();
-        numeroAleatorioTitulo = rnd.nextInt((hasta-desde+1)+desde);
+        Date fecha = new Date();
+        numeroAleatorioTitulo = rnd.nextInt(hasta-desde+1)+desde;
+        DateFormat formatoFechaHora = new SimpleDateFormat("ddMMyyyyHHmmss");
+        fechaActual = formatoFechaHora.format(fecha);
         this.setLocationRelativeTo(null);
         conn = mysql.getConnect();
         String SQLC="SELECT IDCATEGORIA,NOMBRECATEGORIA,DESCRIPCIONCATEGORIA FROM categorias";
-        //DefaultComboBoxModel mdl1= new DefaultComboBoxModel(ConexionBase.leerDatosVector1(SQLC));
-        DefaultComboBoxModel mdlC= new DefaultComboBoxModel(ConexionBase.leerDatosVector1(SQLC));
+        mdlC= new DefaultComboBoxModel(ConexionBase.leerDatosVector1(SQLC));
+        categorias = ConexionBase.leerDatosVector1(SQLC);
         this.jcbCategoriasQR.setModel(mdlC);
         //Redimencionar una imagen a un label
-        String Ruta=getClass().getResource("/images/plus.png").getPath();
+        String Ruta = getClass().getResource("/images/plus.png").getPath();
         Mostrar_Visualizador(btnImagen1, Ruta);
         Mostrar_Visualizador(btnImagen2, Ruta);
         Mostrar_Visualizador(btnImagen3, Ruta);
+        Ruta=getClass().getResource("/images/wait.png").getPath();
+        Mostrar_Visualizador(lblImagenQR, Ruta);
     }
     
     Boolean CopiaArchivos(String home, String destiny, String[] multimedia, String nombre, Integer indice){
@@ -62,7 +75,7 @@ public class NuevoQr extends javax.swing.JFrame {
             //Localisa la carpeta de origen y ubica la carpeta d destino
             File rutaPrincipalImagenes = new File(multimedia[indice]);
             if(!rutaPrincipalImagenes.exists()) rutaPrincipalImagenes.mkdir();
-            FileUtils.moveFileToDirectory(origen, destino, false);
+            FileUtils.copyFileToDirectory(origen, destino, false);
             File nombreOriginal = new File(destiny + "\\" + tempNombreArchivo[indice]);
             File nombreModificado = new File(destiny + "\\" + nombre);
             Boolean cambioNombre = nombreOriginal.renameTo(nombreModificado);
@@ -82,7 +95,7 @@ public class NuevoQr extends javax.swing.JFrame {
             //Localisa la carpeta de origen y ubica la carpeta d destino
             File rutaPrincipalMultimedia = new File(destiny);
             if(!rutaPrincipalMultimedia.exists()) rutaPrincipalMultimedia.mkdir();
-            FileUtils.moveFileToDirectory(origen, destino, false);
+            FileUtils.copyFileToDirectory(origen, destino, false);
             File nombreOriginal = new File(destiny + "\\" + tempNombreMultimedia[indice]);
             File nombreModificado = new File(destiny + "\\" + nombre);
             Boolean cambioNombre = nombreOriginal.renameTo(nombreModificado);
@@ -100,6 +113,10 @@ public class NuevoQr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
         else{  
             try {
+                if(idCategoria == 0){
+                    JOptionPane.showMessageDialog(this, "Debe de seleccionar una categoría");
+                    return;
+                }
                 //Ingreso en nuevo usuario
                 if(!tempImagen[0].isEmpty()){
                     File imagen1 = new File(imagen[0]);
@@ -123,20 +140,25 @@ public class NuevoQr extends javax.swing.JFrame {
                         if(CopiaArchivos(tempVideo, video, "Video.mp4", 1)) video += "\\Video.mp4";
                         else return;
                     } else imagen[2] = "";
-                    
-                    String SQLA = "INSERT INTO articulos(NOMBREARTICULO,DESCRIPCIONARTICULO,IMAGENUNOARTICULO,IMAGENDOSARTICULO,"
+                    File guardarQR = new File(imagenQR);
+                    try {
+                        ImageIO.write(bufferedImage, "png", guardarQR);
+                    } catch (Exception e) {
+                    }
+                    String SQLA = "INSERT INTO articulos(IDCATEGORIA,NOMBREARTICULO,DESCRIPCIONARTICULO,IMAGENUNOARTICULO,IMAGENDOSARTICULO,"
                             + "IMAGENTRESARTICULO,SONIDOARTICULO,VIDEOARTICULO,CODIGOQRARTICULO,IMAGENQRARTICULO)"
-                                  + " VALUES(?,?,?,?,?,?,?,?,?)";
+                                  + " VALUES(?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement ps = conn.prepareStatement(SQLA);
-                    ps.setString(1, txtNombreQr.getText().toString());
-                    ps.setString(2, txtAreaDescripcionNuevoQr.getText().toString());
-                    ps.setString(3, imagen[0]);
-                    ps.setString(4, imagen[1]);
-                    ps.setString(5, imagen[2]);
-                    ps.setString(6, audio);
-                    ps.setString(7, video);
-                    ps.setString(8, "Codigo");
-                    ps.setString(9, "ImagenQr");
+                    ps.setInt(1, idCategoria);
+                    ps.setString(2, txtNombreQr.getText().toString());
+                    ps.setString(3, txtAreaDescripcionNuevoQr.getText().toString());
+                    ps.setString(4, imagen[0]);
+                    ps.setString(5, imagen[1]);
+                    ps.setString(6, imagen[2]);
+                    ps.setString(7, audio);
+                    ps.setString(8, video);
+                    ps.setString(9, codigoImagenQR);
+                    ps.setString(10, imagenQR);
                     int n = ps.executeUpdate();
                     if (n > 0) {
                         JOptionPane.showMessageDialog(null, "Nuevo Qr creado Correctamente");
@@ -152,14 +174,13 @@ public class NuevoQr extends javax.swing.JFrame {
         }
     }
 
-    public static void Mostrar_Visualizador(javax.swing.JLabel Pantalla,String Ruta_Destino) 
-    {
+    public static void Mostrar_Visualizador(JLabel Pantalla, String RutaDestino){
         try
         {
-        java.awt.Image Capturar_Img_Solo_Lectura = javax.imageio.ImageIO.read(new java.io.File(Ruta_Destino));
-        java.awt.Image Obtener_Imagen = Capturar_Img_Solo_Lectura.getScaledInstance(Pantalla.getWidth(),Pantalla.getHeight(), java.awt.Image.SCALE_SMOOTH);
-        javax.swing.Icon iconoEscalado = new javax.swing.ImageIcon(Obtener_Imagen);
-        Pantalla.setIcon(iconoEscalado);
+            Image capturarImgSoloLectura = ImageIO.read(new File(RutaDestino));
+            Image obtenerImagen = capturarImgSoloLectura.getScaledInstance(Pantalla.getWidth(),Pantalla.getHeight(), Image.SCALE_SMOOTH);
+            Icon iconoEscalado = new ImageIcon(obtenerImagen);
+            Pantalla.setIcon(iconoEscalado);
         }
         catch (java.io.IOException e) {
             e.printStackTrace();
@@ -179,11 +200,9 @@ public class NuevoQr extends javax.swing.JFrame {
                 tempImagen[identificador] = fichero.getPath();
                 tempNombreArchivo[identificador] = fichero.getName();
                 ImageIcon icon = new ImageIcon(fichero.toString());
-                Icon icono = new ImageIcon(icon.getImage().
-                getScaledInstance(label.getWidth(), label.getHeight(), 
-                Image.SCALE_DEFAULT));
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
                 label.setText(null);
-                label.setIcon( icono );
+                label.setIcon(icono);
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "Error abriendo la imagen" + ex);
             }
@@ -276,6 +295,12 @@ public class NuevoQr extends javax.swing.JFrame {
         jlGenerarQr.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlGenerarQr.setForeground(new java.awt.Color(0, 153, 204));
         jlGenerarQr.setText("Generacion de Qr");
+
+        jcbCategoriasQR.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbCategoriasQRItemStateChanged(evt);
+            }
+        });
 
         jlNombreQr.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jlNombreQr.setForeground(new java.awt.Color(0, 153, 204));
@@ -555,9 +580,15 @@ public class NuevoQr extends javax.swing.JFrame {
     private void txtNombreQrKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreQrKeyReleased
         if(txtNombreQr.getText().length() != 0){
             GeneradorQR gQR = new GeneradorQR();
-            setImagenQR(gQR.CrearQR(txtNombreQr.getText(), 300));
+            codigoImagenQR = txtNombreQr.getText() + "-" + fechaActual + "/" + numeroAleatorioTitulo;
+            imagenQR = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\QR.png";
+            setImagenQR(gQR.CrearQR(codigoImagenQR, 300));
         } else lblImagenQR.setIcon(null);
     }//GEN-LAST:event_txtNombreQrKeyReleased
+
+    private void jcbCategoriasQRItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbCategoriasQRItemStateChanged
+        idCategoria = categorias.get(jcbCategoriasQR.getSelectedIndex()).getIdCategoria();
+    }//GEN-LAST:event_jcbCategoriasQRItemStateChanged
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
