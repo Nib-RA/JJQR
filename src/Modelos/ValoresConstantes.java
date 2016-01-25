@@ -11,4 +11,5 @@ package Modelos;
  */
 public class ValoresConstantes {
     public static final String directorioPrincipal = System.getProperty("user.home") + "\\AppData\\Local\\JJQR_Data";
+   // public static final String patronEmail="";
 }

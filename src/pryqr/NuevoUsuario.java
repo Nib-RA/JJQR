@@ -22,7 +22,8 @@ public class NuevoUsuario extends javax.swing.JFrame {
 Connection conn;
 Statement sent;
 String accion;
-String cedula;
+String cedula,valCorreo,ok="\u2714";
+Validate val=new Validate();
 
     /**
      * Creates new form NuevoUsuario
@@ -53,6 +54,12 @@ String cedula;
                 jcbTipodeUsuario.setSelectedItem(rs.getString("TIPOUSUARIO"));
                 txtCedula.setText(rs.getString("CEDULAUSUARIO"));
                 txtCorreo.setText(rs.getString("CORREOUSUARIO"));
+                cedula=rs.getString("CEDULAUSUARIO");
+                if(!Validate.validadorDeCedula(cedula)) lblCedulaSinGuion.setText("Cédula incorrecta");
+                else lblCedulaSinGuion.setText(ok);
+                valCorreo=rs.getString("CORREOUSUARIO");
+                if(!Validate.validateEmail(valCorreo)) lblValidadorCorreo.setText("Correo incorrecto");
+                else lblValidadorCorreo.setText(ok);
                 if(rs.getBoolean("ESTADOUSUARIO") == true) jcbEstadoUsuario.setSelectedItem("Activo");
                 else jcbEstadoUsuario.setSelectedItem("Inactivo");
                 rs.close();
@@ -98,9 +105,26 @@ String cedula;
             //Ingreso en nuevo usuario
             if(btnGuardarNuevoUsuario.getText().contains("Guardar")){
                 if(jcbTipodeUsuario.getSelectedIndex()!=0 && jcbEstadoUsuario.getSelectedIndex()!=0 ){
-                    if (txtNombreUsuario.getText().trim().isEmpty() || txtApellidoUsuario.getText().trim().isEmpty()|| txtContraseñaUsuario.getText().trim().isEmpty()|| txtRepetirContraseñaUsuario.getText().trim().isEmpty()|| txtCedula.getText().trim().isEmpty()|| txtCorreo.getText().trim().isEmpty() )
+                    if (txtNombreUsuario.getText().trim().isEmpty() || txtApellidoUsuario.getText().trim().isEmpty()|| txtContraseñaUsuario.getText().trim().isEmpty()|| txtRepetirContraseñaUsuario.getText().trim().isEmpty()|| txtCedula.getText().trim().isEmpty()|| txtCorreo.getText().trim().isEmpty() ){
                         JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
-                    if(txtCedula.getText().length()<10) JOptionPane.showMessageDialog(rootPane,"La cedula debe contener 10 digitos");
+                        return;
+                    }
+                    if(txtCedula.getText().length()<10){ 
+                        JOptionPane.showMessageDialog(rootPane,"La cedula debe contener 10 digitos");
+                        txtCedula.requestFocus();
+                        return;
+                    }
+                    if(!Validate.validadorDeCedula(cedula)){ 
+                        JOptionPane.showMessageDialog(this,"Verifique..! La cédula es incorrecta");
+                        txtCedula.requestFocus();
+                        return;
+                    }
+                     if(!Validate.validateEmail(valCorreo)) {
+                         JOptionPane.showMessageDialog(this,"Verifique..! El correo es incorrecto");
+                         txtCorreo.requestFocus();
+                        return;
+                     }
+                
                     if(txtContraseñaUsuario.getText().length()<8) JOptionPane.showMessageDialog(rootPane,"La contraseña debe contener al menos 8 caracteres");
                     else if(txtContraseñaUsuario.getText().equals(txtRepetirContraseñaUsuario.getText().trim())){
                         String SQL = "INSERT INTO usuarios(TIPOUSUARIO, NOMBRESUSUARIO, APELLIDOSUSUARIO, CONTRASENAUSUARIO, "
@@ -127,6 +151,18 @@ String cedula;
                 } else JOptionPane.showMessageDialog(null, "Faltan datos por validar");
             } else {
                 if(jcbTipodeUsuario.getSelectedIndex()!=0 && jcbEstadoUsuario.getSelectedIndex()!=0 ){
+                    if(txtCedula.getText().length()<10){ 
+                        JOptionPane.showMessageDialog(rootPane,"La cedula debe contener 10 digitos");
+                        return;
+                    }
+                    if(!Validate.validadorDeCedula(cedula)){ 
+                        JOptionPane.showMessageDialog(this,"Verifique..! La cédula es incorrecta");
+                        return;
+                    }
+                    if(!Validate.validateEmail(valCorreo)) {
+                         JOptionPane.showMessageDialog(this,"Verifique..! El correo es incorrecto");
+                        return;
+                     }
                     if (txtNombreUsuario.getText().trim().isEmpty() || txtApellidoUsuario.getText().trim().isEmpty() || txtCedula.getText().trim().isEmpty() || txtCorreo.getText().trim().isEmpty() )
                         JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
                     
@@ -158,49 +194,8 @@ String cedula;
 
     
     
-    
-    public boolean validadorDeCedula(String cedula) {
-        boolean cedulaCorrecta = false;
-        try {
-            if (cedula.length() == 10) // ConstantesApp.LongitudCedula
-            {
-                int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
-                if (tercerDigito < 6) {
-                    // Coeficientes de validación cédula
-                    // El decimo digito se lo considera dígito verificador
-                    int[] coefValCedula = { 2, 1, 2, 1, 2, 1, 2, 1, 2 };
-                    int verificador = Integer.parseInt(cedula.substring(9,10));
-                    int suma = 0;
-                    int digito = 0;
-                    for (int i = 0; i < (cedula.length() - 1); i++) {
-                    digito = Integer.parseInt(cedula.substring(i, i + 1))* coefValCedula[i];
-                    suma += ((digito % 10) + (digito / 10));
-                    }
-
-                    if ((suma % 10 == 0) && (suma % 10 == verificador)) {
-                    cedulaCorrecta = true;
-                    }
-                    else if ((10 - (suma % 10)) == verificador) {
-                    cedulaCorrecta = true;
-                    } else {
-                        cedulaCorrecta = false;
-                    }
-                } else {
-                    cedulaCorrecta = false;
-                }
-            } else {
-                cedulaCorrecta = false;
-            }
-        } catch (NumberFormatException nfe) {
-        cedulaCorrecta = false;
-        } catch (Exception err) {
-        cedulaCorrecta = false;
-        }
-        return cedulaCorrecta;
-    }
-
-    
    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -228,6 +223,7 @@ String cedula;
         jlCamposObligatorios = new javax.swing.JLabel();
         lblCedulaSinGuion = new javax.swing.JLabel();
         lblIdUsuario = new javax.swing.JLabel();
+        lblValidadorCorreo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -325,6 +321,9 @@ String cedula;
         lblCedula.setText("Cedula");
 
         txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCedulaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCedulaKeyTyped(evt);
             }
@@ -335,8 +334,8 @@ String cedula;
         lblCorreo.setText("Correo Electrónico");
 
         txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCorreoKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyReleased(evt);
             }
         });
 
@@ -344,12 +343,14 @@ String cedula;
         jlCamposObligatorios.setForeground(new java.awt.Color(204, 51, 0));
         jlCamposObligatorios.setText("Todos los campos son obligatorios ... !");
 
-        lblCedulaSinGuion.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         lblCedulaSinGuion.setForeground(new java.awt.Color(204, 51, 0));
         lblCedulaSinGuion.setText("Ingrese la CI sin guion");
 
         lblIdUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblIdUsuario.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblValidadorCorreo.setForeground(new java.awt.Color(204, 51, 0));
+        lblValidadorCorreo.setText("Ingrese un email válido");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -401,8 +402,10 @@ String cedula;
                                     .addComponent(lblNuevoUsuario)
                                     .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCedulaSinGuion)))
-                .addContainerGap(61, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblCedulaSinGuion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblValidadorCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,7 +435,8 @@ String cedula;
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCorreo)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblValidadorCorreo))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlEstado)
@@ -476,12 +480,7 @@ String cedula;
     }//GEN-LAST:event_btnCancelarNuevoUsuarioActionPerformed
 
     private void btnGuardarNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarNuevoUsuarioActionPerformed
-        // TODO add your handling code here:
-    //cedula=String.valueOf(txtCedula.getText());
-    //if(validadorDeCedula(cedula)==true)
-    Guardar();
-    //else JOptionPane.showMessageDialog(rootPane,"Verifique La cedula es incorrecta");
-    //validacionCorreo();
+        Guardar();
     }//GEN-LAST:event_btnGuardarNuevoUsuarioActionPerformed
 
     private void jcbTipodeUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbTipodeUsuarioItemStateChanged
@@ -509,8 +508,7 @@ String cedula;
     }//GEN-LAST:event_jcbTipodeUsuarioItemStateChanged
 
     private void jcbEstadoUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbEstadoUsuarioItemStateChanged
-        // TODO add your handling code here:
-        //Verifica que posicion del combobox del estado de usuarios se esta escojiendo
+       //Verifica que posicion del combobox del estado de usuarios se esta escojiendo
         Integer indice = jcbEstadoUsuario.getSelectedIndex();
         switch (indice) {
             case 1:
@@ -524,27 +522,14 @@ String cedula;
         }
     }//GEN-LAST:event_jcbEstadoUsuarioItemStateChanged
 
-    private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
-        // TODO add your handling code here:
-        char car=evt.getKeyChar();
-        if((car<'0' || car>'9')) evt.consume();
-        int limite  = 10;
-         if (txtCedula.getText().length()== limite) {  
-            evt.consume(); 
-            validadorDeCedula(cedula);
-        }
-    }//GEN-LAST:event_txtCedulaKeyTyped
-
     private void txtNombreUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreUsuarioKeyTyped
-        // TODO add your handling code here:
-        ValidarLetras(evt); //LLamando al evento para ingresar solo letras
+       ValidarLetras(evt); //LLamando al evento para ingresar solo letras
         int limite  = 30;
         if (txtNombreUsuario.getText().length()== limite)              evt.consume();        
   
     }//GEN-LAST:event_txtNombreUsuarioKeyTyped
 
     private void txtApellidoUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoUsuarioKeyTyped
-        // TODO add your handling code here:
                 ValidarLetras(evt); //LLamando al evento para ingresar solo letras
                 int limite  = 30;
         if (txtApellidoUsuario.getText().length()== limite)              evt.consume();        
@@ -552,25 +537,39 @@ String cedula;
     }//GEN-LAST:event_txtApellidoUsuarioKeyTyped
 
     private void txtContraseñaUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaUsuarioKeyTyped
-        // TODO add your handling code here:
         int limite  = 15;
             if (txtContraseñaUsuario.getText().length()== limite)   evt.consume();        
 
     }//GEN-LAST:event_txtContraseñaUsuarioKeyTyped
 
     private void txtRepetirContraseñaUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRepetirContraseñaUsuarioKeyTyped
-        // TODO add your handling code here:
         int limite  = 15;
         if (txtRepetirContraseñaUsuario.getText().length()== limite)              evt.consume();        
   
     }//GEN-LAST:event_txtRepetirContraseñaUsuarioKeyTyped
 
-    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
-        // TODO add your handling code here:
-        int limite  = 35;
-        if (txtCorreo.getText().length()== limite)              evt.consume();        
-  
-    }//GEN-LAST:event_txtCorreoKeyTyped
+    private void txtCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyReleased
+        if (txtCedula.getText().length()==10){
+            cedula=txtCedula.getText().toString();
+            if(!Validate.validadorDeCedula(cedula)) lblCedulaSinGuion.setText("Cédula incorrecta");
+            else lblCedulaSinGuion.setText(ok);
+        }
+    }//GEN-LAST:event_txtCedulaKeyReleased
+
+    private void txtCorreoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyReleased
+        int limite  = 75;
+        if (txtCorreo.getText().length()== limite) evt.consume(); 
+        valCorreo=txtCorreo.getText().toString();
+        if(!Validate.validateEmail(valCorreo)) lblValidadorCorreo.setText("Correo erróneo");
+        else lblValidadorCorreo.setText(ok);
+    }//GEN-LAST:event_txtCorreoKeyReleased
+
+    private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
+        char car=evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+        int limite  = 10;
+        if (txtCedula.getText().length()==limite) evt.consume();       
+    }//GEN-LAST:event_txtCedulaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -631,6 +630,7 @@ String cedula;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblIdUsuario;
     private javax.swing.JLabel lblNuevoUsuario;
+    private javax.swing.JLabel lblValidadorCorreo;
     private javax.swing.JTextField txtApellidoUsuario;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtContraseñaUsuario;

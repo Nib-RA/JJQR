@@ -2,6 +2,7 @@ package pryqr;
 
 
 import Modelos.UsuarioIngresado;
+import Modelos.Validate;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -14,6 +15,8 @@ public class Login extends javax.swing.JFrame {
 Connection conn;
 Statement sent;
 UsuarioIngresado us=new UsuarioIngresado();
+String user,ok="\u2714";  //Caracter unicode de visto
+Validate val=new Validate();
     
 
     public Login() {
@@ -93,6 +96,7 @@ int cont=0;
         txtPassword = new javax.swing.JPasswordField();
         btnIngresar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
+        lblUserValidacion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -222,6 +226,9 @@ int cont=0;
         });
 
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyTyped(evt);
             }
@@ -244,11 +251,13 @@ int cont=0;
                         .addGap(89, 89, 89)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtPassword)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblUserValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(157, 157, 157)
                         .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,7 +271,9 @@ int cont=0;
                         .addGap(154, 154, 154)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlUsuarios)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblUserValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlContraseña)
@@ -333,6 +344,24 @@ int cont=0;
         tc1.setVisible(true);
     }//GEN-LAST:event_jlTerminosyCondicionesMouseClicked
 
+    private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
+        // TODO add your handling code here:
+        if (txtUsuario.getText().length()==10){
+            try{
+                String SQLU ="SELECT * FROM USUARIOS WHERE CEDULAUSUARIO Like '%" + txtUsuario.getText().toString().trim() + "%'";
+                sent = conn.createStatement();
+                ResultSet rs = sent.executeQuery(SQLU);
+                rs.next();
+                user = rs.getString("CEDULAUSUARIO");
+                if(!Validate.validadorDeCedula(user)) lblUserValidacion.setText("Usuario inexistente");
+                else lblUserValidacion.setText(ok);
+                rs.close();
+            }
+            catch(Exception e){
+            }
+        }
+    }//GEN-LAST:event_txtUsuarioKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -380,6 +409,7 @@ int cont=0;
     private javax.swing.JLabel jlPoliticasdePrivacidad;
     private javax.swing.JLabel jlTerminosyCondiciones;
     private javax.swing.JLabel jlUsuarios;
+    private javax.swing.JLabel lblUserValidacion;
     public static javax.swing.JPasswordField txtPassword;
     public static javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
