@@ -32,7 +32,7 @@ public class Principal extends javax.swing.JFrame {
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
     }
-        if(UsuarioIngresado.parametroR.equals("Consultor")){
+        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
         //btnActualizarCategoria.setContentAreaFilled(false);
         UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
         btnUsuarios.setContentAreaFilled (false);

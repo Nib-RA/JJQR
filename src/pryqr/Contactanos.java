@@ -36,7 +36,7 @@ public class Contactanos extends javax.swing.JFrame {
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
          }
-         if(UsuarioIngresado.parametroR.equals("Consultor/a")){
+         if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
         btnUsuarios.setContentAreaFilled (false);
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
