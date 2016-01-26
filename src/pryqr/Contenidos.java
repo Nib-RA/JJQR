@@ -7,10 +7,12 @@ package pryqr;
 import Modelos.ItemSeleccionado;
 import Modelos.UsuarioIngresado;
 import db.mysql;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
 
@@ -31,7 +33,7 @@ public class Contenidos extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         conn = mysql.getConnect();
         LlenarTablaCategorias();
         btnGaleria.requestFocus();
@@ -44,7 +46,25 @@ public class Contenidos extends javax.swing.JFrame {
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarCategoria, Ruta3);
         txtBuscarContenidos.setEnabled(false);
-        
+        //Negacion de Privilegio de creacion de Usuarios a secretaria
+        if(UsuarioIngresado.parametroR.equals("Secretario/a")){
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+         }
+        //Negaccion de privilegios de Crear modificar y borrar categorias a inspector y recepcionista
+        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+        btnNuevCategoria.setContentAreaFilled (false);
+        btnNuevCategoria.setEnabled(false);
+        btnNuevCategoria.setBackground(Color.red);
+        //btnActualizarCategoria.setContentAreaFilled(false);
+        UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
+        btnActualizarCategoria.setEnabled(false);
+        btnEliminarCategoria.setEnabled(false);
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+    }
     }
     
     
@@ -92,7 +112,7 @@ public class Contenidos extends javax.swing.JFrame {
             }
             else                JOptionPane.showMessageDialog(null, "Categoria no eliminado ");
             }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: Debe Seleccionar un registro " );
             }
         }
     
@@ -286,7 +306,7 @@ public class Contenidos extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jbAcercade, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbContactanos, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbContactanos, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -435,8 +455,8 @@ public class Contenidos extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(btnNuevCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnNuevCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnActualizarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -565,13 +585,6 @@ public class Contenidos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jlCrearArticuloMouseClicked
 
-    private void btnNuevCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevCategoriaActionPerformed
-        isC.setAccionBoton("Guardar");
-        NuevasCategorias nca= new NuevasCategorias();
-        nca.show();
-        
-    }//GEN-LAST:event_btnNuevCategoriaActionPerformed
-
     private void jlPoliticasdePrivacidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPoliticasdePrivacidadMouseClicked
         PoliticasdePrivacidad pp=new PoliticasdePrivacidad();
         pp.setVisible(true);
@@ -610,6 +623,13 @@ public class Contenidos extends javax.swing.JFrame {
         // TODO add your handling code here:
         SeleccionarItemTablaC(evt);
     }//GEN-LAST:event_jtCategoriasMouseClicked
+
+    private void btnNuevCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevCategoriaActionPerformed
+        isC.setAccionBoton("Guardar");
+        NuevasCategorias nca= new NuevasCategorias();
+        nca.show();
+
+    }//GEN-LAST:event_btnNuevCategoriaActionPerformed
 
     /**
      * @param args the command line arguments

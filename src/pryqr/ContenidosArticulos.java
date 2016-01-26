@@ -7,10 +7,12 @@ package pryqr;
 import Modelos.ItemSeleccionado;
 import Modelos.UsuarioIngresado;
 import db.mysql;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
 
@@ -33,7 +35,7 @@ Integer buscar = 0;
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         btnContenidos.requestFocus();
         conn = mysql.getConnect();
         LlenarTablaArticulos();
@@ -48,6 +50,24 @@ Integer buscar = 0;
         Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarArticulos, Ruta3);
+        //Negacion de Privilegio de creacion de Usuarios a secretaria
+        if(UsuarioIngresado.parametroR.equals("Secretario/a")){
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+         }
+        //Negaccion de privilegios de Crear modificar y borrar categorias a inspector y recepcionista
+        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+        btnNuevoQr.setContentAreaFilled (false);
+        btnNuevoQr.setEnabled(false);
+        btnNuevoQr.setBackground(Color.red);
+        UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
+        btnActualizarArticulos.setEnabled(false);
+        btnEliminarArticulos.setEnabled(false);
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+        }
         
     }
     
@@ -95,7 +115,7 @@ Integer buscar = 0;
             }
             else                JOptionPane.showMessageDialog(null, "Artículo no eliminado ");
             }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: Debe seleccionar un registro" );
             }
         }
 

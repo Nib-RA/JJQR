@@ -6,6 +6,8 @@
 package pryqr;
 
 import Modelos.UsuarioIngresado;
+import java.awt.Color;
+import javax.swing.UIManager;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
 
 /**
@@ -21,7 +23,7 @@ public class AcercaDe extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         
         //Redimencionar una imagen a un label
         String Ruta=getClass().getResource("/images/acercade.jpg").getPath();
@@ -30,6 +32,17 @@ public class AcercaDe extends javax.swing.JFrame {
         Mostrar_Visualizador(lblAcercaDe, Ruta);
         Mostrar_Visualizador(lblAcercaDeAppImg, Ruta1);
         Mostrar_Visualizador(lblAcercaDeAppVersion, Ruta2);
+        //Privilegio de Negacion de creacion de usuarios a secretario
+         if(UsuarioIngresado.parametroR.equals("Secretario/a")){
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+    }
+         if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+    }
     }
 
     /**

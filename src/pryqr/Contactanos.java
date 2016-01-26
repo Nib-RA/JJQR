@@ -7,6 +7,7 @@ package pryqr;
 
 import Modelos.UsuarioIngresado;
 import db.mysql;
+import java.awt.Color;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
 import static pryqr.Principal.con;
 
@@ -23,13 +24,23 @@ public class Contactanos extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         String Ruta=getClass().getResource("/images/nosotras.png").getPath();
         Mostrar_Visualizador(lblImgJJ, Ruta);
         jbContactanos.requestFocus();
         if(con == null) con = mysql.getConnect();
        lblUsuarioyRol.setText("Bienvenid@ "+ UsuarioIngresado.parametroU + " tu rol es de "+ UsuarioIngresado.parametroR );
-        
+        //Privilegio de Negacion de creacion de usuarios a secretario
+         if(UsuarioIngresado.parametroR.equals("Secretario/a")){
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+         }
+         if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+    }
     }
 
     /**

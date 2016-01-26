@@ -29,7 +29,7 @@ public class Usuarios extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         conn = mysql.getConnect();
         lblNuevo.setVisible(false);
-        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         LlenarTablaUsuarios();
         btnUsuarios.requestFocus();
         String Ruta=getClass().getResource("/images/plus.png").getPath();
@@ -95,7 +95,7 @@ public class Usuarios extends javax.swing.JFrame {
             }
             else                JOptionPane.showMessageDialog(null, "Usuario no eliminado ");
             }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: Debe seleccionar un usuario");
             }
         }
         

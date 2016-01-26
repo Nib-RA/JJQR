@@ -4,9 +4,11 @@ import Modelos.UsuarioIngresado;
 import Modelos.ValoresConstantes;
 import java.sql.Connection;
 import db.mysql;
+import java.awt.Color;
 import java.io.File;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 
 public class Principal extends javax.swing.JFrame {
@@ -23,11 +25,21 @@ public class Principal extends javax.swing.JFrame {
         if(con == null) con = mysql.getConnect();
         jlMuseo.requestFocus();
         jlGaleria.setVisible(false);
-        lblUsuarioyRol.setText("Bienvenid@" + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
+        //Negacion de Privilegio de creacion de Usuarios a secretaria
         if(UsuarioIngresado.parametroR.equals("Secretario/a")){
         btnUsuarios.setContentAreaFilled (false);
         btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
     }
+        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+        //btnActualizarCategoria.setContentAreaFilled(false);
+        UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
+        btnUsuarios.setContentAreaFilled (false);
+        btnUsuarios.setEnabled(false);
+        btnUsuarios.setForeground(Color.BLACK);
+    }
+         
      }
 
     
@@ -294,8 +306,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(302, 302, 302)
                         .addComponent(lblCerrarSesion)
                         .addGap(156, 156, 156))))
-            .addGroup(PanelPantallaLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPantallaLayout.createSequentialGroup()
                 .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -310,7 +321,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(PanelPantallaLayout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(lblCerrarSesion)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
