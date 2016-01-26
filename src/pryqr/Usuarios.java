@@ -32,11 +32,11 @@ public class Usuarios extends javax.swing.JFrame {
         lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         LlenarTablaUsuarios();
         btnUsuarios.requestFocus();
-        String Ruta=getClass().getResource("/images/plus.png").getPath();
-        Mostrar_Visualizador(btnActualizar, Ruta);
+        String Ruta=getClass().getResource("/images/Mas.png").getPath();
+        Mostrar_Visualizador(btnNuevoUsuario, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
         Mostrar_Visualizador(btnActualizar, Ruta1);
-        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
+        String Ruta2=getClass().getResource("/images/Eliminar.png").getPath();
         Mostrar_Visualizador(btnEliminar, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarUsuarios, Ruta3);
@@ -287,7 +287,7 @@ public class Usuarios extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jcbBuscarPor = new javax.swing.JComboBox<>();
         txtBuscarPor = new javax.swing.JTextField();
-        btnNuevoUsuario1 = new javax.swing.JLabel();
+        btnNuevoUsuario = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JLabel();
         btnActualizar = new javax.swing.JLabel();
         btnBuscarUsuarios = new javax.swing.JLabel();
@@ -494,15 +494,15 @@ public class Usuarios extends javax.swing.JFrame {
             }
         });
 
-        btnNuevoUsuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.jpg"))); // NOI18N
-        btnNuevoUsuario1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnNuevoUsuario1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNuevoUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Mas.png"))); // NOI18N
+        btnNuevoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevoUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnNuevoUsuario1MouseClicked(evt);
+                btnNuevoUsuarioMouseClicked(evt);
             }
         });
 
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eliminar.png"))); // NOI18N
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.setMaximumSize(new java.awt.Dimension(84, 81));
         btnEliminar.setMinimumSize(new java.awt.Dimension(84, 81));
@@ -524,6 +524,7 @@ public class Usuarios extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         btnBuscarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -558,7 +559,7 @@ public class Usuarios extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addComponent(lblNuevo))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnNuevoUsuario1)
+                        .addComponent(btnNuevoUsuario)
                         .addGap(29, 29, 29)
                         .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -583,7 +584,7 @@ public class Usuarios extends javax.swing.JFrame {
                 .addComponent(lblNuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevoUsuario1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevoUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarUsuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -687,11 +688,11 @@ public class Usuarios extends javax.swing.JFrame {
         SeleccionarItemTablaU(evt);
     }//GEN-LAST:event_jtUsuariosMouseClicked
 
-    private void btnNuevoUsuario1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoUsuario1MouseClicked
+    private void btnNuevoUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoUsuarioMouseClicked
         is.setAccionBoton("Guardar");
         NuevoUsuario frnu=new NuevoUsuario();
         frnu.show();
-    }//GEN-LAST:event_btnNuevoUsuario1MouseClicked
+    }//GEN-LAST:event_btnNuevoUsuarioMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
         if(!id.isEmpty()){
@@ -823,7 +824,7 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel btnBuscarUsuarios;
     private javax.swing.JButton btnContenidos;
     private javax.swing.JLabel btnEliminar;
-    private javax.swing.JLabel btnNuevoUsuario1;
+    private javax.swing.JLabel btnNuevoUsuario;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

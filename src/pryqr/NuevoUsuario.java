@@ -269,7 +269,7 @@ Validate val=new Validate();
             }
         });
 
-        jcbTipodeUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Seleccione opcion--", "Administrador/a", "Secretario/a", "Recepcionista", "Inspector/a", " ", " " }));
+        jcbTipodeUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Seleccione opcion--", "Administrador/a", "Secretario/a", "Consultor/a", " ", " " }));
         jcbTipodeUsuario.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcbTipodeUsuarioItemStateChanged(evt);
@@ -495,10 +495,7 @@ Validate val=new Validate();
                 ItemSeleccionado.rol="Secretario/a";
             break;
             case 3:
-                ItemSeleccionado.rol="Recepcionista";
-            break;
-            case 4:
-                ItemSeleccionado.rol="Inspector/a";
+                ItemSeleccionado.rol="Consultor";
             break;
             default:
                 JOptionPane.showMessageDialog(this,"Debe seleccionar un tipo de usuario");

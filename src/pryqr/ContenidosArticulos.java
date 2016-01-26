@@ -42,11 +42,11 @@ Integer buscar = 0;
         rbtnBuscarPorCategoria.setVisible(false);
         rbtnBuscarPorNombre.setVisible(false); 
         txtBuscarArticulo.setVisible(false);
-        String Ruta=getClass().getResource("/images/plus.png").getPath();
-        Mostrar_Visualizador(btnActualizarArticulos, Ruta);
+        String Ruta=getClass().getResource("/images/Mas.png").getPath();
+        Mostrar_Visualizador(btnNuevoQr, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
         Mostrar_Visualizador(btnActualizarArticulos, Ruta1);
-        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
+        String Ruta2=getClass().getResource("/images/Eliminar.png").getPath();
         Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarArticulos, Ruta3);
@@ -57,12 +57,12 @@ Integer buscar = 0;
         btnUsuarios.setForeground(Color.BLACK);
          }
         //Negaccion de privilegios de Crear modificar y borrar categorias a inspector y recepcionista
-        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
-        btnNuevoQr.setContentAreaFilled (false);
+        if(UsuarioIngresado.parametroR.equals("Consultor/a")){
+        //btnNuevoQr.setContentAreaFilled (false);
         btnNuevoQr.setEnabled(false);
         btnNuevoQr.setBackground(Color.red);
         UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
-        btnActualizarArticulos.setEnabled(false);
+        btnNuevoQr.setEnabled(false);
         btnEliminarArticulos.setEnabled(false);
         btnUsuarios.setContentAreaFilled (false);
         btnUsuarios.setEnabled(false);
@@ -195,10 +195,9 @@ Integer buscar = 0;
         jPanel5 = new javax.swing.JPanel();
         jlNuevaCategoria = new javax.swing.JLabel();
         jlCategorias = new javax.swing.JLabel();
-        btnNuevoQr = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtContenidosArticulos = new javax.swing.JTable();
-        btnActualizarArticulos = new javax.swing.JLabel();
+        btnNuevoQr = new javax.swing.JLabel();
         btnEliminarArticulos = new javax.swing.JLabel();
         btnBuscarArticulos = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -209,6 +208,7 @@ Integer buscar = 0;
         rbtnBuscarPorCategoria = new javax.swing.JRadioButton();
         rbtnBuscarPorNombre = new javax.swing.JRadioButton();
         txtBuscarArticulo = new javax.swing.JTextField();
+        btnActualizarArticulos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -422,15 +422,6 @@ Integer buscar = 0;
         jlCategorias.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
         jlCategorias.setText("Galeria de Piezas de Arte ");
 
-        btnNuevoQr.setBackground(new java.awt.Color(255, 255, 255));
-        btnNuevoQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.jpg"))); // NOI18N
-        btnNuevoQr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnNuevoQr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoQrActionPerformed(evt);
-            }
-        });
-
         jtContenidosArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -449,18 +440,18 @@ Integer buscar = 0;
         });
         jScrollPane1.setViewportView(jtContenidosArticulos);
 
-        btnActualizarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
-        btnActualizarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
-        btnActualizarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
-        btnActualizarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
-        btnActualizarArticulos.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNuevoQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Mas.png"))); // NOI18N
+        btnNuevoQr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevoQr.setMaximumSize(new java.awt.Dimension(84, 81));
+        btnNuevoQr.setMinimumSize(new java.awt.Dimension(84, 81));
+        btnNuevoQr.setPreferredSize(new java.awt.Dimension(84, 81));
+        btnNuevoQr.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnActualizarArticulosMouseClicked(evt);
+                btnNuevoQrMouseClicked(evt);
             }
         });
 
-        btnEliminarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnEliminarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eliminar.png"))); // NOI18N
         btnEliminarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
         btnEliminarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
@@ -471,7 +462,7 @@ Integer buscar = 0;
             }
         });
 
-        btnBuscarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.jpg"))); // NOI18N
+        btnBuscarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         btnBuscarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
         btnBuscarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
@@ -526,6 +517,17 @@ Integer buscar = 0;
             }
         });
 
+        btnActualizarArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
+        btnActualizarArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
+        btnActualizarArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
+        btnActualizarArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
+        btnActualizarArticulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualizarArticulosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -533,11 +535,11 @@ Integer buscar = 0;
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGap(71, 71, 71)
+                        .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
                         .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addGap(33, 33, 33)
                         .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -574,10 +576,10 @@ Integer buscar = 0;
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -721,27 +723,10 @@ Integer buscar = 0;
         EliminarArticulos();
     }//GEN-LAST:event_btnEliminarArticulosMouseClicked
 
-    private void btnActualizarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarArticulosMouseClicked
-        // TODO add your handling code here:
-        if(!idA.isEmpty()){
-            isA.setAccionBoton("Actualizar");
-            isA.setIdArticulo(idA);
-            NuevoQr frnu=new NuevoQr();
-            frnu.show();
-        }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a modificar");
-    }//GEN-LAST:event_btnActualizarArticulosMouseClicked
-
     private void jtContenidosArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtContenidosArticulosMouseClicked
         // TODO add your handling code here:
         SeleccionarItemTablaCA(evt);
     }//GEN-LAST:event_jtContenidosArticulosMouseClicked
-
-    private void btnNuevoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoQrActionPerformed
-        // TODO add your handling code here:
-        isA.setAccionBoton("Guardar");
-        NuevoQr nca = new NuevoQr();
-        nca.show();
-    }//GEN-LAST:event_btnNuevoQrActionPerformed
 
     private void rbtnBuscarPorCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarPorCategoriaActionPerformed
         // TODO add your handling code here:
@@ -761,6 +746,22 @@ Integer buscar = 0;
         rbtnBuscarPorCategoria.setSelected(false);  
         txtBuscarArticulo.setText("");
     }//GEN-LAST:event_rbtnBuscarPorNombreActionPerformed
+
+    private void btnActualizarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarArticulosMouseClicked
+        // TODO add your handling code here:
+        if(!idA.isEmpty()){
+            isA.setAccionBoton("Actualizar");
+            isA.setIdArticulo(idA);
+            NuevoQr frnu=new NuevoQr();
+            frnu.show();
+        }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a modificar");
+    }//GEN-LAST:event_btnActualizarArticulosMouseClicked
+
+    private void btnNuevoQrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoQrMouseClicked
+        isA.setAccionBoton("Guardar");
+        NuevoQr frnu=new NuevoQr();
+        frnu.show();
+    }//GEN-LAST:event_btnNuevoQrMouseClicked
 
     /**
      * @param args the command line arguments
@@ -801,7 +802,7 @@ Integer buscar = 0;
     private javax.swing.JLabel btnBuscarArticulos;
     private javax.swing.JButton btnContenidos;
     private javax.swing.JLabel btnEliminarArticulos;
-    private javax.swing.JButton btnNuevoQr;
+    private javax.swing.JLabel btnNuevoQr;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
