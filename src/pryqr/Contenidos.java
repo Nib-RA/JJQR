@@ -37,11 +37,11 @@ public class Contenidos extends javax.swing.JFrame {
         conn = mysql.getConnect();
         LlenarTablaCategorias();
         btnGaleria.requestFocus();
-        String Ruta=getClass().getResource("/images/plus.png").getPath();
-        Mostrar_Visualizador(btnActualizarCategoria, Ruta);
+        String Ruta=getClass().getResource("/images/Mas.png").getPath();
+        Mostrar_Visualizador(btnNuevaCategoria, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
         Mostrar_Visualizador(btnActualizarCategoria, Ruta1);
-        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
+        String Ruta2=getClass().getResource("/images/Eliminar.png").getPath();
         Mostrar_Visualizador(btnEliminarCategoria, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarCategoria, Ruta3);
@@ -52,13 +52,15 @@ public class Contenidos extends javax.swing.JFrame {
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
          }
+        
+        
+        
         //Negaccion de privilegios de Crear modificar y borrar categorias a inspector y recepcionista
-        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
-        btnNuevCategoria.setContentAreaFilled (false);
-        btnNuevCategoria.setEnabled(false);
-        btnNuevCategoria.setBackground(Color.red);
+        if(UsuarioIngresado.parametroR.equals("Consultor/a")){
+        //btnNuevaCategoria.setContentAreaFilled (false);
+        btnNuevaCategoria.setEnabled(false);
         //btnActualizarCategoria.setContentAreaFilled(false);
-        UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
+        //UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
         btnActualizarCategoria.setEnabled(false);
         btnEliminarCategoria.setEnabled(false);
         btnUsuarios.setContentAreaFilled (false);
@@ -167,13 +169,13 @@ public class Contenidos extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jlNuevaCategoria = new javax.swing.JLabel();
         jlCategorias = new javax.swing.JLabel();
-        btnNuevCategoria = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtCategorias = new javax.swing.JTable();
         btnActualizarCategoria = new javax.swing.JLabel();
         btnEliminarCategoria = new javax.swing.JLabel();
         btnBuscarCategoria = new javax.swing.JLabel();
         txtBuscarContenidos = new javax.swing.JTextField();
+        btnNuevaCategoria = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -383,14 +385,6 @@ public class Contenidos extends javax.swing.JFrame {
         jlCategorias.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
         jlCategorias.setText("Categorias");
 
-        btnNuevCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.jpg"))); // NOI18N
-        btnNuevCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnNuevCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevCategoriaActionPerformed(evt);
-            }
-        });
-
         jtCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -448,6 +442,17 @@ public class Contenidos extends javax.swing.JFrame {
             }
         });
 
+        btnNuevaCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Mas.png"))); // NOI18N
+        btnNuevaCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevaCategoria.setMaximumSize(new java.awt.Dimension(84, 81));
+        btnNuevaCategoria.setMinimumSize(new java.awt.Dimension(84, 81));
+        btnNuevaCategoria.setPreferredSize(new java.awt.Dimension(84, 81));
+        btnNuevaCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNuevaCategoriaMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -455,8 +460,8 @@ public class Contenidos extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(btnNuevCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(btnNuevaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnActualizarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -487,13 +492,12 @@ public class Contenidos extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnBuscarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnNuevCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(btnEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(43, 43, 43)
-                                .addComponent(txtBuscarContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtBuscarContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnNuevaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnActualizarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -606,7 +610,14 @@ public class Contenidos extends javax.swing.JFrame {
 
     private void btnEliminarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCategoriaMouseClicked
         // TODO add your handling code here:
-        EliminarCategoria();
+         Object [] opciones={"Aceptar","Cancelar"};
+        if(!idC.isEmpty()){
+            int eleccion=JOptionPane.showOptionDialog(null,"Está seguro que desea eliminar","Eliminar",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,null,opciones,"Aceptar");
+            if(eleccion==JOptionPane.YES_OPTION)  EliminarCategoria();
+        }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a eliminar");
+  
     }//GEN-LAST:event_btnEliminarCategoriaMouseClicked
 
     private void btnBuscarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarCategoriaMouseClicked
@@ -624,12 +635,13 @@ public class Contenidos extends javax.swing.JFrame {
         SeleccionarItemTablaC(evt);
     }//GEN-LAST:event_jtCategoriasMouseClicked
 
-    private void btnNuevCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevCategoriaActionPerformed
-        isC.setAccionBoton("Guardar");
+    private void btnNuevaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevaCategoriaMouseClicked
+        // TODO add your handling code here:
+         isC.setAccionBoton("Guardar");
         NuevasCategorias nca= new NuevasCategorias();
         nca.show();
 
-    }//GEN-LAST:event_btnNuevCategoriaActionPerformed
+    }//GEN-LAST:event_btnNuevaCategoriaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -670,7 +682,7 @@ public class Contenidos extends javax.swing.JFrame {
     private javax.swing.JLabel btnBuscarCategoria;
     private javax.swing.JLabel btnEliminarCategoria;
     private javax.swing.JButton btnGaleria;
-    private javax.swing.JButton btnNuevCategoria;
+    private javax.swing.JLabel btnNuevaCategoria;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

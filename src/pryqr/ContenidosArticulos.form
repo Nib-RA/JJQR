@@ -422,9 +422,9 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                              <Component id="btnNuevoQr" min="-2" pref="86" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                              <Component id="btnNuevosArticulos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                               <Component id="btnActualizarArticulos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Component id="btnEliminarArticulos" min="-2" max="-2" attributes="0"/>
@@ -449,6 +449,8 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="352" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jPanel8" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -474,10 +476,10 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnNuevoQr" min="-2" pref="77" max="-2" attributes="0"/>
                                   <Component id="btnEliminarArticulos" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
                                   <Component id="btnActualizarArticulos" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
                                   <Component id="btnBuscarArticulos" min="-2" pref="77" max="-2" attributes="0"/>
+                                  <Component id="btnNuevosArticulos" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -498,7 +500,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="89" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel8" max="32767" attributes="0"/>
                   </Group>
@@ -528,22 +533,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Galeria de Piezas de Arte "/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnNuevoQr">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/mas.jpg"/>
-                </Property>
-                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor de Mano"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoQrActionPerformed"/>
-              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <AuxValues>
@@ -657,7 +646,9 @@
                           <Component id="lblVistaPreviaImagen2" min="-2" pref="104" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="lblVistaPreviaImagen3" min="-2" pref="104" max="-2" attributes="0"/>
-                          <EmptySpace pref="396" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="lblVistaPreviaImagen4" min="-2" pref="104" max="-2" attributes="0"/>
+                          <EmptySpace pref="274" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -666,6 +657,7 @@
                       <Component id="lblVistaPreviaImagen1" pref="83" max="32767" attributes="0"/>
                       <Component id="lblVistaPreviaImagen2" pref="83" max="32767" attributes="0"/>
                       <Component id="lblVistaPreviaImagen3" alignment="0" pref="83" max="32767" attributes="0"/>
+                      <Component id="lblVistaPreviaImagen4" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -675,6 +667,8 @@
                 <Component class="javax.swing.JLabel" name="lblVistaPreviaImagen2">
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblVistaPreviaImagen3">
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblVistaPreviaImagen4">
                 </Component>
               </SubComponents>
             </Container>
@@ -698,6 +692,33 @@
               <Events>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarArticuloKeyPressed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="btnNuevosArticulos">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/Mas.png"/>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Mano"/>
+                </Property>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[84, 81]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[84, 81]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[84, 81]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNuevosArticulosMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Qr"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

@@ -36,7 +36,7 @@ public class Contactanos extends javax.swing.JFrame {
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
          }
-         if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+         if(UsuarioIngresado.parametroR.equals("Consultor/a")){
         btnUsuarios.setContentAreaFilled (false);
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
@@ -348,10 +348,10 @@ public class Contactanos extends javax.swing.JFrame {
                             .addComponent(jLabel21))
                         .addGap(37, 37, 37)
                         .addGroup(jPanelJossLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanelJossLayout.createSequentialGroup()
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanelJossLayout.setVerticalGroup(
@@ -447,8 +447,8 @@ public class Contactanos extends javax.swing.JFrame {
                 .addComponent(jlTerminosyCondiciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlPoliticasdePrivacidad)
-                .addGap(178, 178, 178)
-                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(138, 138, 138)
+                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(94, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(

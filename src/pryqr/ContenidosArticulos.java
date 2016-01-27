@@ -42,11 +42,11 @@ Integer buscar = 0;
         rbtnBuscarPorCategoria.setVisible(false);
         rbtnBuscarPorNombre.setVisible(false); 
         txtBuscarArticulo.setVisible(false);
-        String Ruta=getClass().getResource("/images/plus.png").getPath();
-        Mostrar_Visualizador(btnActualizarArticulos, Ruta);
+        String Ruta=getClass().getResource("/images/Mas.png").getPath();
+        Mostrar_Visualizador(btnNuevosArticulos, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
         Mostrar_Visualizador(btnActualizarArticulos, Ruta1);
-        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
+        String Ruta2=getClass().getResource("/images/Eliminar.png").getPath();
         Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarArticulos, Ruta3);
@@ -57,10 +57,10 @@ Integer buscar = 0;
         btnUsuarios.setForeground(Color.BLACK);
          }
         //Negaccion de privilegios de Crear modificar y borrar categorias a inspector y recepcionista
-        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
-        btnNuevoQr.setContentAreaFilled (false);
-        btnNuevoQr.setEnabled(false);
-        btnNuevoQr.setBackground(Color.red);
+        if(UsuarioIngresado.parametroR.equals("Consultor/a")){
+        //btnNuevosArticulos.setContentAreaFilled (false);
+        btnNuevosArticulos.setEnabled(false);
+        btnNuevosArticulos.setBackground(Color.red);
         UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
         btnActualizarArticulos.setEnabled(false);
         btnEliminarArticulos.setEnabled(false);
@@ -131,6 +131,9 @@ Integer buscar = 0;
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),5));
         if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen3, imagenes);
         else lblVistaPreviaImagen3.setIcon(null);
+         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),9));
+        if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen4, imagenes);
+        else lblVistaPreviaImagen4.setIcon(null);
     }
     
     
@@ -195,7 +198,6 @@ Integer buscar = 0;
         jPanel5 = new javax.swing.JPanel();
         jlNuevaCategoria = new javax.swing.JLabel();
         jlCategorias = new javax.swing.JLabel();
-        btnNuevoQr = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtContenidosArticulos = new javax.swing.JTable();
         btnActualizarArticulos = new javax.swing.JLabel();
@@ -206,9 +208,12 @@ Integer buscar = 0;
         lblVistaPreviaImagen1 = new javax.swing.JLabel();
         lblVistaPreviaImagen2 = new javax.swing.JLabel();
         lblVistaPreviaImagen3 = new javax.swing.JLabel();
+        lblVistaPreviaImagen4 = new javax.swing.JLabel();
         rbtnBuscarPorCategoria = new javax.swing.JRadioButton();
         rbtnBuscarPorNombre = new javax.swing.JRadioButton();
         txtBuscarArticulo = new javax.swing.JTextField();
+        btnNuevosArticulos = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -422,15 +427,6 @@ Integer buscar = 0;
         jlCategorias.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
         jlCategorias.setText("Galeria de Piezas de Arte ");
 
-        btnNuevoQr.setBackground(new java.awt.Color(255, 255, 255));
-        btnNuevoQr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.jpg"))); // NOI18N
-        btnNuevoQr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnNuevoQr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoQrActionPerformed(evt);
-            }
-        });
-
         jtContenidosArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -497,13 +493,16 @@ Integer buscar = 0;
                 .addComponent(lblVistaPreviaImagen2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(lblVistaPreviaImagen3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(396, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblVistaPreviaImagen4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(274, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblVistaPreviaImagen1, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
             .addComponent(lblVistaPreviaImagen2, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
             .addComponent(lblVistaPreviaImagen3, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+            .addComponent(lblVistaPreviaImagen4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         rbtnBuscarPorCategoria.setText("Categoría");
@@ -526,6 +525,19 @@ Integer buscar = 0;
             }
         });
 
+        btnNuevosArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Mas.png"))); // NOI18N
+        btnNuevosArticulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevosArticulos.setMaximumSize(new java.awt.Dimension(84, 81));
+        btnNuevosArticulos.setMinimumSize(new java.awt.Dimension(84, 81));
+        btnNuevosArticulos.setPreferredSize(new java.awt.Dimension(84, 81));
+        btnNuevosArticulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNuevosArticulosMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setText("Qr");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -533,9 +545,9 @@ Integer buscar = 0;
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGap(48, 48, 48)
+                        .addComponent(btnNuevosArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
                         .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -556,7 +568,9 @@ Integer buscar = 0;
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jLabel1))
+                                .addComponent(jLabel1)
+                                .addGap(352, 352, 352)
+                                .addComponent(jLabel2))
                             .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(106, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -574,10 +588,10 @@ Integer buscar = 0;
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevoQr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEliminarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnActualizarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnBuscarArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNuevosArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,7 +605,9 @@ Integer buscar = 0;
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -718,7 +734,14 @@ Integer buscar = 0;
 
     private void btnEliminarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarArticulosMouseClicked
         // TODO add your handling code here:
-        EliminarArticulos();
+        Object [] opciones={"Aceptar","Cancelar"};
+        if(!idA.isEmpty()){
+            int eleccion=JOptionPane.showOptionDialog(null,"Está seguro que desea eliminar","Eliminar",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,null,opciones,"Aceptar");
+            if(eleccion==JOptionPane.YES_OPTION)  EliminarArticulos();
+        }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a eliminar");
+  
     }//GEN-LAST:event_btnEliminarArticulosMouseClicked
 
     private void btnActualizarArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarArticulosMouseClicked
@@ -736,13 +759,6 @@ Integer buscar = 0;
         SeleccionarItemTablaCA(evt);
     }//GEN-LAST:event_jtContenidosArticulosMouseClicked
 
-    private void btnNuevoQrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoQrActionPerformed
-        // TODO add your handling code here:
-        isA.setAccionBoton("Guardar");
-        NuevoQr nca = new NuevoQr();
-        nca.show();
-    }//GEN-LAST:event_btnNuevoQrActionPerformed
-
     private void rbtnBuscarPorCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarPorCategoriaActionPerformed
         // TODO add your handling code here:
         //BuscarPorNombreCategoria();   
@@ -759,8 +775,15 @@ Integer buscar = 0;
     private void rbtnBuscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarPorNombreActionPerformed
         // TODO add your handling code here:
         rbtnBuscarPorCategoria.setSelected(false);  
-        txtBuscarArticulo.setText("");
+        txtBuscarArticulo.setText("");      
     }//GEN-LAST:event_rbtnBuscarPorNombreActionPerformed
+
+    private void btnNuevosArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevosArticulosMouseClicked
+        // TODO add your handling code here:
+        isA.setAccionBoton("Guardar");
+        NuevoQr nca = new NuevoQr();
+        nca.show();
+    }//GEN-LAST:event_btnNuevosArticulosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -801,9 +824,10 @@ Integer buscar = 0;
     private javax.swing.JLabel btnBuscarArticulos;
     private javax.swing.JButton btnContenidos;
     private javax.swing.JLabel btnEliminarArticulos;
-    private javax.swing.JButton btnNuevoQr;
+    private javax.swing.JLabel btnNuevosArticulos;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -828,6 +852,7 @@ Integer buscar = 0;
     private javax.swing.JLabel lblVistaPreviaImagen1;
     private javax.swing.JLabel lblVistaPreviaImagen2;
     private javax.swing.JLabel lblVistaPreviaImagen3;
+    private javax.swing.JLabel lblVistaPreviaImagen4;
     private javax.swing.JRadioButton rbtnBuscarPorCategoria;
     private javax.swing.JRadioButton rbtnBuscarPorNombre;
     private javax.swing.JTextField txtBuscarArticulo;

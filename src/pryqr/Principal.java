@@ -28,11 +28,11 @@ public class Principal extends javax.swing.JFrame {
         lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         //Negacion de Privilegio de creacion de Usuarios a secretaria
         if(UsuarioIngresado.parametroR.equals("Secretario/a")){
-        btnUsuarios.setContentAreaFilled (false);
+        //btnUsuarios.setContentAreaFilled (false);
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
     }
-        if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+        if(UsuarioIngresado.parametroR.equals("Consultor/a")){
         //btnActualizarCategoria.setContentAreaFilled(false);
         UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
         btnUsuarios.setContentAreaFilled (false);
@@ -241,8 +241,8 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jlTerminosyCondiciones)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlPoliticasdePrivacidad)
-                .addGap(171, 171, 171)
-                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132)
+                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(

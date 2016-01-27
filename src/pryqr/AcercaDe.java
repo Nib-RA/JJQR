@@ -38,7 +38,7 @@ public class AcercaDe extends javax.swing.JFrame {
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
     }
-         if(UsuarioIngresado.parametroR.equals("Inspector/a") || UsuarioIngresado.parametroR.equals("Recepcionista")){
+         if(UsuarioIngresado.parametroR.equals("Consultor/a")){
         btnUsuarios.setContentAreaFilled (false);
         btnUsuarios.setEnabled(false);
         btnUsuarios.setForeground(Color.BLACK);
@@ -515,8 +515,8 @@ public class AcercaDe extends javax.swing.JFrame {
                 .addComponent(jlTerminosyCondiciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlPoliticasdePrivacidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(183, 183, 183)
-                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(113, 113, 113)
+                .addComponent(lblUsuarioyRol, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
         jPanel2Layout.setVerticalGroup(

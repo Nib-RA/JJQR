@@ -66,9 +66,9 @@ int cont=0;
             dispose();
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "Usuario o Contraseña inválida");
-                txtUsuario.setText("");
+                //txtUsuario.setText("");
                 txtPassword.setText("");
-                txtUsuario.requestFocus();
+                txtPassword.requestFocus();
                 cont++;
                 if(cont==3) System.exit( 0 );
         }

@@ -32,11 +32,11 @@ public class Usuarios extends javax.swing.JFrame {
         lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
         LlenarTablaUsuarios();
         btnUsuarios.requestFocus();
-        String Ruta=getClass().getResource("/images/plus.png").getPath();
+        String Ruta=getClass().getResource("/images/Mas.png").getPath();
         Mostrar_Visualizador(btnActualizar, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
         Mostrar_Visualizador(btnActualizar, Ruta1);
-        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
+        String Ruta2=getClass().getResource("/images/Eliminar.png").getPath();
         Mostrar_Visualizador(btnEliminar, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarUsuarios, Ruta3);
@@ -708,7 +708,15 @@ public class Usuarios extends javax.swing.JFrame {
     
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
-        Eliminar();
+        Object [] opciones={"Aceptar","Cancelar"};
+        if(!id.isEmpty()){
+            int eleccion=JOptionPane.showOptionDialog(null,"Está seguro que desea eliminar","Eliminar",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,null,opciones,"Aceptar");
+            if(eleccion==JOptionPane.YES_OPTION)  Eliminar();
+        }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a eliminar");
+  
+        
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarUsuariosMouseClicked

@@ -66,7 +66,6 @@ static Statement sent;
             sent = con.createStatement();
             ResultSet rs = sent.executeQuery(consulta1);
             while(rs.next()){
-                //JOptionPane.showMessageDialog(null, rs.getString(2));
                 cat=new Categorias();
                 cat.setIdCategoria(rs.getInt(1));
                 cat.setNombreCategoria(rs.getString(2));

@@ -737,8 +737,8 @@
                   <Component id="jlTerminosyCondiciones" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="jlPoliticasdePrivacidad" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="183" max="-2" attributes="0"/>
-                  <Component id="lblUsuarioyRol" min="-2" pref="312" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                  <Component id="lblUsuarioyRol" min="-2" pref="382" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               </Group>
           </Group>
