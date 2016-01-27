@@ -5,6 +5,8 @@
 package pryqr;
 
 import Modelos.GeneradorQR;
+import Modelos.ItemSeleccionado;
+import Modelos.Validate;
 import Modelos.ValoresConstantes;
 import db.Categorias;
 import db.ConexionBase;
@@ -23,12 +25,14 @@ import java.awt.Image;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
 import org.apache.commons.io.FileUtils;
 /**
  *
@@ -38,12 +42,12 @@ public class NuevoQr extends javax.swing.JFrame {
     Connection conn;
     Statement sent;
     File fichero;
-    int numeroAleatorioTitulo = 0, desde = 10000, hasta = 99999, idCategoria = 0;
+    int numeroAleatorioTitulo = 0, desde = 10000, hasta = 99999, idCategoria = 0, id = 0;
     BufferedImage bufferedImage;
     DefaultComboBoxModel mdlC;
     Vector<Categorias> categorias;
-    String audio = "", tempAudio = "", video = "", tempVideo = "", imagenQR = "", codigoImagenQR = "", fechaActual = "";
-    String[] imagen = {"", "", ""}, tempImagen = {"", "", ""}, tempNombreArchivo = {"", "", ""}, tempNombreMultimedia = {"", ""};
+    String audio = "", tempAudio = "", video = "", tempVideo = "", imagenQR = "", codigoImagenQR = "", fechaActual = "", accion = "", categoria = "";
+    String[] imagen = {"", "", ""}, tempImagen = {"", "", ""}, tempNombreArchivo = {"", "", ""}, tempNombreMultimedia = {"", ""}, tempRutaActual = {"", "", "", "", "", ""};
     
     public NuevoQr() {
         initComponents();
@@ -66,6 +70,45 @@ public class NuevoQr extends javax.swing.JFrame {
         Mostrar_Visualizador(btnImagen3, Ruta);
         Ruta=getClass().getResource("/images/wait.png").getPath();
         Mostrar_Visualizador(lblImagenQR, Ruta);
+        lblIdQR.setVisible(false);
+        accion=ItemSeleccionado.accionBoton;
+        btnGenerarNuevoQr.setText(accion);
+        try{
+            //Muestra los usuarios existentes en la base de datos
+            if(accion.contains("Actualizar")){
+                txtNombreQr.setEnabled(false);
+                jlGenerarQr.setText(accion + " datos del QR");
+                lblIdQR.setText("ID del Usuario: \t\t" + ItemSeleccionado.idArticulo);
+                lblIdQR.setVisible(true);
+                int idCat = 0;
+                for (int i = 0; i < categorias.size(); i++) {
+                    String tempCategoria = categorias.get(i).getNombreCategoria();
+                    if(tempCategoria.contains(ItemSeleccionado.idCategoria)) idCat = i;
+                }
+                jcbCategoriasQR.setSelectedIndex(idCat);
+                String SQLTU ="SELECT * FROM articulos WHERE IDARTICULO = " + ItemSeleccionado.idArticulo; 
+                sent = conn.createStatement();
+                ResultSet rs = sent.executeQuery(SQLTU);
+                rs.next();
+                txtNombreQr.setText(rs.getString("NOMBREARTICULO"));
+                txtAreaDescripcionNuevoQr.setText(rs.getString("DESCRIPCIONARTICULO"));
+                tempRutaActual[0] = rs.getString("IMAGENUNOARTICULO");
+                tempRutaActual[1] = rs.getString("IMAGENDOSARTICULO");
+                tempRutaActual[2] = rs.getString("IMAGENTRESARTICULO");
+                tempRutaActual[3] = rs.getString("SONIDOARTICULO");
+                tempRutaActual[4] = rs.getString("VIDEOARTICULO");
+                tempRutaActual[5] = rs.getString("IMAGENQRARTICULO");
+                rs.close();
+                Mostrar_Visualizador(btnImagen1, tempRutaActual[0]);
+                if(!tempRutaActual[1].isEmpty()) Mostrar_Visualizador(btnImagen2, tempRutaActual[1]);
+                if(!tempRutaActual[2].isEmpty()) Mostrar_Visualizador(btnImagen3, tempRutaActual[2]);
+                if(!tempRutaActual[3].isEmpty()) Mostrar_Visualizador(btnAudioQr, tempRutaActual[3]);
+                if(!tempRutaActual[4].isEmpty()) Mostrar_Visualizador(btnVideoQr, tempRutaActual[4]);
+                Mostrar_Visualizador(lblImagenQR, tempRutaActual[5]);
+            }
+        }
+        catch(Exception e){
+        }
     }
     
     Boolean CopiaArchivos(String home, String destiny, String[] multimedia, String nombre, Integer indice){
@@ -222,6 +265,7 @@ public class NuevoQr extends javax.swing.JFrame {
                 tempVideo = fichero.getPath();
                 tempNombreMultimedia[identificador] = fichero.getName();
                 label.setText(tempNombreMultimedia[identificador]);
+                if(label.getText().length() > 10) label.setText(tempNombreMultimedia[identificador].substring(0, 10) + "...mp4");
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "Error abriendo la imagen" + ex);
             }
@@ -241,6 +285,7 @@ public class NuevoQr extends javax.swing.JFrame {
                 tempAudio = fichero.getPath();
                 tempNombreMultimedia[identificador] = fichero.getName();
                 label.setText(tempNombreMultimedia[identificador]);
+                if(label.getText().length() > 10) label.setText(tempNombreMultimedia[identificador].substring(0, 10) + "...mp3");
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "Error abriendo la imagen" + ex);
             }
@@ -282,6 +327,7 @@ public class NuevoQr extends javax.swing.JFrame {
         btnImagen3 = new javax.swing.JLabel();
         btnImagen2 = new javax.swing.JLabel();
         lblImagenQR = new javax.swing.JLabel();
+        lblIdQR = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -355,7 +401,7 @@ public class NuevoQr extends javax.swing.JFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        txtAreaDescripcionNuevoQr.setColumns(10);
+        txtAreaDescripcionNuevoQr.setLineWrap(true);
         txtAreaDescripcionNuevoQr.setRows(5);
         jScrollPane1.setViewportView(txtAreaDescripcionNuevoQr);
 
@@ -408,6 +454,10 @@ public class NuevoQr extends javax.swing.JFrame {
 
         lblImagenQR.setBackground(new java.awt.Color(255, 255, 255));
 
+        lblIdQR.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lblIdQR.setForeground(new java.awt.Color(0, 153, 204));
+        lblIdQR.setText("Categoria");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -453,15 +503,16 @@ public class NuevoQr extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAudioQr)
                                     .addComponent(jlAudioQr))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 414, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImagenQR, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jlGenerarQr)
-                        .addGap(255, 255, 255)
-                        .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblIdQR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 355, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblImagenQR, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jlGenerarQr)
+                                .addGap(255, 255, 255)
+                                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(224, 224, 224)
@@ -471,12 +522,17 @@ public class NuevoQr extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnCerrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jlGenerarQr)))
-                .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnCerrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jlGenerarQr)))
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblIdQR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -568,12 +624,12 @@ public class NuevoQr extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImagen3MouseClicked
 
     private void btnVideoQrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVideoQrMouseClicked
-        CargarVideo(jlVideoQr, 0);
+        CargarVideo(jlVideoQr, 1);
         video = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Multimedia";
     }//GEN-LAST:event_btnVideoQrMouseClicked
 
     private void btnAudioQrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAudioQrMouseClicked
-        CargarAudio(jlAudioQr, 1);
+        CargarAudio(jlAudioQr, 0);
         audio = ValoresConstantes.directorioPrincipal + "\\" + txtNombreQr.getText().toString() + "\\Multimedia";
     }//GEN-LAST:event_btnAudioQrMouseClicked
 
@@ -643,6 +699,7 @@ public class NuevoQr extends javax.swing.JFrame {
     private javax.swing.JLabel jlNombreQr;
     private javax.swing.JLabel jlNombreQr6;
     private javax.swing.JLabel jlVideoQr;
+    private javax.swing.JLabel lblIdQR;
     private javax.swing.JLabel lblImagenQR;
     private javax.swing.JTextArea txtAreaDescripcionNuevoQr;
     private javax.swing.JTextField txtNombreQr;
