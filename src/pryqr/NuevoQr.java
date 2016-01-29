@@ -102,8 +102,8 @@ public class NuevoQr extends javax.swing.JFrame {
                 Mostrar_Visualizador(btnImagen1, tempRutaActual[0]);
                 if(!tempRutaActual[1].isEmpty()) Mostrar_Visualizador(btnImagen2, tempRutaActual[1]);
                 if(!tempRutaActual[2].isEmpty()) Mostrar_Visualizador(btnImagen3, tempRutaActual[2]);
-                if(!tempRutaActual[3].isEmpty()) Mostrar_Visualizador(btnAudioQr, tempRutaActual[3]);
-                if(!tempRutaActual[4].isEmpty()) Mostrar_Visualizador(btnVideoQr, tempRutaActual[4]);
+                if(!tempRutaActual[3].isEmpty()) jlAudioQr.setText("Audio.mp3");
+                if(!tempRutaActual[4].isEmpty()) jlVideoQr.setText("Video.mp4");
                 Mostrar_Visualizador(lblImagenQR, tempRutaActual[5]);
             }
         }

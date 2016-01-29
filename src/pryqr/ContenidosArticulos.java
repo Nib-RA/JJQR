@@ -33,40 +33,40 @@ Integer buscar = 0;
      */
     public ContenidosArticulos() {
         initComponents();
+        jtContenidosArticulos.requestFocus();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU+" tu rol es de " + UsuarioIngresado.parametroR);
-        btnContenidos.requestFocus();
+        lblUsuarioyRol.setText("Bienvenid@ " + UsuarioIngresado.parametroU + " tu rol es de " + UsuarioIngresado.parametroR);
         conn = mysql.getConnect();
         LlenarTablaArticulos();
         rbtnBuscarPorCategoria.setVisible(false);
         rbtnBuscarPorNombre.setVisible(false); 
         txtBuscarArticulo.setVisible(false);
-        String Ruta=getClass().getResource("/images/Mas.png").getPath();
-        Mostrar_Visualizador(btnNuevosArticulos, Ruta);
+        String Ruta=getClass().getResource("/images/plus.png").getPath();
+        Mostrar_Visualizador(btnActualizarArticulos, Ruta);
         String Ruta1=getClass().getResource("/images/actualizar.png").getPath();
         Mostrar_Visualizador(btnActualizarArticulos, Ruta1);
-        String Ruta2=getClass().getResource("/images/Eliminar.png").getPath();
+        String Ruta2=getClass().getResource("/images/eliminar.jpg").getPath();
         Mostrar_Visualizador(btnEliminarArticulos, Ruta2);
         String Ruta3=getClass().getResource("/images/search.png").getPath();
         Mostrar_Visualizador(btnBuscarArticulos, Ruta3);
         //Negacion de Privilegio de creacion de Usuarios a secretaria
         if(UsuarioIngresado.parametroR.equals("Secretario/a")){
-        btnUsuarios.setContentAreaFilled (false);
-        btnUsuarios.setEnabled(false);
-        btnUsuarios.setForeground(Color.BLACK);
-         }
+            btnUsuarios.setContentAreaFilled (false);
+            btnUsuarios.setEnabled(false);
+            btnUsuarios.setForeground(Color.BLACK);
+        }
         //Negaccion de privilegios de Crear modificar y borrar categorias a inspector y recepcionista
-        if(UsuarioIngresado.parametroR.equals("Consultor/a")){
-        //btnNuevosArticulos.setContentAreaFilled (false);
-        btnNuevosArticulos.setEnabled(false);
-        btnNuevosArticulos.setBackground(Color.red);
-        UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
-        btnActualizarArticulos.setEnabled(false);
-        btnEliminarArticulos.setEnabled(false);
-        btnUsuarios.setContentAreaFilled (false);
-        btnUsuarios.setEnabled(false);
-        btnUsuarios.setForeground(Color.BLACK);
+            if(UsuarioIngresado.parametroR.equals("Consultor/a")){
+            //btnNuevosArticulos.setContentAreaFilled (false);
+            btnNuevosArticulos.setEnabled(false);
+            btnNuevosArticulos.setBackground(Color.red);
+            UIManager.put("btnActualizarCategoria.disabledBackground", Color.YELLOW);
+            btnActualizarArticulos.setEnabled(false);
+            btnEliminarArticulos.setEnabled(false);
+            btnUsuarios.setContentAreaFilled (false);
+            btnUsuarios.setEnabled(false);
+            btnUsuarios.setForeground(Color.BLACK);
         }
         
     }
@@ -74,26 +74,26 @@ Integer buscar = 0;
     void LlenarTablaArticulos(){
         try{
             //String titulos[] = {"IdCategoria","Nombre","Descripcion","Editar","Eliminar"};
-            String titulos[] = {"ID","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
-                "IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
+            String titulos[] = {"ID","CATEGORIA","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
+                "IMAGEN TRES","SONIDO","VIDEO","IMAGEN QR"};
             //String SQL ="SELECT * FROM ingresos where CodigoParaiso Like '%"+txtBuscar.getText().toString().trim()+"%'AND ORDER BY Movimiento,Id,Fecha ASC"; 
-            String SQLTA ="SELECT * FROM articulos ORDER BY IDARTICULO ASC"; 
+            String SQLTA ="SELECT a.IDARTICULO, c.NOMBRECATEGORIA, a.NOMBREARTICULO, a.DESCRIPCIONARTICULO, a.IMAGENUNOARTICULO, a.IMAGENDOSARTICULO, a.IMAGENTRESARTICULO, a.SONIDOARTICULO, a.VIDEOARTICULO, a.IMAGENQRARTICULO FROM articulos AS a INNER JOIN categorias AS c USING(IDCATEGORIA) ORDER BY a.IDARTICULO ASC"; 
             model = new DefaultTableModel(null, titulos);
             sent = conn.createStatement();
             ResultSet rs = sent.executeQuery(SQLTA);
             String[]fila=new String[10];
             while(rs.next()){
                 fila[0] = rs.getString("IDARTICULO");
-                fila[1] = rs.getString("NOMBREARTICULO");
-                fila[2] = rs.getString("DESCRIPCIONARTICULO");
-                fila[3] = rs.getString("IMAGENUNOARTICULO");
-                fila[4] = rs.getString("IMAGENDOSARTICULO");
-                fila[5] = rs.getString("IMAGENTRESARTICULO");
-                fila[6] = rs.getString("SONIDOARTICULO");
-                fila[7] = rs.getString("VIDEOARTICULO");
-                fila[8] = rs.getString("CODIGOQRARTICULO");
+                fila[1] = rs.getString("NOMBRECATEGORIA");
+                fila[2] = rs.getString("NOMBREARTICULO");
+                fila[3] = rs.getString("DESCRIPCIONARTICULO");
+                fila[4] = rs.getString("IMAGENUNOARTICULO");
+                fila[5] = rs.getString("IMAGENDOSARTICULO");
+                fila[6] = rs.getString("IMAGENTRESARTICULO");
+                fila[7] = rs.getString("SONIDOARTICULO");
+                fila[8] = rs.getString("VIDEOARTICULO");
                 fila[9] = rs.getString("IMAGENQRARTICULO");
-               model.addRow(fila);
+                model.addRow(fila);
             }
             jtContenidosArticulos.setModel(model);
         }catch(Exception e){
@@ -102,8 +102,7 @@ Integer buscar = 0;
     
     
     void EliminarArticulos(){
-    JOptionPane.showMessageDialog(null, "El artículo será eliminado");
-    
+        JOptionPane.showMessageDialog(null, "El artículo será eliminado");
         int fila = jtContenidosArticulos.getSelectedRow();
         try {
             String SQL = "DELETE FROM articulos WHERE IDARTICULO=" + jtContenidosArticulos.getValueAt(fila, 0);
@@ -113,9 +112,9 @@ Integer buscar = 0;
                 JOptionPane.showMessageDialog(null, "Artículo eliminado correctamente ");
                 LlenarTablaArticulos();
             }
-            else                JOptionPane.showMessageDialog(null, "Artículo no eliminado ");
+            else JOptionPane.showMessageDialog(null, "Artículo no eliminado ");
             }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: Debe seleccionar un registro" );
+                JOptionPane.showMessageDialog(null, "Error: Debe seleccionar un registro" );
             }
         }
 
@@ -123,30 +122,27 @@ Integer buscar = 0;
         DefaultTableModel modelo=(DefaultTableModel) jtContenidosArticulos.getModel();
         idA=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),0));
         categoria=String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),1));
-        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),3));
-        Mostrar_Visualizador(lblVistaPreviaImagen1, imagenes);
         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),4));
+        Mostrar_Visualizador(lblVistaPreviaImagen1, imagenes);
+        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),5));
         if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen2, imagenes);
         else lblVistaPreviaImagen2.setIcon(null);
-        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),5));
+        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),6));
         if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen3, imagenes);
         else lblVistaPreviaImagen3.setIcon(null);
-         imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),9));
+        imagenes = String.valueOf(modelo.getValueAt(jtContenidosArticulos.getSelectedRow(),9));
         if(!imagenes.isEmpty()) Mostrar_Visualizador(lblVistaPreviaImagen4, imagenes);
         else lblVistaPreviaImagen4.setIcon(null);
     }
     
-    
-    
     void BuscarPorNombreArticulo (){
-        
         try{
-       
-    //Consulta para la fecha de inicio a fecha de final
-    String titulos[] = {"ID","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
-                "IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
-    String SQL = "SELECT *FROM articulos WHERE NOMBREARTICULO Like '%"+txtBuscarArticulo.getText().toString().trim()+"%'ORDER BY NOMBREARTICULO ASC";
-          model = new DefaultTableModel(null, titulos);
+            //Consulta para la fecha de inicio a fecha de final
+            String titulos[] = {"ID","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
+
+                        "IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
+            String SQL = "SELECT *FROM articulos WHERE NOMBREARTICULO Like '%"+txtBuscarArticulo.getText().toString().trim()+"%'ORDER BY NOMBREARTICULO ASC";
+            model = new DefaultTableModel(null, titulos);
             sent = conn.createStatement();
             ResultSet rs = sent.executeQuery(SQL);
             String[]fila=new String[10];
@@ -161,12 +157,13 @@ Integer buscar = 0;
                 fila[7] = rs.getString("VIDEOARTICULO");
                 fila[8] = rs.getString("CODIGOQRARTICULO");
                 fila[9] = rs.getString("IMAGENQRARTICULO");
-               model.addRow(fila);
-  }
-    jtContenidosArticulos.setModel(model);
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(null,"Error de Consulta..... :(");
-    }
+                model.addRow(fila);
+            }
+
+            jtContenidosArticulos.setModel(model);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error de Consulta..... :(");
+        }
     }
           
     /**
@@ -749,6 +746,7 @@ Integer buscar = 0;
         if(!idA.isEmpty()){
             isA.setAccionBoton("Actualizar");
             isA.setIdArticulo(idA);
+			isA.setIdCategoria(categoria);
             NuevoQr frnu=new NuevoQr();
             frnu.show();
         }else JOptionPane.showMessageDialog(this, "No ha seleccionado un registro a modificar");
