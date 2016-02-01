@@ -6,14 +6,17 @@ package pryqr;
 
 import Modelos.ItemSeleccionado;
 import Modelos.UsuarioIngresado;
+import Modelos.ValoresConstantes;
 import db.mysql;
 import java.awt.Color;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.io.FileUtils;
 import static pryqr.NuevoQr.Mostrar_Visualizador;
 
 /**
@@ -68,7 +71,6 @@ Integer buscar = 0;
             btnUsuarios.setEnabled(false);
             btnUsuarios.setForeground(Color.BLACK);
         }
-        
     }
     
     void LlenarTablaArticulos(){
@@ -100,23 +102,24 @@ Integer buscar = 0;
         }
     }
     
-    
     void EliminarArticulos(){
         JOptionPane.showMessageDialog(null, "El artículo será eliminado");
         int fila = jtContenidosArticulos.getSelectedRow();
         try {
-            String SQL = "DELETE FROM articulos WHERE IDARTICULO=" + jtContenidosArticulos.getValueAt(fila, 0);
+            String SQL = "DELETE FROM articulos WHERE IDARTICULO=" + idA;
             sent = conn.createStatement();
             int n = sent.executeUpdate(SQL);
             if (n > 0){
                 JOptionPane.showMessageDialog(null, "Artículo eliminado correctamente ");
+                File directorioPrincipalArticulo = new File(ValoresConstantes.directorioPrincipal + "\\" + jtContenidosArticulos.getValueAt(fila, 2));
+                FileUtils.deleteDirectory(directorioPrincipalArticulo);
                 LlenarTablaArticulos();
             }
             else JOptionPane.showMessageDialog(null, "Artículo no eliminado ");
-            }catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error: Debe seleccionar un registro" );
-            }
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: Debe seleccionar un registro" );
         }
+    }
 
     void SeleccionarItemTablaCA(java.awt.event.MouseEvent evt){
         DefaultTableModel modelo=(DefaultTableModel) jtContenidosArticulos.getModel();
@@ -138,9 +141,7 @@ Integer buscar = 0;
     void BuscarPorNombreArticulo (){
         try{
             //Consulta para la fecha de inicio a fecha de final
-            String titulos[] = {"ID","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS",
-
-                        "IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
+            String titulos[] = {"ID","NOMBRE","DESCRIPCION","IMAGEN UNO","IMAGEN DOS","IMAGEN TRES","SONIDO","VIDEO","CODIGO","IMAGEN QR"};
             String SQL = "SELECT *FROM articulos WHERE NOMBREARTICULO Like '%"+txtBuscarArticulo.getText().toString().trim()+"%'ORDER BY NOMBREARTICULO ASC";
             model = new DefaultTableModel(null, titulos);
             sent = conn.createStatement();

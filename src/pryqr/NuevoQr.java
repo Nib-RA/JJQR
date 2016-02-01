@@ -42,7 +42,7 @@ public class NuevoQr extends javax.swing.JFrame {
     Connection conn;
     Statement sent;
     File fichero;
-    int numeroAleatorioTitulo = 0, desde = 10000, hasta = 99999, idCategoria = 0, id = 0;
+    int numeroAleatorioTitulo = 0, desde = 10000, hasta = 99999, idCategoria = 0, id = 0, idCat = 0;
     BufferedImage bufferedImage;
     DefaultComboBoxModel mdlC;
     Vector<Categorias> categorias;
@@ -80,7 +80,6 @@ public class NuevoQr extends javax.swing.JFrame {
                 jlGenerarQr.setText(accion + " datos del QR");
                 lblIdQR.setText("ID del Usuario: \t\t" + ItemSeleccionado.idArticulo);
                 lblIdQR.setVisible(true);
-                int idCat = 0;
                 for (int i = 0; i < categorias.size(); i++) {
                     String tempCategoria = categorias.get(i).getNombreCategoria();
                     if(tempCategoria.contains(ItemSeleccionado.idCategoria)) idCat = i;
@@ -156,63 +155,131 @@ public class NuevoQr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
         else{  
             try {
-                if(idCategoria == 0){
-                    JOptionPane.showMessageDialog(this, "Debe de seleccionar una categoría");
-                    return;
-                }
-                //Ingreso en nuevo usuario
-                if(!tempImagen[0].isEmpty()){
-                    File imagen1 = new File(imagen[0]);
-                    if(!imagen1.exists()) imagen1.mkdir();
+                if(btnGenerarNuevoQr.getText().contains("Guardar")){
+                    if(idCategoria == 0){
+                        JOptionPane.showMessageDialog(this, "Debe de seleccionar una categoría");
+                        return;
+                    }
+                    //Ingreso en nuevo usuario
+                    if(!tempImagen[0].isEmpty()){
+                        File imagen1 = new File(imagen[0]);
+                        if(!imagen1.exists()) imagen1.mkdir();
+                        imagen[0] += "\\Imagenes";
+                        if(CopiaArchivos(tempImagen[0], imagen[0], imagen, "Imagen1.jpg", 0)) imagen[0] += "\\Imagen1.jpg";
+                        else return;
+                        if(!tempImagen[1].isEmpty()){
+                            if(CopiaArchivos(tempImagen[1], imagen[1], imagen, "Imagen2.jpg", 1)) imagen[1] += "\\Imagen2.jpg";
+                            else return;
+                        }
+                        if(!tempImagen[2].isEmpty()){
+                            if(CopiaArchivos(tempImagen[2], imagen[2], imagen, "Imagen3.jpg", 2)) imagen[2] += "\\Imagen3.jpg";
+                            else return;
+                        }
+                        if(!tempAudio.isEmpty()){
+                            if(CopiaArchivos(tempAudio, audio, "Audio.mp3", 0)) audio += "\\Audio.mp3";
+                            else return;
+                        }
+                        if(!tempVideo.isEmpty()){
+                            if(CopiaArchivos(tempVideo, video, "Video.mp4", 1)) video += "\\Video.mp4";
+                            else return;
+                        }
+                        File guardarQR = new File(imagenQR);
+                        try {
+                            ImageIO.write(bufferedImage, "png", guardarQR);
+                        } catch (Exception e) {
+                        }
+                        String SQLA = "INSERT INTO articulos(IDCATEGORIA,NOMBREARTICULO,DESCRIPCIONARTICULO,IMAGENUNOARTICULO,IMAGENDOSARTICULO,"
+                                + "IMAGENTRESARTICULO,SONIDOARTICULO,VIDEOARTICULO,CODIGOQRARTICULO,IMAGENQRARTICULO)"
+                                      + " VALUES(?,?,?,?,?,?,?,?,?,?)";
+                        PreparedStatement ps = conn.prepareStatement(SQLA);
+                        ps.setInt(1, idCategoria);
+                        ps.setString(2, txtNombreQr.getText());
+                        ps.setString(3, txtAreaDescripcionNuevoQr.getText());
+                        ps.setString(4, imagen[0]);
+                        ps.setString(5, imagen[1]);
+                        ps.setString(6, imagen[2]);
+                        ps.setString(7, audio);
+                        ps.setString(8, video);
+                        ps.setString(9, codigoImagenQR);
+                        ps.setString(10, imagenQR);
+                        int n = ps.executeUpdate();
+                        if (n > 0) {
+                            JOptionPane.showMessageDialog(null, "Nuevo Qr creado Correctamente");
+                            dispose();
+                            ContenidosArticulos frca=new ContenidosArticulos();
+                            frca.show();
+                        }
+                    } else JOptionPane.showMessageDialog(this, "Debe por lo menos agregar una imagen al reconocimiento QR");
+                } else {
+                    if(idCategoria == idCat) idCategoria = idCat;
+                    else if(idCategoria == 0){
+                        JOptionPane.showMessageDialog(this, "Debe de seleccionar una categoría");
+                        return;
+                    }
+                    //Actualizar usuario
                     imagen[0] += "\\Imagenes";
-                    if(CopiaArchivos(tempImagen[0], imagen[0], imagen, "Imagen1.jpg", 0)) imagen[0] += "\\Imagen1.jpg";
-                    else return;
-                    if(!tempImagen[1].isEmpty()){
+                    if(tempImagen[0].isEmpty()) imagen[0] = tempRutaActual[0];
+                    else {
+                        File borrarImagenAntigua = new File(tempRutaActual[0]);
+                        borrarImagenAntigua.delete();
+                        if(CopiaArchivos(tempImagen[0], imagen[0], imagen, "Imagen1.jpg", 0)) imagen[0] += "\\Imagen1.jpg";
+                        else return;
+                    }
+                    if(tempImagen[1].isEmpty()) imagen[1] = tempRutaActual[1];
+                    else {
+                        File borrarImagenAntigua = new File(tempRutaActual[1]);
+                        borrarImagenAntigua.delete();
                         if(CopiaArchivos(tempImagen[1], imagen[1], imagen, "Imagen2.jpg", 1)) imagen[1] += "\\Imagen2.jpg";
                         else return;
-                    } else imagen[1] = "";
-                    if(!tempImagen[2].isEmpty()){
+                    }
+                    if(tempImagen[2].isEmpty()) imagen[2] = tempRutaActual[2];
+                    else {
+                        File borrarImagenAntigua = new File(tempRutaActual[2]);
+                        borrarImagenAntigua.delete();
                         if(CopiaArchivos(tempImagen[2], imagen[2], imagen, "Imagen3.jpg", 2)) imagen[2] += "\\Imagen3.jpg";
                         else return;
-                    } else imagen[2] = "";
-                    if(!tempAudio.isEmpty()){
+                    }
+                    if(tempAudio.isEmpty()) audio = tempRutaActual[3];
+                    else {
+                        File borrarMultimediaAntigua = new File(tempRutaActual[3]);
+                        borrarMultimediaAntigua.delete();
                         if(CopiaArchivos(tempAudio, audio, "Audio.mp3", 0)) audio += "\\Audio.mp3";
                         else return;
-                    } else imagen[2] = "";
-                    if(!tempVideo.isEmpty()){
+                    }
+                    if(tempVideo.isEmpty()) video = tempRutaActual[4];
+                    else {
+                        File borrarMultimediaAntigua = new File(tempRutaActual[4]);
+                        borrarMultimediaAntigua.delete();
                         if(CopiaArchivos(tempVideo, video, "Video.mp4", 1)) video += "\\Video.mp4";
                         else return;
-                    } else imagen[2] = "";
-                    File guardarQR = new File(imagenQR);
-                    try {
-                        ImageIO.write(bufferedImage, "png", guardarQR);
-                    } catch (Exception e) {
                     }
-                    String SQLA = "INSERT INTO articulos(IDCATEGORIA,NOMBREARTICULO,DESCRIPCIONARTICULO,IMAGENUNOARTICULO,IMAGENDOSARTICULO,"
-                            + "IMAGENTRESARTICULO,SONIDOARTICULO,VIDEOARTICULO,CODIGOQRARTICULO,IMAGENQRARTICULO)"
-                                  + " VALUES(?,?,?,?,?,?,?,?,?,?)";
-                    PreparedStatement ps = conn.prepareStatement(SQLA);
-                    ps.setInt(1, idCategoria);
-                    ps.setString(2, txtNombreQr.getText().toString());
-                    ps.setString(3, txtAreaDescripcionNuevoQr.getText().toString());
-                    ps.setString(4, imagen[0]);
-                    ps.setString(5, imagen[1]);
-                    ps.setString(6, imagen[2]);
-                    ps.setString(7, audio);
-                    ps.setString(8, video);
-                    ps.setString(9, codigoImagenQR);
-                    ps.setString(10, imagenQR);
-                    int n = ps.executeUpdate();
-                    if (n > 0) {
-                        JOptionPane.showMessageDialog(null, "Nuevo Qr creado Correctamente");
-                        dispose();
-                        ContenidosArticulos frca=new ContenidosArticulos();
-                        frca.show();
+                    if (txtNombreQr.getText().trim().isEmpty() || txtAreaDescripcionNuevoQr.getText().trim().isEmpty())
+                        JOptionPane.showMessageDialog(null, "Ingrese Los Campos Obligatorios");
+                    else{
+                        String SQL = "UPDATE articulos SET IDCATEGORIA = ?, NOMBREARTICULO = ?, DESCRIPCIONARTICULO = ?, IMAGENUNOARTICULO = ?, "
+                                + "IMAGENDOSARTICULO = ?, IMAGENTRESARTICULO = ?, SONIDOARTICULO = ?, VIDEOARTICULO = ? "
+                                + "WHERE IDARTICULO = " + ItemSeleccionado.idArticulo;
+                        PreparedStatement ps = conn.prepareStatement(SQL);
+                        ps.setInt(1, idCategoria);
+                        ps.setString(2, txtNombreQr.getText());
+                        ps.setString(3, txtAreaDescripcionNuevoQr.getText());
+                        ps.setString(4, imagen[0]);
+                        ps.setString(5, imagen[1]);
+                        ps.setString(6, imagen[2]);
+                        ps.setString(7, audio);
+                        ps.setString(8, video);
+                        int n = ps.executeUpdate();
+                        if (n > 0) {
+                            JOptionPane.showMessageDialog(null, "Información del QR actualizada Correctamente");
+                            dispose();
+                            ContenidosArticulos frca=new ContenidosArticulos();
+                            frca.show();
+                        }
                     }
-                } else JOptionPane.showMessageDialog(this, "Debe por lo menos agregar una imagen al reconocimiento QR");
+                }
             }catch (SQLException e) {
-            JOptionPane.showConfirmDialog(null, "Error: " + e.getMessage());
-            //System.out.println();
+                JOptionPane.showConfirmDialog(null, "Error: " + e.getMessage());
+                //System.out.println();
             }
         }
     }

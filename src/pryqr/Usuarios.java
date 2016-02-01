@@ -83,7 +83,7 @@ public class Usuarios extends javax.swing.JFrame {
 
     
     void Eliminar(){
-    JOptionPane.showMessageDialog(null, "El registro sera eliminado");
+        JOptionPane.showMessageDialog(null, "El registro sera eliminado");
         int fila = jtUsuarios.getSelectedRow();
         try {
             String SQL = "DELETE FROM usuarios WHERE IdUSUARIO=" + jtUsuarios.getValueAt(fila, 0);
@@ -93,11 +93,11 @@ public class Usuarios extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente ");
                 LlenarTablaUsuarios();
             }
-            else                JOptionPane.showMessageDialog(null, "Usuario no eliminado ");
-            }catch (Exception e) {
+            else JOptionPane.showMessageDialog(null, "Usuario no eliminado ");
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: Debe seleccionar un usuario");
-            }
         }
+    }
         
     
     void BuscarPorNombreUsuario (){
